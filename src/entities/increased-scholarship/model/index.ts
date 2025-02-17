@@ -41,6 +41,7 @@ const sportsParticipationCheck = createCheckboxField({ reset: [pageMounted, type
 const gtoGoldBadgeCheck = createCheckboxField({ reset: [pageMounted, typeOfActivity.value] })
 
 const files = createFilesField({ reset: pageMounted })
+const bankDetails = createFilesField({ reset: pageMounted })
 const criteria = createCheckboxField({ reset: [pageMounted, typeOfActivity.value] })
 const consecutiveExcellentAssessmentsFilledOut = createCheckboxField({ reset: [pageMounted, typeOfActivity.value] })
 const completed = createCheckboxField({ reset: pageMounted })
@@ -173,6 +174,7 @@ export const fields = {
     sportsParticipationCheck,
     gtoGoldBadgeCheck,
     files,
+    bankDetails,
 
     criteria,
     completed,

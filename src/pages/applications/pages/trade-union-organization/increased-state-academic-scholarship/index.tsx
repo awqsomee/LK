@@ -9,12 +9,14 @@ import BaseApplicationWrapper from '@pages/applications/ui/base-application-wrap
 import { increasedScholarshipModel } from '@entities/increased-scholarship'
 
 import { ApplicationFormCodes } from '@shared/consts/models/application-form-codes'
-import { Divider, FileLink, FormBlock, Input, Message, SubmitButton, TextArea } from '@shared/ui/atoms'
+import { userModel } from '@shared/session'
+import { Divider, FormBlock, Input, Message, SubmitButton, TextArea, Title } from '@shared/ui/atoms'
 import Checkbox from '@shared/ui/checkbox'
 import FileInput from '@shared/ui/file-input'
 import Flex from '@shared/ui/flex'
 import TextHeader from '@shared/ui/molecules/text-header'
 import Select from '@shared/ui/select'
+import Subtext from '@shared/ui/subtext'
 
 const typesOfActivity = [
     { id: 0, title: 'Учебная деятельность' },
@@ -34,19 +36,6 @@ const IncreasedStateAcademicScholarship = () => {
     return (
         <BaseApplicationWrapper isDone={completed ?? false}>
             <FormBlock noHeader>
-                <Message type="alert">
-                    Сервис предназначен:
-                    <Ul>
-                        <li>
-                            для подачи документов на участие в конкурсе на назначение повышенной государственной
-                            академической стипендии для обучающихся на бюджетной основе обучения;
-                        </li>
-                        <li>
-                            для подачи документов на участие в конкурсе на назначение Стипендии Московского Политеха для
-                            обучающихся на платной основе обучения.
-                        </li>
-                    </Ul>
-                </Message>
                 <Fio />
                 <Tel />
                 <Email />
@@ -56,6 +45,7 @@ const IncreasedStateAcademicScholarship = () => {
                 <ListOfAchievements />
                 <Сriteria />
                 <Files />
+                <BankDetails />
                 <Submit />
             </FormBlock>
         </BaseApplicationWrapper>
@@ -115,7 +105,7 @@ function Сriteria() {
 
     return (
         <>
-            <TextHeader visible={true} title={'Критерии'} />
+            <TextHeader visible={true} title="Критерии" />
             {(typeOfActivity.id as (typeof typesOfActivity)[number]['id']) === 0 ? (
                 <>
                     <ConsecutiveExcellentGradesCheck />
@@ -199,7 +189,7 @@ function ConsecutiveExcellentAssessmentsCheck() {
         <Checkbox
             checked={value}
             setChecked={setValue}
-            text={'количество сданных промежуточных аттестаций подряд на «отлично»:'}
+            text="количество сданных промежуточных аттестаций подряд на «отлично»:"
         />
     )
 }
@@ -411,8 +401,35 @@ function Files() {
     return <FileInput files={value} setFiles={setValue} isActive maxFiles={3} formats={['pdf']} />
 }
 
+function BankDetails() {
+    const { value, setValue } = useUnit(increasedScholarshipModel.fields.bankDetails)
+
+    const user = useUnit(userModel.stores.user)
+    if (!user?.finance || user.finance === 'Бюджетное') return null
+
+    return (
+        <Flex d="column" gap="0.5rem">
+            <Title size={5} align="left" required>
+                Прикрепите файл с банковскими реквизитами карты для зачисления стипендии*
+            </Title>
+            <Subtext>
+                Важно! Карта должна быть открыта на имя студента, участвующего в конкурсе, с платежной системой{' '}
+                <strong>МИР следующих банков: Сбербанк, ВТБ или Газпромбанк</strong>
+            </Subtext>
+            <FileInput
+                files={value}
+                setFiles={setValue}
+                isActive
+                maxFiles={1}
+                formats={['pdf', 'jpeg', 'jpg', 'png']}
+            />
+        </Flex>
+    )
+}
+
 function Submit() {
     const { value: completed, setValue: setCompleted } = useUnit(increasedScholarshipModel.fields.completed)
+    const user = useUnit(userModel.stores.user)
     const [
         loading,
         sendForm,
@@ -438,6 +455,7 @@ function Submit() {
         gtoGoldBadgeCheck,
 
         files,
+        bankDetails,
         criteria,
     ] = useUnit([
         increasedScholarshipModel.stores.loading,
@@ -463,26 +481,56 @@ function Submit() {
         increasedScholarshipModel.fields.sportsParticipationCheck.value,
         increasedScholarshipModel.fields.gtoGoldBadgeCheck.value,
         increasedScholarshipModel.fields.files.value,
+        increasedScholarshipModel.fields.bankDetails.value,
         increasedScholarshipModel.fields.criteria.value,
     ])
-    const [confirmed, setConfirmed] = useState(false)
+
+    const [dataConfirmed, setDataConfirmed] = useState(false)
+    const [persDataConfirmed, setPersDataConfirmed] = useState(false)
+    const [provisionConfirmed, setProvisionConfirmed] = useState(false)
     const isDone = completed ?? false
     return (
         <>
-            <FileLink
-                title="Порядок подачи"
-                link="https://e.mospolytech.ru/old/storage/files/Poryadok_priema_dokumentov_PGAS.pdf"
-                type="document"
-            />
-            <FileLink
-                title="Положение"
-                link="https://e.mospolytech.ru/old/storage/files/Polozhenie_o_Stipendii_Moskovskogo_Politeha_platnoe.pdf"
-                type="document"
+            <Checkbox
+                checked={dataConfirmed}
+                setChecked={setDataConfirmed}
+                text="Подтверждаю достоверность указанных мной сведений"
             />
             <Checkbox
-                checked={confirmed}
-                setChecked={setConfirmed}
-                text={'С Порядком подачи и Положением ознакомлен'}
+                checked={persDataConfirmed}
+                setChecked={setPersDataConfirmed}
+                text="Даю согласие на обработку персональных данных в соответствии с Федеральным законом «О персональных данных» от 27.07.2006 N 152-ФЗ"
+            />
+            <Checkbox
+                checked={provisionConfirmed}
+                setChecked={setProvisionConfirmed}
+                text={
+                    user?.finance === 'Бюджетное' ? (
+                        <>
+                            С{' '}
+                            <a
+                                href="https://e.mospolytech.ru/old/storage/files/Poryadok_priema_dokumentov_PGAS.pdf"
+                                target="_blank"
+                                rel="noreferrer"
+                            >
+                                Порядком
+                            </a>{' '}
+                            приема документов на ПГАС ознакомлен
+                        </>
+                    ) : (
+                        <>
+                            С{' '}
+                            <a
+                                href="https://e.mospolytech.ru/old/storage/files/Polozhenie_o_Stipendii_Moskovskogo_Politeha_platnoe.pdf"
+                                target="_blank"
+                                rel="noreferrer"
+                            >
+                                Положением
+                            </a>{' '}
+                            о стипендии Московского Политеха ознакомлен(а)
+                        </>
+                    )
+                }
             />
             <SubmitButton
                 text={!isDone ? 'Отправить' : 'Отправлено'}
@@ -516,7 +564,7 @@ function Submit() {
                             'sports-participation-check': sportsParticipationCheck,
                             'gto-gold-badge-check': gtoGoldBadgeCheck,
 
-                            ...parseFilesToFormData(files),
+                            ...parseFilesToFormData([...files, ...bankDetails]),
                         },
                     })
                 }}
@@ -527,9 +575,17 @@ function Submit() {
                 buttonSuccessText="Отправлено"
                 isDone={isDone}
                 isActive={
-                    confirmed && !!tel && !!typeOfActivity && !!listOfAchievements && !!files.length && !!criteria
+                    dataConfirmed &&
+                    provisionConfirmed &&
+                    persDataConfirmed &&
+                    !!tel &&
+                    !!typeOfActivity &&
+                    !!listOfAchievements &&
+                    !!files.length &&
+                    (!user?.finance || user.finance === 'Бюджетное' || !!bankDetails.length) &&
+                    !!criteria
                 }
-                popUpFailureMessage={'Для отправки формы необходимо, чтобы все поля были заполнены'}
+                popUpFailureMessage="Для отправки формы необходимо, чтобы все поля были заполнены"
                 popUpSuccessMessage="Данные формы успешно отправлены"
             />
         </>

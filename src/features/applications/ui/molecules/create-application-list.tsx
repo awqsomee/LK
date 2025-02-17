@@ -109,12 +109,12 @@ const CreateApplicationList = ({ isTeachers = false, currentFormEducation, curre
     const {
         data: { user },
     } = userModel.selectors.useUser()
-    const sections: Section[] = (isTeachers && user ? getTeachersSectionLinks(user) : getSectionLinks()).map(
-        (section) => {
-            const links = section.links.filter((link) => !link.disabled)
-            return { ...section, links }
-        },
-    )
+    const sections: Section[] = (
+        isTeachers && user ? getTeachersSectionLinks(user) : getSectionLinks({ studentFinance: user?.finance })
+    ).map((section) => {
+        const links = section.links.filter((link) => !link.disabled)
+        return { ...section, links }
+    })
     const [search, setSearch] = useState<string>('')
 
     const [foundSections, setFoundSections] = useState<Section[] | null>(sections)
