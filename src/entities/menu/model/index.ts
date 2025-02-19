@@ -118,7 +118,7 @@ const $leftSidebar = combine(
                       ...filterTeachersPrivateRoutes(adminLinks.data, allowancesRoles),
                       ...employeeHiddenRoutes({ allowancesRoles }),
                   }
-                : { ...studentRoutes(), ...studentHiddenRoutes() },
+                : { ...studentRoutes(), ...studentHiddenRoutes({ studentFinance: user.finance }) },
         )
     },
 )
@@ -138,7 +138,7 @@ const $homeRoutes = combine(
                       ...filterTeachersPrivateRoutes(adminLinks.data, allowancesRoles),
                       ...employeeHiddenRoutes({ allowancesRoles }),
                   }
-                : { ...studentRoutes(), ...studentHiddenRoutes() },
+                : { ...studentRoutes(), ...studentHiddenRoutes({ studentFinance: user.finance }) },
         )
     },
 )
@@ -186,7 +186,7 @@ const $menu = createStore<Menu>(DEFAULT_STORE)
                       ...filterTeachersPrivateRoutes(adminLinks, allowancesRoles),
                       ...employeeHiddenRoutes({ allowancesRoles }),
                   }
-                : { ...studentRoutes(), ...studentHiddenRoutes() },
+                : { ...studentRoutes(), ...studentHiddenRoutes({ studentFinance: user?.finance }) },
         visibleRoutes:
             user?.user_status === 'staff' ? filterTeachersPrivateRoutes(adminLinks, allowancesRoles) : studentRoutes(),
     }))

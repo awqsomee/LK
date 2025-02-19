@@ -23,14 +23,13 @@ const listOfAchievements = createInputField({ reset: pageMounted })
 const consecutiveExcellentGradesCheck = createCheckboxField({ reset: [pageMounted, typeOfActivity.value] })
 const projectAwardCheck = createCheckboxField({ reset: [pageMounted, typeOfActivity.value] })
 const academicCompetitionWinnerCheck = createCheckboxField({ reset: [pageMounted, typeOfActivity.value] })
-const consecutiveExcellentAssessmentsCheck = createCheckboxField({ reset: [pageMounted, typeOfActivity.value] })
-const consecutiveExcellentAssessmentsAmount = createInputField({ reset: [pageMounted, typeOfActivity.value] })
 
 const researchAwardOrGrantCheck = createCheckboxField({ reset: [pageMounted, typeOfActivity.value] })
 const scientificPublicationCheck = createCheckboxField({ reset: [pageMounted, typeOfActivity.value] })
 
 const participationCheck = createCheckboxField({ reset: [pageMounted, typeOfActivity.value] })
 const infoSupportCheck = createCheckboxField({ reset: [pageMounted, typeOfActivity.value] })
+const youthParticipationCheck = createCheckboxField({ reset: [pageMounted, typeOfActivity.value] })
 
 const culturalCreativeAwardCheck = createCheckboxField({ reset: [pageMounted, typeOfActivity.value] })
 const publicWorkPresentationCheck = createCheckboxField({ reset: [pageMounted, typeOfActivity.value] })
@@ -41,8 +40,8 @@ const sportsParticipationCheck = createCheckboxField({ reset: [pageMounted, type
 const gtoGoldBadgeCheck = createCheckboxField({ reset: [pageMounted, typeOfActivity.value] })
 
 const files = createFilesField({ reset: pageMounted })
+const bankDetails = createFilesField({ reset: pageMounted })
 const criteria = createCheckboxField({ reset: [pageMounted, typeOfActivity.value] })
-const consecutiveExcellentAssessmentsFilledOut = createCheckboxField({ reset: [pageMounted, typeOfActivity.value] })
 const completed = createCheckboxField({ reset: pageMounted })
 
 const sendFormMutation = createMutation({
@@ -83,21 +82,13 @@ sample({
 })
 
 sample({
-    clock: [consecutiveExcellentAssessmentsCheck.setValue, consecutiveExcellentAssessmentsAmount.setValue],
-    source: [consecutiveExcellentAssessmentsCheck.value, consecutiveExcellentAssessmentsAmount.value],
-    fn: (consecutiveExcellentAssessments) => consecutiveExcellentAssessments.every((item) => !!item),
-    target: consecutiveExcellentAssessmentsFilledOut.setValue,
-})
-
-sample({
     clock: [
         consecutiveExcellentGradesCheck.setValue,
         projectAwardCheck.setValue,
         academicCompetitionWinnerCheck.setValue,
-        consecutiveExcellentAssessmentsCheck.setValue,
-        consecutiveExcellentAssessmentsAmount.setValue,
         participationCheck.setValue,
         infoSupportCheck.setValue,
+        youthParticipationCheck.setValue,
         culturalCreativeAwardCheck.setValue,
         publicWorkPresentationCheck.setValue,
         publicCulturalActivityCheck.setValue,
@@ -111,7 +102,6 @@ sample({
         consecutiveExcellentGradesCheck.value,
         projectAwardCheck.value,
         academicCompetitionWinnerCheck.value,
-        consecutiveExcellentAssessmentsFilledOut.value,
         participationCheck.value,
         infoSupportCheck.value,
         culturalCreativeAwardCheck.value,
@@ -160,10 +150,9 @@ export const fields = {
     consecutiveExcellentGradesCheck,
     projectAwardCheck,
     academicCompetitionWinnerCheck,
-    consecutiveExcellentAssessmentsCheck,
-    consecutiveExcellentAssessmentsAmount,
     participationCheck,
     infoSupportCheck,
+    youthParticipationCheck,
     culturalCreativeAwardCheck,
     publicWorkPresentationCheck,
     publicCulturalActivityCheck,
@@ -173,6 +162,7 @@ export const fields = {
     sportsParticipationCheck,
     gtoGoldBadgeCheck,
     files,
+    bankDetails,
 
     criteria,
     completed,

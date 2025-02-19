@@ -15,12 +15,12 @@ export const $allRoutes = createStore<IRoutes | null>(null)
 
 sample({
     clock: userModel.stores.user,
-    source: { allowancesRoles: userModel.stores.roles, userRoles: userModel.stores.userRole },
-    fn: ({ allowancesRoles, userRoles }) => ({
+    source: { allowancesRoles: userModel.stores.roles, user: userModel.stores.user },
+    fn: ({ allowancesRoles, user }) => ({
         ...generalRoutes,
         ...generalHiddenRoutes,
-        ...(userRoles === 'stud'
-            ? { ...studentRoutes(), ...studentHiddenRoutes() }
+        ...(user?.user_status === 'stud'
+            ? { ...studentRoutes(), ...studentHiddenRoutes({ studentFinance: user.finance }) }
             : { ...employeeRoutes({ allowancesRoles }), ...employeeHiddenRoutes({ allowancesRoles }) }),
     }),
     target: $allRoutes,

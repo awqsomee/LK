@@ -4,6 +4,7 @@ import { FaRegLightbulb } from 'react-icons/fa6'
 import { FiBriefcase, FiFileText } from 'react-icons/fi'
 import { MdOutlineBedroomChild } from 'react-icons/md'
 
+import { StudentAccount } from '@shared/api/model'
 import { isProduction } from '@shared/consts'
 
 import { IRoutes } from '../consts'
@@ -186,7 +187,11 @@ export const studentRoutes: () => IRoutes = () => ({
     },
 })
 
-export const studentHiddenRoutes: () => IRoutes = () => ({
+export const studentHiddenRoutes: ({ studentFinance }: { studentFinance: StudentAccount['finance'] }) => IRoutes = ({
+    studentFinance,
+}: {
+    studentFinance: StudentAccount['finance']
+}) => ({
     ...generalHiddenRoutes,
     'student-employment-type': {
         id: 'student-employment-type',
@@ -522,7 +527,10 @@ export const studentHiddenRoutes: () => IRoutes = () => ({
     },
     'increased-state-academic-scholarship': {
         id: 'increased-state-academic-scholarship',
-        title: 'Отправка документов на получение стипендии Московского Политеха',
+        title:
+            studentFinance === 'С оплатой обучения'
+                ? 'Конкурс на назначение стипендии Московского Политеха'
+                : 'Конкурс на назначение повышенной государственной академической стипендии',
         icon: BiIdCard,
         path: INCREASED_STATE_ACADEMIC_SCHOLARSHIP,
         color: 'blue',

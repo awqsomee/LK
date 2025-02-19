@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { ReactNode } from 'react'
 import { FiCheck } from 'react-icons/fi'
 
 import { CheckboxSquare, CheckboxWrapper } from './styles'
@@ -7,7 +7,7 @@ export interface CheckboxProps {
     checked: boolean
     setChecked: (value: boolean) => void
     invisibleOnFalse?: boolean
-    text?: string
+    text?: ReactNode
     isActive?: boolean
     visible?: boolean
     fontSize?: string

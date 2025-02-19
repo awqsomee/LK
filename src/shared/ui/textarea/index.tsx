@@ -1,10 +1,10 @@
-import React from 'react'
+import React, { TextareaHTMLAttributes } from 'react'
 
 import { Title } from '@shared/ui/title'
 
 import { TextAreaWrapper } from './styles'
 
-export type TextAreaProps = {
+export type TextAreaProps = TextareaHTMLAttributes<HTMLTextAreaElement> & {
     value: string
     setValue: (value: string) => void
     isActive?: boolean
@@ -23,6 +23,7 @@ export function TextArea(props: TextAreaProps) {
                 {title}
             </Title>
             <textarea
+                {...props}
                 onChange={(e) => setValue(e.target.value)}
                 placeholder={placeholder}
                 required={required}

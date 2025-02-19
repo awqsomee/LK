@@ -1,5 +1,6 @@
 import { Section } from '@features/applications/ui/molecules/create-application-list'
 
+import { StudentAccount } from '@shared/api/model'
 import { RECEPTION_COMMISSION, UNION_ORGANIZATION, isProduction } from '@shared/consts'
 import {
     ACADEMIC_LEAVE_ACCOMMODATION,
@@ -44,7 +45,7 @@ import {
     TERMINATION_OF_EMPLOYMENT_CONTRACT,
 } from '@shared/routing'
 
-const getSectionLinks = (): Section[] => {
+const getSectionLinks = ({ studentFinance }: { studentFinance: StudentAccount['finance'] }): Section[] => {
     const additionalHeaderClosedService = isProduction ? ' (Сервис временно недоступен)' : ''
     return [
         {
@@ -145,7 +146,10 @@ const getSectionLinks = (): Section[] => {
                 { link: SOCIAL_SCOLLARSHIP, title: 'Оформить социальную стипендию' },
                 {
                     link: INCREASED_STATE_ACADEMIC_SCHOLARSHIP,
-                    title: 'Отправка документов на получение стипендии Московского Политеха',
+                    title:
+                        studentFinance === 'С оплатой обучения'
+                            ? 'Конкурс на назначение стипендии Московского Политеха'
+                            : 'Конкурс на назначение повышенной государственной академической стипендии',
                     exceptionalFormEducationList: ['Очно-заочная', 'Заочная'],
                     exceptionalDegreeLevelList: ['Аспирантура'],
                 },
