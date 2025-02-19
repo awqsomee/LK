@@ -147,9 +147,9 @@ const getSectionLinks = ({ studentFinance }: { studentFinance: StudentAccount['f
                 {
                     link: INCREASED_STATE_ACADEMIC_SCHOLARSHIP,
                     title:
-                        studentFinance === 'Бюджетное'
-                            ? 'Конкурс на назначение повышенной государственной академической стипендии'
-                            : 'Конкурс на назначение стипендии Московского Политеха',
+                        studentFinance === 'С оплатой обучения'
+                            ? 'Конкурс на назначение стипендии Московского Политеха'
+                            : 'Конкурс на назначение повышенной государственной академической стипендии',
                     exceptionalFormEducationList: ['Очно-заочная', 'Заочная'],
                     exceptionalDegreeLevelList: ['Аспирантура'],
                 },

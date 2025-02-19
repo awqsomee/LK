@@ -1,4 +1,4 @@
-import { User } from '@shared/api/session/user'
+import { Finance, User } from '@shared/api/session/user'
 
 import { divisionT } from './hr-applications'
 
@@ -74,7 +74,7 @@ export interface UserApplication extends User {
     specialty_code: string
     specialty_name: string
     specialization: string
-    finance: string
+    finance: Finance
     degreeLevel: string
     enterYear: string
     group: string

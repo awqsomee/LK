@@ -413,7 +413,7 @@ function BankDetails() {
     const { value, setValue } = useUnit(increasedScholarshipModel.fields.bankDetails)
 
     const user = useUnit(userModel.stores.user)
-    if (!user?.finance || user.finance === 'Бюджетное') return null
+    if (user?.finance !== 'С оплатой обучения') return null
 
     return (
         <Flex d="column" gap="0.5rem">
@@ -511,19 +511,7 @@ function Submit() {
                 checked={provisionConfirmed}
                 setChecked={setProvisionConfirmed}
                 text={
-                    user?.finance === 'Бюджетное' ? (
-                        <>
-                            С{' '}
-                            <a
-                                href="https://e.mospolytech.ru/old/storage/files/Poryadok_priema_dokumentov_PGAS.pdf"
-                                target="_blank"
-                                rel="noreferrer"
-                            >
-                                Порядком
-                            </a>{' '}
-                            приема документов на ПГАС ознакомлен
-                        </>
-                    ) : (
+                    user?.finance === 'С оплатой обучения' ? (
                         <>
                             С{' '}
                             <a
@@ -534,6 +522,18 @@ function Submit() {
                                 Положением
                             </a>{' '}
                             о стипендии Московского Политеха ознакомлен(а)
+                        </>
+                    ) : (
+                        <>
+                            С{' '}
+                            <a
+                                href="https://e.mospolytech.ru/old/storage/files/Poryadok_priema_dokumentov_PGAS.pdf"
+                                target="_blank"
+                                rel="noreferrer"
+                            >
+                                Порядком
+                            </a>{' '}
+                            приема документов на ПГАС ознакомлен
                         </>
                     )
                 }
@@ -587,7 +587,7 @@ function Submit() {
                     !!typeOfActivity &&
                     !!listOfAchievements &&
                     !!files.length &&
-                    (!user?.finance || user.finance === 'Бюджетное' || !!bankDetails.length) &&
+                    (user?.finance !== 'С оплатой обучения' || !!bankDetails.length) &&
                     !!criteria
                 }
                 popUpFailureMessage="Для отправки формы необходимо, чтобы все поля были заполнены"

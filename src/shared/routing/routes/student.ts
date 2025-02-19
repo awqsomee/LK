@@ -528,9 +528,9 @@ export const studentHiddenRoutes: ({ studentFinance }: { studentFinance: Student
     'increased-state-academic-scholarship': {
         id: 'increased-state-academic-scholarship',
         title:
-            studentFinance === 'Бюджетное'
-                ? 'Конкурс на назначение повышенной государственной академической стипендии'
-                : 'Конкурс на назначение стипендии Московского Политеха',
+            studentFinance === 'С оплатой обучения'
+                ? 'Конкурс на назначение стипендии Московского Политеха'
+                : 'Конкурс на назначение повышенной государственной академической стипендии',
         icon: BiIdCard,
         path: INCREASED_STATE_ACADEMIC_SCHOLARSHIP,
         color: 'blue',

@@ -15,13 +15,14 @@ type GeneralAccountFields = {
     fio: string
     avatar: string
 }
+export type Finance = 'Бюджетная' | 'С оплатой обучения' | 'Целевой прием'
 
 export type StudentAccount = {
     status?: string
     group?: string
     course?: string
     educationForm?: EducationFormT
-    finance?: string
+    finance?: Finance
     vacation_start?: string
     vacation_end?: string
     degreeLevel?: string
