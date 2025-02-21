@@ -19,10 +19,10 @@ import { Title } from '@shared/ui/title'
 
 const currentYear = new Date().getFullYear()
 function getYears(): SelectPage[] {
-    const startYear = 2007
+    const startYear = 2006
     return Array.from({ length: currentYear - startYear }, (_, index) => ({
         id: index,
-        title: (currentYear - 1 - index).toString(),
+        title: (currentYear - index).toString(),
     }))
 }
 const years = getYears()
