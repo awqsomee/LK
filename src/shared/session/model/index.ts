@@ -155,7 +155,7 @@ sample({
 
 reset({
     clock: getUserFx.done,
-    target: [$isAuthenticated, $error, $savePassword],
+    target: [$error, $savePassword],
 })
 
 sample({
@@ -177,6 +177,12 @@ sample({
 })
 
 //getUserTokenFx
+sample({
+    clock: getUserTokenFx.doneData,
+    fn: ({ token }) => !!token,
+    target: [$isAuthenticated],
+})
+
 sample({
     clock: getUserTokenFx.failData,
     fn: (error) => error.message,
