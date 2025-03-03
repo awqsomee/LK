@@ -21,6 +21,7 @@ import {
 } from '@shared/routing'
 
 import {
+    AdminCompetenceCenter,
     AllowanceInfo,
     Allowances,
     Article,
@@ -164,6 +165,7 @@ export const employeePages = {
         }, [])
         return null
     },
+    'competence-center': AdminCompetenceCenter,
 }
 
 export const employeeHiddenPages = {

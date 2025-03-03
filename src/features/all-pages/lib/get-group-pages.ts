@@ -8,8 +8,9 @@ export const routesOrder: RoutesOrder = {
     'Кадровая среда': 1,
     'Учебная деятельность': 2,
     Коммуникация: 3,
-    'Научная деятельность': 4,
-    'Находится в разработке': 5,
+    'Центр компетенций': 4,
+    'Научная деятельность': 5,
+    'Находится в разработке': 6,
 }
 
 const getGroupPages = (routes: IRoutes | null, peTeacher: PETeacher | null, userGuid: string | null) => {

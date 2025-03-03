@@ -5,6 +5,7 @@ export const JOB_ROUTE = '/job'
 export const APPLICATION_FOR_SUPERIOR_ROOM_ROUTE = '/application-for-superior-room'
 export const ACAD_PERFORMANCE_ROUTE = '/acad-performance'
 export const STUDENT_EMPLOYMENT_ROUTE = '/student-employment'
+export const COMPETENCE_CENTER_LIST = '/competence-center-list'
 
 //hidden routes
 export const CLARIFICATION_OF_PASSPORT_DATA_ROUTE = APPLICATIONS_ROUTE + '/clarification-of-passport-data'
@@ -54,3 +55,5 @@ export const STUDENT_EMPLOYMENT = STUDENT_EMPLOYMENT_ROUTE + '/employment'
 
 export const TAX_CERTIFICATES_ROUTE = '/tax-certificates'
 export const TAX_CERTIFICATE_ROUTE = '/tax-certificates/:id'
+
+export const COMPETENCE_CENTER_FORM = '/competence-center-form'

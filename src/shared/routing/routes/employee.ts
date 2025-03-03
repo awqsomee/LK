@@ -39,6 +39,7 @@ import {
     CERTIFICATION_AND_ISSUANCE_OF_DOCS,
     CERTIFIED_COPIES_OF_MILITARY_DOCS,
     CHILDREN_ROUTE,
+    COMPETENCE_CENTER,
     CONNECTING_COMPUTER,
     CONTACT_DETAILS,
     CONTACT_DETAILS_FORM,
@@ -450,6 +451,16 @@ export const employeeRoutes: (params: { allowancesRoles: Role[] }) => IRoutes = 
         isTemplate: false,
         group: 'FINANCES_DOCS',
         withoutHeader: true,
+    },
+    'competence-center': {
+        id: 'competence-center',
+        title: 'Новые заявки',
+        icon: RiPassValidLine,
+        path: COMPETENCE_CENTER,
+        color: 'orange',
+        isTemplate: false,
+        pageSize: 'big',
+        group: 'COMPETENCE_CENTER',
     },
 })
 

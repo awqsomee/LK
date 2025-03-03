@@ -3,6 +3,7 @@ import { BsFileMedical } from 'react-icons/bs'
 import { FaRegLightbulb } from 'react-icons/fa6'
 import { FiBriefcase, FiFileText } from 'react-icons/fi'
 import { MdOutlineBedroomChild } from 'react-icons/md'
+import { RiPassValidLine } from 'react-icons/ri'
 
 import { StudentAccount } from '@shared/api/model'
 import { isProduction } from '@shared/consts'
@@ -20,6 +21,8 @@ import {
     CERTIFICATE_OF_ATTENDANCE,
     CHANGING_PERSONAL_DATA,
     CLARIFICATION_OF_PASSPORT_DATA_ROUTE,
+    COMPETENCE_CENTER_FORM,
+    COMPETENCE_CENTER_LIST,
     DORMITORY,
     EXIT_ACADEMIC_LEAVE,
     EXTENSION_ATTESTATION,
@@ -110,9 +113,19 @@ export const studentRoutes: () => IRoutes = () => ({
         color: 'orange',
         isTemplate: true,
         show: true,
-        group: 'LEARNING_ACTIVITIES',
+        group: 'COMPETENCE_CENTER',
         isExternal: true,
         keywords: ['рсв', 'россия страна возможностей', 'софтскиллс', 'навыки'],
+    },
+    'competence-center-list': {
+        id: 'competence-center-list',
+        title: 'Заявки Центру компетенций',
+        icon: RiPassValidLine,
+        path: COMPETENCE_CENTER_LIST,
+        color: 'orange',
+        isTemplate: false,
+        pageSize: 'big',
+        group: 'COMPETENCE_CENTER',
     },
     'acad-performance': {
         id: 'acad-performance',
@@ -723,6 +736,19 @@ export const studentHiddenRoutes: ({ studentFinance }: { studentFinance: Student
         fallbackPrevPage: TAX_CERTIFICATES_ROUTE,
         isNew: true,
         pageSize: 'big',
+        hiddenTitle: true,
+    },
+    'competence-center-form': {
+        id: 'competence-center-form',
+        title: 'Мои заявления',
+        icon: RiPassValidLine,
+        path: COMPETENCE_CENTER_FORM,
+        color: 'orange',
+        isTemplate: false,
+        isSubPage: true,
+        backButtonText: 'Назад к заявкам',
+        fallbackPrevPage: COMPETENCE_CENTER_LIST,
+        group: 'COMPETENCE_CENTER',
         hiddenTitle: true,
     },
 })
