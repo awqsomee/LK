@@ -128,3 +128,6 @@ export const StudentEmploymentApplicationPage = lazy(() => import('@pages/applic
 
 export const TaxCertificatesPage = lazy(() => import('@pages/payments/tax-certificate'))
 export const TaxCertificatePage = lazy(() => import('@pages/payments/tax-certificate/tax-certificate'))
+
+export const CompetenceCenterList = lazy(() => import('@pages/competence-center/list'))
+export const CompetenceCenterForm = lazy(() => import('@pages/competence-center/form'))

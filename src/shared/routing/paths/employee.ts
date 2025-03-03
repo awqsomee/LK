@@ -44,6 +44,7 @@ export const ARTICLE = '/articles/:id'
 export const OPEN_PUBLICATION = '/open-publication'
 export const EXPORT_CONTROL = '/export-control'
 export const KEDO_ROUTE = '/kedo'
+export const COMPETENCE_CENTER = '/competence-center'
 
 //hidden routes
 export const PHYSICAL_EDUCATION_STUDENT_ID = '/physical-education/student/:studentId'
