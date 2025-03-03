@@ -1,7 +1,7 @@
 import { User } from '@shared/api/model'
 import { EndDateSuperiorRoom, StartDateSuperiorRoom } from '@shared/routing/routes/student'
 
-export const superiorRoomAlert = 'Подача заявок открыта с 12:00 26 июня до 12:00 28 июня!'
+export const superiorRoomAlert = 'Подача заявок открыта с 12:00 4 марта до 12:00 9 марта!'
 
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
 export const getStatusFormSuperiorRoom = (user: User) => {
