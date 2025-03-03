@@ -9,11 +9,12 @@ import Flex from '@shared/ui/flex'
 import LinkImageBlock from './link-image-block'
 
 const SubjectPlaceBlockWrapper = styled.div`
-    ${MEDIA_QUERIES.isNotMobile} {
-        width: 500px;
+    width: 500px;
+
+    ${MEDIA_QUERIES.isTablet} {
+        width: auto;
     }
 
-    height: 200px;
     margin: 10px 0 10px 0;
     overflow: hidden;
     display: flex;
@@ -72,7 +73,7 @@ const SubjectPlaceBlock = ({ place, link, name }: Props) => {
             ) : place === 'Webinar' ? (
                 <LinkImageBlock title={place} link={link} image={'https://apix-drive.com/ru/img/webinar_ru.png'} />
             ) : place === 'Прянишникова' ? (
-                <div style={{ position: 'relative', overflow: 'hidden' }}>
+                <div style={{ position: 'relative', overflow: 'hidden', width: '100%' }}>
                     <a
                         href="https://yandex.ru/maps/213/moscow/?utm_medium=mapframe&utm_source=maps"
                         style={{ color: '#eee', fontSize: '12px', position: 'absolute', top: '0px' }}
@@ -87,7 +88,7 @@ const SubjectPlaceBlock = ({ place, link, name }: Props) => {
                     </a>
                     <iframe
                         src="https://yandex.ru/map-widget/v1/-/CCUBAPA0PC"
-                        width="560"
+                        width="100%"
                         height="400"
                         frameBorder="1"
                         allowFullScreen={true}

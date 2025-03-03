@@ -15,7 +15,7 @@ export const EventBackgroundStyled = styled.div<{ background: string; noPadding:
     z-index: -1;
     overflow: hidden;
 
-    ${MEDIA_QUERIES.isMobile} {
+    ${MEDIA_QUERIES.isTablet} {
         width: calc(100% + 40px);
     }
 `
