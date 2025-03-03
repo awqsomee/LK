@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react'
 import { FiInfo } from 'react-icons/fi'
+import { Link } from 'react-router-dom'
 
 import styled from 'styled-components'
 
@@ -8,6 +9,7 @@ import checkFormFields from '@features/send-form/check-form-fields'
 import { superiorRoomModel } from '@entities/superior-room'
 
 import { isProduction } from '@shared/consts'
+import { DORMITORY } from '@shared/routing'
 import { userModel } from '@shared/session'
 import { Error, FormBlock, Message, SubmitButton, Wrapper } from '@shared/ui/atoms'
 import InputArea from '@shared/ui/input-area'
@@ -20,7 +22,6 @@ import sendForm from './lib/send-form'
 
 const ApplicationForSuperiorRoomWrapper = styled.div<{ isDone: boolean }>`
     display: flex;
-    align-items: ${({ isDone }) => (isDone ? 'center' : 'flex-start')};
     justify-content: center;
     width: 100%;
     height: ${({ isDone }) => isDone && '100%'};
@@ -75,9 +76,11 @@ const ApplicationForSuperiorRoom = () => {
                     <FormBlock>
                         <InputArea {...form} collapsed={isDone} setData={setForm as LoadedState} />
                         <Message title="Информация по заявке" type="info" icon={<FiInfo />} visible={isDone}>
-                            Ваша заявка направлена на рассмотрение жилищной комиссии. Итоги рассмотрения будут
-                            направлены Вам 11 сентября 2023 года на указанную в заявке почту:{' '}
-                            {(form.data?.[2] as IInputAreaData).value?.toString()}
+                            <p>
+                                С результатами распределения мест и датой заселения можно будет ознакомиться в Личном
+                                кабинете в разделе <Link to={DORMITORY}>«Список нуждающихся в общежитии»</Link> - «Итоги
+                                конкурса КПК» 14 марта.
+                            </p>
                         </Message>
                         <SubmitButton
                             text={data?.is_avaliable ? 'Отправить' : 'Отправлено'}
