@@ -16,13 +16,22 @@ const bgAllocationTypes = [
     { id: 2, title: 'Трое в комнате' },
 ]
 
-const dormLocations = [
-    { id: 0, title: 'ул. Бориса Галушкина, д. 9' },
-    { id: 1, title: 'ул. Михалковская, д. 7, корп. 3' },
-    { id: 2, title: 'ул. Малая Семеновская, д. 12' },
+const msAllocationTypes = [
+    { id: 0, title: 'Один в комнате' },
+    { id: 1, title: 'Двое в комнате' },
+    { id: 2, title: 'Трое в комнате' },
 ]
 
-const extracurricularActivities: CheckboxDocs[] = [
+const pkAllocationTypes = [{ id: 2, title: 'Трое в комнате' }]
+
+export const dormLocations = [
+    { id: 'bs', title: 'ул. Бориса Галушкина, д. 9' },
+    { id: 'm', title: 'ул. Михалковская, д. 7, корп. 3' },
+    { id: 'ms', title: 'ул. Малая Семеновская, д. 12' },
+    { id: 'pk', title: 'ул. Павла Корчагина, д. 22, к.2' },
+]
+
+export const extracurricularActivities: CheckboxDocs[] = [
     {
         value: false,
         title: 'Общественная',
@@ -108,9 +117,16 @@ const getForm = (data: SuperiorRoom, form: IInputArea | null): IInputArea => {
                 value: null,
                 fieldName: 'allocation',
                 type: 'select',
-                items: dormId === 0 ? bgAllocationTypes : mAllocationTypes,
+                items:
+                    dormId === 'bg'
+                        ? bgAllocationTypes
+                        : dormId === 'pk'
+                          ? pkAllocationTypes
+                          : dormId === 'ms'
+                            ? msAllocationTypes
+                            : mAllocationTypes,
                 width: '100%',
-                editable: true,
+                editable: !!dormId,
                 required: true,
             },
             {
@@ -118,9 +134,16 @@ const getForm = (data: SuperiorRoom, form: IInputArea | null): IInputArea => {
                 value: null,
                 fieldName: 'alternative-allocation',
                 type: 'select',
-                items: dormId === 0 ? bgAllocationTypes : mAllocationTypes,
+                items:
+                    dormId === 'bg'
+                        ? bgAllocationTypes
+                        : dormId === 'pk'
+                          ? pkAllocationTypes
+                          : dormId === 'ms'
+                            ? msAllocationTypes
+                            : mAllocationTypes,
                 width: '100%',
-                editable: true,
+                editable: !!dormId,
                 required: true,
             },
             // {
@@ -151,28 +174,24 @@ const getForm = (data: SuperiorRoom, form: IInputArea | null): IInputArea => {
         alert: <>{superiorRoomAlert}</>,
         hint: 'Перед отправкой заявки обязательно проверьте указанную в форме контактную информацию (мобильный телефон и адрес электронной почты) и при необходимости внесите изменения.',
         optionalCheckbox: {
-            title: `С приказами об изменении размеров платы за дополнительные услуги № 0597-ОД от 08.06.2021 и № 0032-АХД от 09.03.2022 ознакомлен(а)`,
+            title: (
+                <>
+                    С{' '}
+                    <a
+                        href="https://mospolytech.ru/upload/medialibrary/dcd/aj5km0q67pkjw737j8g5hynmz2dfhlxb/Prikaz-_1564_OD-ot-28.12.2024-Ob-utverzhdenii-razmerov-platy-za-dopolnitelnuyu-uslugu.pdf"
+                        target="_blank"
+                        rel="noreferrer"
+                    >
+                        приказом
+                    </a>{' '}
+                    об утверждении размеров платы за дополнительную услугу в студенческом городке от 28.12.2024 N1564-ОД
+                    ознакомлен(а)
+                </>
+            ),
             value: false,
             fieldName: '',
             editable: true,
         },
-        links: [
-            {
-                title: 'Приказ № 0032-АХД от 09.03.2022 (ул. Михалковская, д. 7, корп. 3)',
-                link: 'https://e.mospolytech.ru/old/storage/files/Prikaz_po_osnovnoj_deyatelnosti_No_0032-AHD_ot_09_03_2022_Ob_utverzhdenii_razmerov_platy_za_dopolnitelnye_us.pdf',
-                type: 'document',
-            },
-            {
-                title: 'Приказ № 0597-ОД от 08.06.2021 (ул. Малая Семеновская, д. 12)',
-                link: 'https://e.mospolytech.ru/old/storage/files/Prikaz_po_osnovnoj_deyatelnosti_No_0597-OD_ot_08_06_2021_Ob_utverzhdenii_razmerov_platy_za_dopolnitelnye_usl.pdf',
-                type: 'document',
-            },
-            {
-                title: 'Приказ № 15-АХД от 10.10.2023 (ул. Бориса Галушкина, д. 9)',
-                link: 'https://mospolytech.ru/upload/medialibrary/5d3/k1eyzf9xk6x6rgi8hq1l83fcz941ve94/razmer-platy-za-dopuslugu-10102023.PDF',
-                type: 'document',
-            },
-        ],
     }
 }
 
