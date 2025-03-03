@@ -94,7 +94,7 @@ export const studentRoutes: () => IRoutes = () => ({
     },
     dormitory: {
         id: 'dormitory',
-        title: 'Список ожидания на заселение в общежитие',
+        title: 'Список нуждающихся в общежитии',
         icon: MdOutlineBedroomChild,
         path: DORMITORY,
         color: 'blue',
