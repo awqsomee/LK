@@ -3,10 +3,12 @@ import { FiPlus } from 'react-icons/fi'
 
 import styled from 'styled-components'
 
+import SliderPage from '@features/slider-page'
+
 import { applicationsModel } from '@entities/applications'
 
 import { Colors } from '@shared/consts'
-import { Button, Message, Title, Wrapper } from '@shared/ui/atoms'
+import { Button, Message, Wrapper } from '@shared/ui/atoms'
 import Flex from '@shared/ui/flex'
 import PageBlock from '@shared/ui/page-block'
 import Subtext from '@shared/ui/subtext'
@@ -30,59 +32,68 @@ const AdminCompetenceCenter = () => {
                     />
                 }
             >
-                <TableWrapper>
-                    <Flex jc="space-between">
-                        <Title size={3} align="left">
-                            Консультации
-                        </Title>
-                        <Subtext>Показать архивные заявки</Subtext>
-                    </Flex>
-                    <Table
-                        loading={false}
-                        columns={getConsColumns()}
-                        data={[
-                            {
-                                fio: 'Тестов Тест Тестович',
-                                date: '2022-12-12',
-                                status: 'В работе',
-                                type: 'email',
-                                phone: '',
-                                email: 'test@email.com',
-                            },
-                            {
-                                fio: 'Тестов Тест Тестович',
-                                date: '2022-12-12',
-                                status: 'Готово',
-                                type: 'phone',
-                                phone: '+7 (999) 999-99-99',
-                            },
-                        ]}
-                        maxOnPage={7}
-                    />
-                </TableWrapper>
-                <TableWrapper>
-                    <Flex jc="space-between">
-                        <Title size={3} align="left">
-                            Паспорта компетенций
-                        </Title>
-                        <Subtext>Показать архивные заявки</Subtext>
-                    </Flex>
-                    <Table
-                        loading={false}
-                        columns={getPassColumns()}
-                        data={[
-                            {
-                                fio: 'Тестов Тест Тестович',
-                                date: '2022-12-12',
-                            },
-                            {
-                                fio: 'Тестов Тест Тестович',
-                                date: '2022-12-12',
-                            },
-                        ]}
-                        maxOnPage={7}
-                    />
-                </TableWrapper>
+                <SliderPage
+                    pages={[
+                        {
+                            title: 'Консультации',
+                            content: (
+                                <TableWrapper>
+                                    <Flex jc="flex-end">
+                                        <Subtext>Показать архивные заявки</Subtext>
+                                    </Flex>
+                                    <Table
+                                        loading={false}
+                                        columns={getConsColumns()}
+                                        data={[
+                                            {
+                                                fio: 'Тестов Тест Тестович',
+                                                date: '2022-12-12',
+                                                status: 'В работе',
+                                                type: 'email',
+                                                phone: '',
+                                                email: 'test@email.com',
+                                            },
+                                            {
+                                                fio: 'Тестов Тест Тестович',
+                                                date: '2022-12-12',
+                                                status: 'Готово',
+                                                type: 'phone',
+                                                phone: '+7 (999) 999-99-99',
+                                            },
+                                        ]}
+                                        maxOnPage={7}
+                                    />
+                                </TableWrapper>
+                            ),
+                        },
+                        {
+                            title: 'Паспорта компетенций',
+                            content: (
+                                <TableWrapper>
+                                    <Flex jc="flex-end">
+                                        <Subtext>Показать архивные заявки</Subtext>
+                                    </Flex>
+                                    <Table
+                                        loading={false}
+                                        columns={getPassColumns()}
+                                        data={[
+                                            {
+                                                fio: 'Тестов Тест Тестович',
+                                                date: '2022-12-12',
+                                            },
+                                            {
+                                                fio: 'Тестов Тест Тестович',
+                                                date: '2022-12-12',
+                                            },
+                                        ]}
+                                        maxOnPage={7}
+                                    />
+                                </TableWrapper>
+                            ),
+                        },
+                    ]}
+                    appearance={false}
+                />
             </PageBlock>
         </Wrapper>
     )
