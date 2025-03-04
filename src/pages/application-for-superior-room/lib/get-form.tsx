@@ -75,6 +75,7 @@ export const extracurricularActivities: CheckboxDocs[] = [
 const getForm = (data: SuperiorRoom, form: IInputArea | null): IInputArea => {
     const { fio, phone, email } = data
     const dormId = ((form?.data[3] as IInputAreaData)?.value as SelectPage)?.id
+    const documentsAppendedValue = (form?.data[7] as IInputAreaData)?.value
     const optionalCheckboxValue = form?.optionalCheckbox?.value
     return {
         title: 'Заявка на комнату повышенной комфортности',
@@ -149,13 +150,6 @@ const getForm = (data: SuperiorRoom, form: IInputArea | null): IInputArea => {
                 editable: !!dormId,
                 required: true,
             },
-            // {
-            //     title: 'Я проживаю в комнате повышенной комфортности в настоящее время',
-            //     value: false,
-            //     fieldName: 'inSuperiorRoom',
-            //     type: 'checkbox',
-            //     editable: true,
-            // },
             {
                 title: 'Участие во внеучебной деятельности',
                 value: null,
@@ -166,14 +160,14 @@ const getForm = (data: SuperiorRoom, form: IInputArea | null): IInputArea => {
                 editable: true,
                 required: false,
             },
-            // {
-            //     title: 'Дополнительная информация',
-            //     value: (form?.data[6] as IInputAreaData)?.value ?? '',
-            //     fieldName: 'info',
-            //     type: 'textarea',
-            //     editable: true,
-            //     placeholder: 'Желание проживать с другом и т.д.',
-            // },
+            {
+                title: 'Необходимые документы приложены',
+                type: 'checkbox',
+                value: !!documentsAppendedValue,
+                fieldName: '',
+                editable: true,
+                required: true,
+            },
         ],
         alert: <>{superiorRoomAlert}</>,
         hint: 'Перед отправкой заявки обязательно проверьте указанную в форме контактную информацию (мобильный телефон и адрес электронной почты) и при необходимости внесите изменения.',
