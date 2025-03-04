@@ -39,7 +39,7 @@ export const extracurricularActivities: CheckboxDocs[] = [
         title: 'Общественная',
         files: [],
         maxFiles: 10,
-        required: false,
+        required: true,
         fieldName: 'society',
         checkboxCondition: 'straight',
     },
@@ -48,7 +48,7 @@ export const extracurricularActivities: CheckboxDocs[] = [
         title: 'Научная',
         files: [],
         maxFiles: 10,
-        required: false,
+        required: true,
         fieldName: 'science',
         checkboxCondition: 'straight',
     },
@@ -57,7 +57,7 @@ export const extracurricularActivities: CheckboxDocs[] = [
         title: 'Спортивная',
         files: [],
         maxFiles: 10,
-        required: false,
+        required: true,
         fieldName: 'sport',
         checkboxCondition: 'straight',
     },
@@ -66,7 +66,7 @@ export const extracurricularActivities: CheckboxDocs[] = [
         title: 'Творческая',
         files: [],
         maxFiles: 10,
-        required: false,
+        required: true,
         fieldName: 'creativity',
         checkboxCondition: 'straight',
     },
@@ -75,6 +75,7 @@ export const extracurricularActivities: CheckboxDocs[] = [
 const getForm = (data: SuperiorRoom, form: IInputArea | null): IInputArea => {
     const { fio, phone, email } = data
     const dormId = ((form?.data[3] as IInputAreaData)?.value as SelectPage)?.id
+    const optionalCheckboxValue = form?.optionalCheckbox?.value
     return {
         title: 'Заявка на комнату повышенной комфортности',
         data: [
@@ -163,6 +164,7 @@ const getForm = (data: SuperiorRoom, form: IInputArea | null): IInputArea => {
                 items: extracurricularActivities,
                 width: '100%',
                 editable: true,
+                required: false,
             },
             // {
             //     title: 'Дополнительная информация',
@@ -190,7 +192,7 @@ const getForm = (data: SuperiorRoom, form: IInputArea | null): IInputArea => {
                     ознакомлен(а)
                 </>
             ),
-            value: false,
+            value: !!optionalCheckboxValue,
             fieldName: '',
             editable: true,
         },
