@@ -23,8 +23,10 @@ export const DetailsModal = () => {
     return (
         <Flex d="column" gap="0.5rem" mw="calc(800px + 1rem)">
             <Flex gap="1rem" ai="flex-start" d={isMobile ? 'column' : 'row'}>
-                <Column title="Scopus" titles={details.titles.scopus} data={details.data.scopus} />
-                <Column title="WoS" titles={details.titles.wos} data={details.data.wos} />
+                {details.data.scopus && (
+                    <Column title="Scopus" titles={details.titles.scopus} data={details.data.scopus} />
+                )}
+                {details.data.wos && <Column title="WoS" titles={details.titles.wos} data={details.data.wos} />}
             </Flex>
         </Flex>
     )
