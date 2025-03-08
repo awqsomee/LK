@@ -45,6 +45,8 @@ export const OPEN_PUBLICATION = '/open-publication'
 export const EXPORT_CONTROL = '/export-control'
 export const KEDO_ROUTE = '/kedo'
 export const COMPETENCE_CENTER = '/competence-center'
+export const CC_PASSPORT_LOG = '/competence-center/passport-log'
+export const CC_COMPLETED_CONSULTATIONS = '/competence-center/completed-consultations'
 
 //hidden routes
 export const PHYSICAL_EDUCATION_STUDENT_ID = '/physical-education/student/:studentId'
