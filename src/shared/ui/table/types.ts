@@ -1,3 +1,5 @@
+import { Property } from 'csstype'
+
 import { IndexedProperties } from '@shared/consts/models/indexed-properties'
 
 import { SelectPage } from '../select'
@@ -28,7 +30,7 @@ export interface ColumnProps {
 
 export type Footer = (props: { [key: string]: any[] } | null) => IndexedProperties
 
-export interface TableProps {
+export type TableProps = {
     columns: ColumnProps[]
     columnsExtended?: ColumnProps[]
     footer?: Footer
@@ -44,4 +46,9 @@ export interface TableProps {
     }
     innerPadding?: string
     fontSize?: string
+} & TableHeaderProps
+
+export type TableHeaderProps = {
+    dimmedHeaders?: boolean
+    fw?: Property.FontWeight
 }

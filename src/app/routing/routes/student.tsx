@@ -27,6 +27,8 @@ import {
     ArbitraryRequestPage,
     ChangingPersonalData,
     ClarificationOfPassportDataApplication,
+    CompetenceCenterForm,
+    CompetenceCenterList,
     DormitoryPage,
     FamilyRoomPage,
     FinancialSupport,
@@ -78,6 +80,7 @@ export const studentPages = {
     'helpful-information': HelpfulInformation,
     'application-for-superior-room': ApplicationForSuperiorRoom,
     'all-teachers': AllTeachersPage,
+    'competence-center-list': CompetenceCenterList,
 }
 
 export const hiddenStudentPages = {
@@ -125,4 +128,5 @@ export const hiddenStudentPages = {
     'extension-attestation': ApplicationExtensionAttestation,
     'tax-certificate': TaxCertificatesPage,
     'tax-certificate-form': TaxCertificatePage,
+    'competence-center-form': CompetenceCenterForm,
 }

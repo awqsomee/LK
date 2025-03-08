@@ -32,6 +32,8 @@ const Table = ({
     pagination,
     innerPadding,
     fontSize,
+    dimmedHeaders,
+    fw,
 }: TableProps & TutorialComponent) => {
     const {
         sort,
@@ -69,6 +71,8 @@ const Table = ({
                 setFilter={setFilter}
                 tableHasSelect={Boolean(select)}
                 fontSize={fontSize}
+                dimmedHeaders={dimmedHeaders}
+                fw={fw}
             />
             <Body
                 innerPadding={innerPadding}
