@@ -37,9 +37,9 @@ const AdminCompetenceCenter = () => {
 
     return (
         <PageBlock>
-            <Flex d="column" p={isMobile ? undefined : '2.5rem 2.5rem 2.5rem 4.5rem'} gap="3.25rem">
+            <Flex d="column" gap="3.25rem">
                 <TableWrapper>
-                    <Title align="left" size={3}>
+                    <Title align="left" size={2}>
                         Паспорт компетенций
                     </Title>
                     <Flex d="column" gap={isMobile ? '0.25rem' : '0.75rem'}>
@@ -194,8 +194,8 @@ const ToListLink = styled(Link)`
 
     ${MEDIA_QUERIES.isMobile} {
         padding: 0.75rem;
-        font-size: 10px;
-        line-height: 12px;
+        font-size: 0.625rem;
+        line-height: 0.75rem;
     }
 `
 const Subtext = styled.span`
@@ -234,16 +234,16 @@ const ProgressText = styled.p`
 `
 const NotFoundButton = styled(ButtonBase)`
     font-weight: 500;
-    font-size: 14.4px;
-    line-height: 18px;
+    font-size: 0.9rem;
+    line-height: 1.125rem;
     color: var(--reallyBlue);
     background-color: transparent;
 `
 const OutlinedButton = styled(ButtonBase)`
     font-weight: 600;
-    font-size: 14.4px;
-    line-height: 18px;
-    padding: 1rem 1.5rem;
+    font-size: 0.9rem;
+    line-height: 1.125rem;
+    padding: 1rem 1.25rem;
 
     background-color: transparent;
     border: 1px solid var(--reallyBlue);
@@ -251,23 +251,23 @@ const OutlinedButton = styled(ButtonBase)`
     ${MEDIA_QUERIES.isMobile} {
         width: 100%;
         padding-block: 0.75rem;
-        font-size: 10px;
-        line-height: 12px;
+        font-size: 0.625rem;
+        line-height: 0.75rem;
     }
 `
 const Button = styled(ButtonBase)`
     font-weight: 600;
-    font-size: 14.4px;
-    line-height: 18px;
-    padding: 1rem 1.5rem;
+    font-size: 0.9rem;
+    line-height: 1.125rem;
+    padding: 1rem 1.25rem;
 
     background-color: var(--reallyBlue);
 
     ${MEDIA_QUERIES.isMobile} {
         padding-block: 0.75rem;
         width: 100%;
-        font-size: 10px;
-        line-height: 12px;
+        font-size: 0.625rem;
+        line-height: 0.75rem;
     }
 `
 
