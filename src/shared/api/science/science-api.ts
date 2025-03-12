@@ -34,16 +34,20 @@ export const getArticle = async (id: string) => {
 }
 
 export const getArticleDetails = async (id: string) => {
-    const { data } = await $scienceApi.get(`/article/${id}/details`)
+    const {
+        data: { data, titles },
+    } = await $scienceApi.get(`/article/${id}/details`)
+    const scopusData = data?.scopus && convertKeysToLowerCase(data.scopus)
+    const wosData = data?.wos && convertKeysToLowerCase(data.wos)
 
     return {
         titles: {
-            scopus: convertKeysToLowerCase(data.titles.scopus),
-            wos: convertKeysToLowerCase(data.titles.wos),
+            scopus: convertKeysToLowerCase(titles.scopus),
+            wos: convertKeysToLowerCase(titles.wos),
         },
         data: {
-            scopus: convertKeysToLowerCase(data.data.scopus),
-            wos: convertKeysToLowerCase(data.data.wos),
+            scopus: scopusData,
+            wos: wosData,
         },
     }
 }

@@ -28,6 +28,7 @@ import { NextSubject, SubjectPlaceBlock } from '../../atoms'
 import ListOfGroups from '../../atoms/list-of-groups'
 import { SubjectIconAndBackground } from '../subject-icon-and-background'
 import { TimeIndicator } from '../time-indicator'
+import { MEDIA_QUERIES } from '@shared/ui/consts'
 
 const SubjectModalWrapper = styled.div`
     position: relative;
@@ -37,6 +38,9 @@ const SubjectModalWrapper = styled.div`
     @media (min-width: 1001px) {
         min-width: 320px;
         width: 100%;
+    }
+    ${MEDIA_QUERIES.isTablet} {
+        max-width: 100%;
     }
 
     .date-interval {
@@ -64,7 +68,6 @@ const SubjectModalWrapper = styled.div`
 const ModalContentWrapper = styled(Flex)<{ noPadding: boolean }>`
     padding: ${({ noPadding }) => (noPadding ? '24px 0 0 0' : '24px')};
     hyphens: auto;
-    height: calc(100% - 154px);
 `
 
 type Props = ISubject & {

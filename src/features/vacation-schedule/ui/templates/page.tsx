@@ -14,10 +14,8 @@ import Subtext from '@shared/ui/subtext'
 import { Vacation } from '../organism'
 
 const calendarUrls = {
-    fiveWorkDays:
-        'https://e.mospolytech.ru/old/storage/files/Proizvodstvennyj_kalendar_na_2024_god_dlya_pyatidnevnoj_rabochej_nedeli.pdf',
-    sixWorkDays:
-        'https://e.mospolytech.ru/old/storage/files/Proizvodstvennyj_kalendar_na_2024_god_dlya_shestidnevnoj_rabochej.pdf',
+    fiveWorkDays: 'https://e.mospolytech.ru/old/storage/files/ProizvodstvennyiM%86_kalendar_2025_dlya_pyatidnevki.pdf',
+    sixWorkDays: 'https://e.mospolytech.ru/old/storage/files/ProizvodstvennyiM%86_kalendar_2025_dlya_shestidnevki.PDF',
 }
 
 const Page = () => {
@@ -59,7 +57,7 @@ const Page = () => {
                     }
                 >
                     <Subtext width="100%" maxWidth="100%">
-                        Производственный календарь на 2024 год
+                        Производственный календарь на 2025 год
                     </Subtext>
                     <List scroll={false} direction="horizontal" gap={12} wrapOnMobile>
                         <Card

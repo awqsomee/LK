@@ -32,9 +32,14 @@ const checkFormFields = (form: IInputArea, specialFieldsNameConfig?: SpecialFiel
                 return null
             }
 
-            return el.type !== 'checkbox-docs'
-                ? !el.value && el.required
-                : el.required && !(el.items as CheckboxDocs[]).find((item) => !!item.files.length)
+            if (el.type === 'checkbox-docs')
+                if (el.required) return !(el.items as CheckboxDocs[]).find((item) => !!item.files.length)
+                else
+                    return (el.items as CheckboxDocs[])?.find(
+                        (item) => item.value && item.required && !item.files.length,
+                    )
+
+            return !el.value && el.required
         }) &&
         isCheckDocument &&
         expandableVerified

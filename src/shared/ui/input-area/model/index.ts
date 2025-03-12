@@ -1,3 +1,5 @@
+import { ReactNode } from 'react'
+
 import { FileFormats } from '@shared/consts'
 import { RadioButton } from '@shared/ui/organisms/radio-button-list'
 import { SelectPage } from '@shared/ui/select'
@@ -7,7 +9,7 @@ import { SpecialFieldsName, SpecialFieldsNameConfig } from '../types'
 export interface IInputAreaCheckbox {
     fieldName: string
     value: boolean
-    title: string
+    title: ReactNode
     required?: boolean
     fileNeeded?: boolean
     visible?: boolean
