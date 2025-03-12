@@ -1,4 +1,5 @@
 import { EventCallable, createEffect, createEvent, createStore, sample } from 'effector'
+import { reset } from 'patronum'
 
 export const $newPassportApplications = createStore([
     {
@@ -31,10 +32,15 @@ export const $newConsultationApplications = createStore([
 export const $newConsultations = $newConsultationApplications.map((applications) => applications.length)
 export const $passportProcessingProgressPercent = createStore(0)
 export const $passportProcessingDone = $passportProcessingProgressPercent.map((percent) => percent === 100)
-export const $studentsNotFound = createStore(2)
+export const $notFoundStudents = createStore([
+    { fio: 'Адыльбекова Кизира Хайнусовна', email: '123@email.ru' },
+    { fio: 'Паулюс Криштиан Андреевич', email: '321@email.ru' },
+])
+export const $studentsNotFound = $notFoundStudents.map((students) => students.length)
 
 export const generationStarted = createEvent()
 export const generationFinished = createEvent()
+export const denyRemainingApplications = createEvent()
 
 const $passportProgress = createCountdown('passportProgress', {
     start: generationStarted,
@@ -46,6 +52,13 @@ sample({
     source: $passportProcessingProgressPercent,
     fn: (percent) => (percent >= 100 ? 100 : percent + 1),
     target: $passportProcessingProgressPercent,
+})
+
+sample({ clock: denyRemainingApplications, fn: () => [], target: $newPassportApplications })
+
+reset({
+    clock: [generationStarted, denyRemainingApplications],
+    target: [$passportProcessingProgressPercent, $notFoundStudents],
 })
 
 function createCountdown(

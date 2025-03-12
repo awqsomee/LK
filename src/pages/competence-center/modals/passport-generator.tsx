@@ -7,34 +7,33 @@ import { ButtonBase } from '@shared/ui'
 import { MEDIA_QUERIES } from '@shared/ui/consts'
 import FileInput from '@shared/ui/file-input'
 import Flex from '@shared/ui/flex'
+import useCurrentDevice from '@shared/ui/hooks/use-current-device'
 import { useModal } from '@shared/ui/modal'
-import { Title } from '@shared/ui/title'
 
 import * as model from '../model'
 
 export const PassportGenerator = () => {
+    const { isMobile } = useCurrentDevice()
     const { close } = useModal()
     const [files, setFiles] = useState([])
 
     const [generationStarted, generationFinished] = useUnit([model.generationStarted, model.generationFinished])
 
     return (
-        <Flex d="column" gap="1.875rem">
-            <Flex d="column" gap="1.75rem">
-                <p>
+        <Flex w={isMobile ? '100%' : '36rem'} d="column" gap={isMobile ? '2.5rem' : '1.5rem'}>
+            <Flex d="column" ai="start" gap={isMobile ? '1rem' : '1.5rem'}>
+                <Text>
                     Выбрать и скачать таблицу с данными:{' '}
                     <a href="https://rsv.ru/" target="_blank" rel="noreferrer">
                         по этой ссылке
                     </a>
-                </p>
-                <Flex d="column" gap="0.75rem">
-                    <Title align="left" size={5}>
-                        Загрузите таблицу
-                    </Title>
+                </Text>
+                <Flex ai="start" d="column" gap={isMobile ? '0.5rem' : '0.75rem'}>
+                    <Text>Загрузите таблицу</Text>
                     <FileInput isActive files={files} setFiles={setFiles} formats={['xlsx']} />
                 </Flex>
             </Flex>
-            <Flex gap="0.625rem" ai="stretch">
+            <Flex gap={isMobile ? '0.625rem' : '2rem'} ai="stretch">
                 <OutlinedButton onClick={close}>Отмена</OutlinedButton>
                 <Button
                     disabled={!files.length}
@@ -50,6 +49,14 @@ export const PassportGenerator = () => {
         </Flex>
     )
 }
+const Text = styled.p`
+    font-size: 0.9rem;
+    font-family: 'Montserrat';
+    font-style: normal;
+    font-weight: 500;
+    line-height: 18px;
+    color: var(--text);
+`
 
 const OutlinedButton = styled(ButtonBase)`
     width: 100%;
