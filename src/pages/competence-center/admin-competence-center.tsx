@@ -6,16 +6,21 @@ import { Link } from 'react-router-dom'
 import { useUnit } from 'effector-react'
 import styled from 'styled-components'
 
+import getCorrectWordForm from '@shared/lib/get-correct-word-form'
 import { CC_COMPLETED_CONSULTATIONS, CC_PASSPORT_LOG } from '@shared/routing'
+import { ButtonBase } from '@shared/ui'
 import { Title } from '@shared/ui/atoms'
 import { MEDIA_QUERIES } from '@shared/ui/consts'
 import Flex from '@shared/ui/flex'
 import useCurrentDevice from '@shared/ui/hooks/use-current-device'
+import { useModal } from '@shared/ui/modal'
 import PageBlock from '@shared/ui/page-block'
 import Table from '@shared/ui/table'
 
+import * as config from './config'
 import * as model from './model'
 import { getConsColumns } from './lib/get-consultation-columns'
+import { PassportGenerator } from './modals/passport-generator'
 
 const AdminCompetenceCenter = () => {
     const { isMobile } = useCurrentDevice()
@@ -35,6 +40,8 @@ const AdminCompetenceCenter = () => {
         model.$studentsNotFound,
     ])
 
+    const { open } = useModal()
+
     return (
         <PageBlock>
             <Flex d="column" gap="3.25rem">
@@ -43,7 +50,10 @@ const AdminCompetenceCenter = () => {
                         Паспорт компетенций
                     </Title>
                     <Flex d="column" gap={isMobile ? '0.25rem' : '0.75rem'}>
-                        <GeneratePassportsButton disabled={!newPassports || !!passportProcessingProgressPercent}>
+                        <GeneratePassportsButton
+                            onClick={() => open(<PassportGenerator />, 'Создание паспортов компетенций')}
+                            disabled={!newPassports || !!passportProcessingProgressPercent}
+                        >
                             {passportProcessingDone ? (
                                 <Flex
                                     d={isMobile ? 'column' : 'row'}
@@ -60,7 +70,9 @@ const AdminCompetenceCenter = () => {
                                     >
                                         <NotFoundButton>Не найдено студентов: {studentsNotFound}</NotFoundButton>
                                         <Flex w={isMobile ? '100%' : 'auto'} gap="0.5rem" ai="stretch">
-                                            <OutlinedButton>Отклонить заявки</OutlinedButton>
+                                            <OutlinedButton>
+                                                {studentsNotFound > 1 ? 'Отклонить заявки' : 'Отклонить заявку'}
+                                            </OutlinedButton>
                                             <Button>Попробовать снова</Button>
                                         </Flex>
                                     </Flex>
@@ -75,9 +87,12 @@ const AdminCompetenceCenter = () => {
                                 </Flex>
                             ) : newPassports ? (
                                 <Flex d={isMobile ? 'column' : 'row'} ai="flex-start" jc="space-between" gap="1rem">
-                                    <NewApplicationsAmount>{newPassports} новых заявок</NewApplicationsAmount>
+                                    <NewApplicationsAmount>
+                                        {newPassports} {getCorrectWordForm(newPassports, config.newApplicationRules)}
+                                    </NewApplicationsAmount>
                                     <Flex w="fit-content" gap="2.5rem">
-                                        Создать паспорта <FaArrowRightLong size={24} />
+                                        {newPassports > 1 ? 'Создать паспорта' : 'Создать паспорт'}
+                                        <FaArrowRightLong size={24} />
                                     </Flex>
                                 </Flex>
                             ) : (
@@ -91,7 +106,11 @@ const AdminCompetenceCenter = () => {
                     <Flex>
                         <Title align="left" justify="baseline" size={3}>
                             Консультации
-                            {newConsultations && <Subtext>{newConsultations} новых</Subtext>}
+                            {newConsultations && (
+                                <Subtext>
+                                    {newConsultations} {getCorrectWordForm(newConsultations, config.consultationRules)}
+                                </Subtext>
+                            )}
                         </Title>
                         {isMobile && (
                             <IconLink to={CC_COMPLETED_CONSULTATIONS}>
@@ -117,28 +136,6 @@ const AdminCompetenceCenter = () => {
     )
 }
 
-// TODO: create basic Button component
-const ButtonBase = styled.button`
-    color: var(--text);
-    border-radius: 0.5rem;
-    outline: none;
-    border: none;
-
-    transition: all 200ms;
-
-    &:not(:disabled):hover {
-        filter: brightness(0.9);
-        cursor: pointer;
-    }
-
-    &:focus {
-        outline: 0.25rem solid var(--almostTransparentOpposite);
-    }
-
-    &:focus:not(:focus-visible) {
-        outline: none;
-    }
-`
 const TableWrapper = styled.div`
     width: 100%;
     display: flex;
@@ -165,6 +162,7 @@ const GeneratePassportsButton = styled(ButtonBase)`
     &:disabled {
         background-color: var(--block-content);
         color: var(--text);
+        opacity: 1;
     }
 
     &:not(:disabled):hover {

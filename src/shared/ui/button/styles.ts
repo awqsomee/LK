@@ -116,3 +116,30 @@ export const ButtonWrapper = styled.button<{
         }
     }
 `
+
+// TODO: create basic Button component
+export const ButtonBase = styled.button`
+    color: var(--text);
+    border-radius: 0.5rem;
+    outline: none;
+    border: none;
+
+    transition: all 200ms;
+
+    &:not(:disabled):hover {
+        filter: brightness(0.9);
+        cursor: pointer;
+    }
+
+    &:disabled {
+        opacity: 0.5;
+    }
+
+    &:focus {
+        outline: 0.25rem solid var(--almostTransparentOpposite);
+    }
+
+    &:focus:not(:focus-visible) {
+        outline: none;
+    }
+`
