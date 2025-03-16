@@ -173,7 +173,7 @@ const Information = () => {
 
 const Consultations = () => {
     return (
-        <Stack>
+        <Stack w="100%">
             <Flex gap="0.5rem">
                 <Title size={2} align="left">
                     Заявки на консультацию
@@ -248,8 +248,9 @@ const CircleLink = styled.div`
     color: var(--text);
 `
 
-const Stack = styled.div<{ gap?: number; justify?: Property.JustifyContent; align?: Property.AlignItems }>`
+const Stack = styled.div<{ gap?: number; justify?: Property.JustifyContent; align?: Property.AlignItems; w?: string }>`
     max-width: 100%;
+    width: ${({ w }) => w};
 
     display: flex;
     flex-direction: column;
