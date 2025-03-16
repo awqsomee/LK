@@ -60,7 +60,8 @@ const TaxCertificatePage = () => {
                             </Title>
                             <Table
                                 loading={loading}
-                                innerPadding="0.33rem"
+                                rowPadding="0.33rem"
+                                headerPadding="0.33rem"
                                 fontSize="0.75rem"
                                 columns={[
                                     {
@@ -81,7 +82,8 @@ const TaxCertificatePage = () => {
                             </Title>
                             <Table
                                 loading={loading}
-                                innerPadding="0.33rem"
+                                rowPadding="0.33rem"
+                                headerPadding="0.33rem"
                                 fontSize="0.75rem"
                                 columns={[
                                     {

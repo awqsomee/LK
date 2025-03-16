@@ -19,7 +19,6 @@ type Props = {
     setFilter: React.Dispatch<React.SetStateAction<TableCatalogType>>
     setSearch: React.Dispatch<React.SetStateAction<TableSearchType>>
     tableHasSelect?: boolean
-    padding?: string
     fontSize?: string
 } & TableHeaderProps
 
@@ -37,7 +36,7 @@ const Header = ({
     sort,
     setSort,
     tableHasSelect,
-    padding,
+    headerPadding,
     fontSize,
     dimmedHeaders,
     fw,
@@ -64,7 +63,7 @@ const Header = ({
             {columns.map((column) => {
                 return (
                     <Column
-                        padding={padding}
+                        padding={headerPadding}
                         overflow={!!column.catalogs ? 'visible' : 'hidden'}
                         width={column.width}
                         title={column.title}
@@ -75,7 +74,7 @@ const Header = ({
                         className={column.priority?.toString() ?? 'one'}
                         onClick={columnClick(column)}
                         fontSize={fontSize}
-                        dimmedHeaders={dimmedHeaders}
+                        dimmed={dimmedHeaders}
                         fw={fw}
                     >
                         {!column.catalogs && column.title}

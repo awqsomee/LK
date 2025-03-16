@@ -1,7 +1,6 @@
 import React from 'react'
 import { FaArrowRightLong } from 'react-icons/fa6'
 import { FiArchive } from 'react-icons/fi'
-import { Link } from 'react-router-dom'
 
 import { useUnit } from 'effector-react'
 import styled from 'styled-components'
@@ -22,6 +21,7 @@ import * as model from './model'
 import { getConsColumns } from './lib/get-consultation-columns'
 import { NotFoundStudents } from './modals/not-found-students'
 import { PassportGenerator } from './modals/passport-generator'
+import { Button, ButtonLink, IconLink, OutlinedButton } from './ui'
 
 const AdminCompetenceCenter = () => {
     const { isMobile } = useCurrentDevice()
@@ -61,7 +61,8 @@ const AdminCompetenceCenter = () => {
                     <Flex d="column" gap={isMobile ? '0.25rem' : '0.75rem'}>
                         <Table
                             dimmedHeaders
-                            innerPadding="1rem 1.25rem"
+                            rowPadding="1rem 1.25rem"
+                            headerPadding="1rem 1.25rem"
                             fw={500}
                             loading={false}
                             columns={getConsColumns()}
@@ -216,7 +217,7 @@ const GeneratePassportsButton = styled(ButtonBase)`
     padding-inline: 3.75rem;
     border-radius: 0.5rem;
     background-color: var(--reallyBlue);
-    color: var(--text);
+    color: white;
 
     font-weight: 600;
     font-size: 1.125rem;
@@ -239,25 +240,8 @@ const GeneratePassportsButton = styled(ButtonBase)`
         padding-block: 0.625rem;
     }
 `
-const ToListLink = styled(Link)`
+const ToListLink = styled(ButtonLink)`
     margin-left: auto;
-    padding: 1rem 1.25rem;
-    font-weight: 600;
-    font-size: 0.83125rem;
-    line-height: 1rem;
-    border-radius: 0.5rem;
-
-    color: #90b3e7;
-
-    &:hover {
-        text-decoration: underline;
-    }
-
-    ${MEDIA_QUERIES.isMobile} {
-        padding: 0.75rem;
-        font-size: 0.625rem;
-        line-height: 0.75rem;
-    }
 `
 const Subtext = styled.span`
     font-weight: 500;
@@ -299,44 +283,6 @@ const NotFoundButton = styled(ButtonBase)`
     line-height: 1.125rem;
     color: var(--reallyBlue);
     background-color: transparent;
-`
-const OutlinedButton = styled(ButtonBase)`
-    font-weight: 600;
-    font-size: 0.9rem;
-    line-height: 1.125rem;
-    padding: 1rem 1.25rem;
-
-    background-color: transparent;
-    border: 1px solid var(--reallyBlue);
-
-    ${MEDIA_QUERIES.isMobile} {
-        width: 100%;
-        padding-block: 0.75rem;
-        font-size: 0.625rem;
-        line-height: 0.75rem;
-    }
-`
-const Button = styled(ButtonBase)`
-    font-weight: 600;
-    font-size: 0.9rem;
-    line-height: 1.125rem;
-    padding: 1rem 1.25rem;
-
-    background-color: var(--reallyBlue);
-
-    ${MEDIA_QUERIES.isMobile} {
-        padding-block: 0.75rem;
-        width: 100%;
-        font-size: 0.625rem;
-        line-height: 0.75rem;
-    }
-`
-
-const IconLink = styled(Link)`
-    color: var(--text);
-    height: fit-content;
-    line-height: 0;
-    background: transparent;
 `
 
 export default AdminCompetenceCenter

@@ -44,7 +44,7 @@ export const ARTICLE = '/articles/:id'
 export const OPEN_PUBLICATION = '/open-publication'
 export const EXPORT_CONTROL = '/export-control'
 export const KEDO_ROUTE = '/kedo'
-export const COMPETENCE_CENTER = '/competence-center'
+export const COMPETENCE_CENTER_STAFF = '/competence-center-staff'
 export const CC_PASSPORT_LOG = '/competence-center/passport-log'
 export const CC_COMPLETED_CONSULTATIONS = '/competence-center/completed-consultations'
 

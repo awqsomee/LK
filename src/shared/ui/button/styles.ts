@@ -120,7 +120,7 @@ export const ButtonWrapper = styled.button<{
 // TODO: create basic Button component
 export const ButtonBase = styled.button`
     color: var(--text);
-    border-radius: 0.5rem;
+    border-radius: var(--brLight);
     outline: none;
     border: none;
 
@@ -141,5 +141,9 @@ export const ButtonBase = styled.button`
 
     &:focus:not(:focus-visible) {
         outline: none;
+    }
+
+    ${MEDIA_QUERIES.isTablet} {
+        font-size: 0.8em;
     }
 `

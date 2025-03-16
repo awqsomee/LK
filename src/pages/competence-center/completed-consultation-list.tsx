@@ -10,7 +10,8 @@ const CompletedConsultationList = () => {
         <PageBlock>
             <Table
                 dimmedHeaders
-                innerPadding="1rem 1.25rem"
+                rowPadding="1rem 1.25rem"
+                headerPadding="1rem 1.25rem"
                 fw={500}
                 loading={false}
                 columns={getConsColumns()}

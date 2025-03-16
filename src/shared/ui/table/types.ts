@@ -46,9 +46,15 @@ export type TableProps = {
     }
     innerPadding?: string
     fontSize?: string
-} & TableHeaderProps
+} & TableHeaderProps &
+    TableRowProps
 
 export type TableHeaderProps = {
     dimmedHeaders?: boolean
+    headerPadding?: Property.Padding
     fw?: Property.FontWeight
+}
+
+export type TableRowProps = {
+    rowPadding?: Property.Padding
 }

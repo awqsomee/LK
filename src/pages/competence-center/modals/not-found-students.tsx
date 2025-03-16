@@ -10,6 +10,7 @@ import Flex from '@shared/ui/flex'
 import { useModal } from '@shared/ui/modal'
 
 import * as model from '../model'
+import { IconButton } from '../ui'
 
 export const NotFoundStudents = () => {
     const { close } = useModal()
@@ -59,10 +60,4 @@ const Button = styled(ButtonBase)`
         font-size: 0.625rem;
         line-height: 0.75rem;
     }
-`
-
-const IconButton = styled(ButtonBase)`
-    color: var(--text);
-    line-height: 0;
-    background: transparent;
 `

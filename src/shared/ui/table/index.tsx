@@ -30,7 +30,8 @@ const Table = ({
     loading = false,
     forwardedRef,
     pagination,
-    innerPadding,
+    rowPadding,
+    headerPadding,
     fontSize,
     dimmedHeaders,
     fw,
@@ -61,7 +62,7 @@ const Table = ({
             />
             <Search search={search} setSearch={setSearch} />
             <Header
-                padding={innerPadding}
+                headerPadding={headerPadding}
                 sort={sort}
                 setSort={setSort}
                 columns={columns}
@@ -75,7 +76,7 @@ const Table = ({
                 fw={fw}
             />
             <Body
-                innerPadding={innerPadding}
+                rowPadding={rowPadding}
                 loading={loading}
                 onRowClick={onRowClick}
                 filter={filter}

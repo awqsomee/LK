@@ -51,7 +51,7 @@ export const ScienceTable = ({
                 {articles[index] ? (
                     <Row
                         onRowClick={onRowClick}
-                        padding="10px"
+                        rowPadding="10px"
                         columns={columns}
                         el={articles[index]}
                         index={index}
