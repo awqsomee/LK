@@ -1,9 +1,10 @@
+import { Property } from 'csstype'
 import styled from 'styled-components'
 
-const ModalContent = styled.div<{ isOpen: boolean; hasBack: boolean; hasTitle: boolean }>`
+const ModalContent = styled.div<{ isOpen: boolean; hasBack: boolean; hasTitle: boolean; padding?: Property.Padding }>`
     background: var(--block);
     color: var(--text);
-    padding: 20px;
+    padding: ${({ padding }) => padding || '20px'};
     min-height: 150px;
     max-height: 90vh;
     border-radius: var(--brLight);
@@ -23,7 +24,7 @@ const ModalContent = styled.div<{ isOpen: boolean; hasBack: boolean; hasTitle: b
     .close-button,
     .back-button {
         position: absolute;
-        top: 14px;
+        top: ${({ padding }) => `calc(${padding?.toString().split(' ')[0] || '20px'} - 6px)`};
     }
 
     .back-button {
@@ -31,7 +32,7 @@ const ModalContent = styled.div<{ isOpen: boolean; hasBack: boolean; hasTitle: b
     }
 
     .close-button {
-        right: 20px;
+        right: ${({ padding }) => padding || '20px'};
         z-index: 100;
         padding: 8px;
         border-radius: 100%;
@@ -39,7 +40,6 @@ const ModalContent = styled.div<{ isOpen: boolean; hasBack: boolean; hasTitle: b
 
     @media (max-width: 1000px) {
         font-size: 0.9em;
-        padding-top: 15px;
 
         /* Swipe bar on top */
         /* 
@@ -62,7 +62,7 @@ const ModalContent = styled.div<{ isOpen: boolean; hasBack: boolean; hasTitle: b
     }
 
     @media (max-width: 800px) {
-        padding: 15px;
+        padding: ${({ padding }) => padding || '15px'};
         width: 100%;
         max-height: 80%;
         height: fit-content;
@@ -90,7 +90,7 @@ const ModalContent = styled.div<{ isOpen: boolean; hasBack: boolean; hasTitle: b
         }
 
         .close-button {
-            right: 15px;
+            right: ${({ padding }) => padding || '15px'};
         }
 
         h3 {

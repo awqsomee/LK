@@ -1,3 +1,4 @@
+import { Property } from 'csstype'
 import styled from 'styled-components'
 
 import { Align } from '@shared/ui/types'
@@ -6,12 +7,14 @@ const Column = styled.div<{
     even?: boolean
     align?: Align | 'space-between'
     clickable?: boolean
-    padding?: string
     width?: string
     overflow?: string
     showFull?: boolean
     onRowClick?: () => void
     fontSize?: string
+    dimmed?: boolean
+    fw?: Property.FontWeight
+    padding?: Property.Padding
 }>`
     width: ${({ width }) => width ?? '100%'};
     min-width: ${({ width }) => width ?? 'auto'};
@@ -27,8 +30,11 @@ const Column = styled.div<{
     font-size: ${({ fontSize }) => fontSize};
 
     @media (max-width: 700px) {
-        padding: ${({ clickable }) => !clickable && '10px'};
+        padding: ${({ clickable, padding }) => !clickable && (padding ?? '10px')};
     }
+
+    /* color: ${({ dimmed }) => dimmed && '#8a8a8a'}; */
+    font-weight: ${({ fw }) => fw};
 `
 
 export default Column

@@ -1,12 +1,11 @@
+import { Property } from 'csstype'
 import styled from 'styled-components'
 
-type JC = 'flex-start' | 'center' | 'flex-end' | 'space-between' | 'space-around'
-type AI = 'flex-start' | 'center' | 'flex-end' | 'space-between' | 'space-around'
 type Direction = 'row' | 'column'
 
 const Flex = styled.div<{
-    jc?: JC
-    ai?: AI
+    jc?: Property.JustifyContent
+    ai?: Property.AlignItems
     w?: string
     h?: string
     gap?: string

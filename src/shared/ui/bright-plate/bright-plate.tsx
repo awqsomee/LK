@@ -7,19 +7,20 @@ interface Props {
     children: React.ReactNode
     show: boolean
     hasBorder?: boolean
-    borderPadding?: string
+    height?: string
+    padding?: string
 }
 
-export const BrightPlate = ({ onClick, children, show, hasBorder, borderPadding }: Props) => {
+export const BrightPlate = ({ onClick, children, show, hasBorder, height, padding }: Props) => {
     if (!show) return null
     return (
-        <Layout onClick={onClick} hasBorder={hasBorder} borderPadding={borderPadding}>
+        <Layout onClick={onClick} hasBorder={hasBorder} height={height} padding={padding}>
             {children}
         </Layout>
     )
 }
 
-const Layout = styled.button<Pick<Props, 'hasBorder' | 'borderPadding'>>`
+const Layout = styled.button<Pick<Props, 'hasBorder' | 'height' | 'padding'>>`
     border: none;
     display: flex;
     cursor: pointer;
@@ -33,7 +34,8 @@ const Layout = styled.button<Pick<Props, 'hasBorder' | 'borderPadding'>>`
     background: var(--block);
     box-shadow: var(--very-mild-shadow);
     overflow-y: hidden;
-    height: 75px;
+    height: ${({ height }) => height ?? '75px'};
+    padding: ${({ padding }) => padding};
 
     background: 
         /* linear-gradient(90deg, #3ed485 0%, #56a6c4 28%, #5e6cea 53%, #ba64bb 76.5%, #f0636b 99%), */

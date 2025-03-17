@@ -1,8 +1,14 @@
+import { Property } from 'csstype'
 import styled from 'styled-components'
 
 import { Align } from '@shared/ui/types'
 
-export const TitleWrapper = styled.div<{ align: Align; bottomGap: boolean | string; iconColor?: string; size: number }>`
+export const TitleWrapper = styled.div<{
+    align: Align
+    bottomGap: boolean | string
+    iconColor?: string
+    size: number
+}>`
     width: 100%;
     text-align: ${({ align }) => align};
     margin-bottom: ${({ bottomGap }) => (typeof bottomGap === 'string' ? bottomGap : bottomGap ? '10px' : '0')};
@@ -24,10 +30,10 @@ export const RedStar = styled.span`
     margin-right: 5px;
 `
 
-export const ChildrenWrapper = styled.div<{ width?: string }>`
+export const ChildrenWrapper = styled.div<{ width?: string; justify?: Property.AlignItems; gap?: string }>`
     display: flex;
-    align-items: center;
+    align-items: ${({ justify }) => justify ?? 'center'};
     justify-content: space-between;
-    column-gap: 10px;
+    column-gap: ${({ gap }) => gap ?? '10px'};
     width: ${({ width }) => width};
 `

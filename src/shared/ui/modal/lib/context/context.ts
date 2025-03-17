@@ -1,5 +1,7 @@
 import { createContext } from 'react'
 
+import { Property } from 'csstype'
+
 export interface ModalContext {
     isOpen: boolean
     component: React.ReactElement<any, any> | undefined
@@ -9,6 +11,8 @@ export interface ModalContext {
     close: () => void
     canBack: boolean
     title?: string
+    gap?: Property.Gap
+    padding?: Property.Padding
 }
 
 export const Context = createContext<ModalContext>({
