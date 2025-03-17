@@ -10,7 +10,7 @@ import Flex from '@shared/ui/flex'
 import useCurrentDevice from '@shared/ui/hooks/use-current-device'
 import { useModal } from '@shared/ui/modal'
 
-import * as model from '../model'
+import * as model from '../models/competence-center-admin-model'
 
 export const PassportGenerator = () => {
     const { isMobile } = useCurrentDevice()

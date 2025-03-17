@@ -1,6 +1,6 @@
 import React from 'react'
 import { FaArrowRightLong } from 'react-icons/fa6'
-import { FiArchive } from 'react-icons/fi'
+import { FiArchive, FiX } from 'react-icons/fi'
 
 import { useUnit } from 'effector-react'
 import styled from 'styled-components'
@@ -9,6 +9,7 @@ import getCorrectWordForm from '@shared/lib/get-correct-word-form'
 import { CC_COMPLETED_CONSULTATIONS, CC_PASSPORT_LOG } from '@shared/routing'
 import { ButtonBase } from '@shared/ui'
 import { Title } from '@shared/ui/atoms'
+import { Button as LKButton } from '@shared/ui/button'
 import { MEDIA_QUERIES } from '@shared/ui/consts'
 import Flex from '@shared/ui/flex'
 import useCurrentDevice from '@shared/ui/hooks/use-current-device'
@@ -17,7 +18,7 @@ import PageBlock from '@shared/ui/page-block'
 import Table from '@shared/ui/table'
 
 import * as config from './config'
-import * as model from './model'
+import * as model from './models/competence-center-admin-model'
 import { getConsColumns } from './lib/get-consultation-columns'
 import { NotFoundStudents } from './modals/not-found-students'
 import { PassportGenerator } from './modals/passport-generator'
@@ -101,7 +102,7 @@ const PassportActiveElement = () => {
             gap: isMobile ? '1.5rem' : '2rem',
         })
 
-    if (passportProcessingDone)
+    if (passportProcessingDone && studentsNotFound)
         return (
             <PassportActiveElementWrapper>
                 <Flex
@@ -131,11 +132,31 @@ const PassportActiveElement = () => {
                             <OutlinedButton onClick={denyRemainingApplications}>
                                 {studentsNotFound > 1 ? 'Отклонить заявки' : 'Отклонить заявку'}
                             </OutlinedButton>
-                            <Button onClick={openGeneratorModal}>Попробовать снова</Button>
+                            <Button w="100%" onClick={openGeneratorModal}>
+                                Попробовать снова
+                            </Button>
                         </Flex>
                     </Flex>
                 </Flex>
             </PassportActiveElementWrapper>
+        )
+
+    if (passportProcessingDone)
+        return (
+            <SuccessfulActiveElementWrapper>
+                <Flex jc="space-between">
+                    Сгенерированы все паспорта! 🥳
+                    <LKButton
+                        onClick={close}
+                        icon={<FiX />}
+                        height="35px"
+                        minWidth="35px"
+                        width="35px"
+                        background="var(--almostTransparent)"
+                        radius="50%"
+                    />
+                </Flex>
+            </SuccessfulActiveElementWrapper>
         )
 
     if (!!passportProcessingProgressPercent)
@@ -188,6 +209,27 @@ const TableWrapper = styled.div`
 
     ${MEDIA_QUERIES.isMobile} {
         gap: 1rem;
+    }
+`
+const SuccessfulActiveElementWrapper = styled.div`
+    display: flex;
+    justify-content: start;
+    align-items: center;
+    width: 100%;
+    min-height: 6.5rem;
+    padding-inline: 3.75rem;
+    border-radius: 0.5rem;
+    background: #252525;
+    border-radius: 9px;
+
+    font-weight: 600;
+    font-size: 1.125rem;
+    line-height: 1.375rem;
+    color: #3cd288;
+
+    ${MEDIA_QUERIES.isMobile} {
+        padding-inline: 1rem;
+        padding-block: 0.625rem;
     }
 `
 const PassportActiveElementWrapper = styled.div`

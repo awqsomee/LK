@@ -9,7 +9,7 @@ import { MEDIA_QUERIES } from '@shared/ui/consts'
 import Flex from '@shared/ui/flex'
 import { useModal } from '@shared/ui/modal'
 
-import * as model from '../model'
+import * as model from '../models/competence-center-admin-model'
 import { IconButton } from '../ui'
 
 export const NotFoundStudents = () => {

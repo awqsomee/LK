@@ -124,7 +124,7 @@ export const studentRoutes: () => IRoutes = () => ({
         path: COMPETENCE_CENTER,
         color: 'orange',
         isTemplate: false,
-        pageSize: 'big',
+        pageSize: 'large',
         group: 'COMPETENCE_CENTER',
     },
     'acad-performance': {

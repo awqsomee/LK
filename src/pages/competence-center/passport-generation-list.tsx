@@ -6,7 +6,7 @@ import PageBlock from '@shared/ui/page-block'
 import Table from '@shared/ui/table'
 import { ColumnProps } from '@shared/ui/table/types'
 
-import * as model from './model'
+import * as model from './models/competence-center-admin-model'
 
 const PassportGenerationList = () => {
     const [newPassportApplications] = useUnit([model.$newPassportApplications])

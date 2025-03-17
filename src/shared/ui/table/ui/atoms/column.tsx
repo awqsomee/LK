@@ -33,7 +33,7 @@ const Column = styled.div<{
         padding: ${({ clickable, padding }) => !clickable && (padding ?? '10px')};
     }
 
-    opacity: ${({ dimmed }) => dimmed && 0.5};
+    /* color: ${({ dimmed }) => dimmed && '#8a8a8a'}; */
     font-weight: ${({ fw }) => fw};
 `
 

@@ -30,7 +30,7 @@ export const $newConsultationApplications = createStore([
     },
 ])
 export const $newConsultations = $newConsultationApplications.map((applications) => applications.length)
-export const $passportProcessingProgressPercent = createStore(0)
+export const $passportProcessingProgressPercent = createStore(100)
 export const $passportProcessingDone = $passportProcessingProgressPercent.map((percent) => percent === 100)
 export const $notFoundStudents = createStore([
     { fio: 'Адыльбекова Кизира Хайнусовна', email: '123@email.ru' },
