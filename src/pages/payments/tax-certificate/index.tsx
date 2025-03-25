@@ -42,6 +42,7 @@ const TaxCertificate = () => {
     useEffect(() => {
         pageMounted()
     }, [])
+
     return (
         <Wrapper data={true} load={() => {}} error={null}>
             <PageBlock>
@@ -87,13 +88,11 @@ const TaxCertificate = () => {
                                             ),
                                             onConfirm: () => {
                                                 certificatedRequested({ year: selected.title })
-                                                close()
                                             },
                                         })
                                         return
                                     }
                                     certificatedRequested({ year: selected.title })
-                                    close()
                                 }}
                             />
                         </Flex>
