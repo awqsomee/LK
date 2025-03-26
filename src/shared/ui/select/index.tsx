@@ -1,5 +1,7 @@
-import React, { memo, useRef } from 'react'
+import React, { FC, memo, useRef } from 'react'
 import { FiCheck, FiChevronLeft, FiChevronRight } from 'react-icons/fi'
+
+import styled from 'styled-components'
 
 import { Input, Title } from '@shared/ui/atoms'
 
@@ -11,6 +13,7 @@ export interface SelectPage {
     icon?: React.ReactNode
     title: string
     children?: SelectPage[]
+    items?: { id: string | number; title: string }[]
     data?: string | number
 }
 
@@ -114,39 +117,42 @@ const Select = (props: SelectProps) => {
                         </span>
                     </SelectItem>
                 )}
-                {currentItems.length ? (
-                    currentItems.map(({ id, icon, title, children, data }) => (
-                        <SelectItem
-                            key={id ?? title}
-                            onClick={(e) => {
-                                e.stopPropagation()
-                                handleSelect({ id, icon, title, children, data })
-                            }}
-                            isSelected={
-                                !multiple &&
-                                !!selected &&
-                                ((selected as SelectPage).id
-                                    ? id === (selected as SelectPage).id
-                                    : title === (selected as SelectPage).title)
-                            }
-                            leadingToSelected={selectedRoute.includes(id.toString())}
-                        >
-                            {!!icon && <span className="icon">{icon}</span>}
-                            <span className="select-item-title">{title}</span>
-                            {!!children && (
-                                <span className="right-icon">
-                                    <FiChevronRight />
-                                </span>
-                            )}
-                            {multiple &&
-                                !!selected &&
-                                !!(selected as SelectPage[]).find((page) => page.title.includes(title)) && (
-                                    <span className="right-icon">
-                                        <FiCheck />
-                                    </span>
-                                )}
-                        </SelectItem>
-                    ))
+                {(currentItems[0].items ? currentItems.some(({ items }) => items?.length) : currentItems.length) ? (
+                    currentItems[0].items ? (
+                        currentItems.map(({ id, title, items }) => {
+                            if (!items?.length) return null
+
+                            return (
+                                <div key={id}>
+                                    <GroupTitle>{title}</GroupTitle>
+                                    <div>
+                                        {items?.map((item) => (
+                                            <Item
+                                                key={item.id}
+                                                handleSelect={handleSelect}
+                                                multiple={multiple}
+                                                selectedRoute={selectedRoute}
+                                                selected={selected}
+                                                {...item}
+                                                ml="1rem"
+                                            />
+                                        ))}
+                                    </div>
+                                </div>
+                            )
+                        })
+                    ) : (
+                        currentItems.map((item) => (
+                            <Item
+                                key={item.id}
+                                handleSelect={handleSelect}
+                                multiple={multiple}
+                                selected={selected}
+                                selectedRoute={selectedRoute}
+                                {...item}
+                            />
+                        ))
+                    )
                 ) : (
                     <SelectItem
                         onClick={(e) => {
@@ -161,5 +167,66 @@ const Select = (props: SelectProps) => {
         </SelectWrapper>
     )
 }
+
+const Item: FC<
+    SelectPage & {
+        handleSelect: (page: SelectPage) => void
+        selectedRoute: string
+        multiple: boolean
+        selected: SelectPage | SelectPage[] | null
+        ml?: string
+    }
+> = ({ id, title, icon, children, data, handleSelect, selectedRoute, multiple, selected, ml }) => {
+    return (
+        <SelectItem
+            key={id ?? title}
+            onClick={(e) => {
+                e.stopPropagation()
+                handleSelect({ id, icon, title, children, data })
+            }}
+            isSelected={
+                !multiple &&
+                !!selected &&
+                ((selected as SelectPage).id
+                    ? id === (selected as SelectPage).id
+                    : title === (selected as SelectPage).title)
+            }
+            leadingToSelected={selectedRoute.includes(id.toString())}
+            ml={ml}
+        >
+            {!!icon && <span className="icon">{icon}</span>}
+            <span className="select-item-title">{title}</span>
+            {!!children && (
+                <span className="right-icon">
+                    <FiChevronRight />
+                </span>
+            )}
+            {multiple && !!selected && !!(selected as SelectPage[]).find((page) => page.title.includes(title)) && (
+                <span className="right-icon">
+                    <FiCheck />
+                </span>
+            )}
+        </SelectItem>
+    )
+}
+
+const GroupTitle = styled.h4`
+    display: flex;
+    align-items: center;
+    position: relative;
+    padding: 0.5rem 0.75rem;
+    color: var(--theme-mild-opposite);
+    cursor: auto;
+
+    &:after {
+        content: '';
+        margin-inline: 0.5rem;
+        display: block;
+        width: 100%;
+        height: 1px;
+        background: var(--theme-mild-opposite);
+        opacity: 0.5;
+    }
+`
 
 export default memo(Select)
