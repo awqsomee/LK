@@ -1,6 +1,6 @@
 import styled from 'styled-components'
 
-const SelectItem = styled.li<{ isSelected: boolean; leadingToSelected?: boolean }>`
+const SelectItem = styled.li<{ isSelected: boolean; leadingToSelected?: boolean; ml?: string }>`
     list-style-type: none;
     background: var(${({ isSelected }) => (isSelected ? '--reallyBlue' : '')});
     color: ${({ isSelected }) => (isSelected ? '#fff' : '')};
@@ -9,6 +9,7 @@ const SelectItem = styled.li<{ isSelected: boolean; leadingToSelected?: boolean 
     display: flex;
     align-items: center;
     justify-content: space-between;
+    margin-left: ${({ ml }) => ml};
 
     .icon {
         display: flex;

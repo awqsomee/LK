@@ -100,14 +100,25 @@ const useSelect = (props: SelectProps) => {
             return
         }
 
-        const handler = setTimeout(() => {
-            setDebouncedItems(
-                currentItems.filter((item) => item.title.toLowerCase().includes(searchQuery.toLowerCase())),
-            )
+        const searchHandler = setTimeout(() => {
+            const foundItems = currentItems[0]?.items
+                ? currentItems.map((group) => ({
+                      ...group,
+                      items:
+                          group.items?.filter((item) => item.title.toLowerCase().includes(searchQuery.toLowerCase())) ??
+                          [],
+                  }))
+                : currentItems.filter((item) => item.title.toLowerCase().includes(searchQuery.toLowerCase()))
+
+            const isExactMatch = currentItems[0]?.items
+                ? foundItems.reduce((acc, el) => acc + (el.items?.length ?? 0), 0)
+                : foundItems.length <= 1
+
+            setDebouncedItems(isExactMatch ? items : foundItems)
         }, 300)
 
         return () => {
-            clearTimeout(handler)
+            clearTimeout(searchHandler)
         }
     }, [currentItems, searchQuery, withSearch])
 
@@ -115,6 +126,7 @@ const useSelect = (props: SelectProps) => {
         setSelected(null)
         setIsOpen(false)
     }, [])
+
     const changeQuery = useCallback((value: string) => {
         setSelected(null)
         setSearchQuery(value)

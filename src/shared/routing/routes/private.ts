@@ -1,5 +1,14 @@
 import { AiOutlineReload } from 'react-icons/ai'
-import { BiGroup, BiHeadphone, BiInfoCircle, BiMessageRounded, BiNews, BiPalette, BiUserCircle } from 'react-icons/bi'
+import {
+    BiGroup,
+    BiHeadphone,
+    BiInfoCircle,
+    BiMessageRounded,
+    BiNews,
+    BiPalette,
+    BiUserCircle,
+    BiWrench,
+} from 'react-icons/bi'
 import { BsFileMedical } from 'react-icons/bs'
 import { FiBell, FiClipboard, FiClock, FiFileText, FiHome, FiMenu, FiSettings, FiUser } from 'react-icons/fi'
 import {
@@ -26,6 +35,7 @@ import {
     HOME_ROUTE,
     INSTRUCTIONS_ROUTE,
     LK_NOTIFICATIONS_ROUTE,
+    MAINTENANCE,
     PERSONAL_ELECTRONIC_INTERACTION,
     PROFILE_ROUTE,
     SAFETY_INFORMATION,
@@ -229,6 +239,17 @@ export const generalRoutes: Omit<IRoutes, 'Component'> = {
         icon: FiFileText,
         color: 'blue',
         path: TECHNICAL_MAINTENANCE,
+        isTemplate: false,
+        group: 'GENERAL',
+        isSubPage: true,
+    },
+    maintenance: {
+        id: 'maintenance',
+        hiddenTitle: true,
+        title: 'Техническое обслуживание',
+        icon: BiWrench,
+        color: 'blue',
+        path: MAINTENANCE,
         isTemplate: false,
         group: 'GENERAL',
         isSubPage: true,
