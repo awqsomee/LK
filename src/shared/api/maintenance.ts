@@ -8,7 +8,7 @@ export type TechnicalMaintenance = {
     title: string
     description: string
     user_email: string
-    custom_fields: Record<string, number>
+    custom_fields: string
     files: File[]
 }
 
@@ -17,7 +17,7 @@ export const postMaintenance = async (req: TechnicalMaintenance) => {
     formData.append('title', req.title)
     formData.append('description', req.description)
     formData.append('user_email', req.user_email)
-    formData.append('custom_fields', JSON.stringify(req.custom_fields))
+    formData.append('custom_fields', req.custom_fields)
     req.files[0] && formData.append('files', req.files[0])
     const { data } = await $maintenanceApi.post<{ data: { id: string } }>(`/tickets/`, formData, {
         headers: {

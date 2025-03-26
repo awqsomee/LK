@@ -68,10 +68,8 @@ sample({
     fn: ({ files, name, phone, email, note, serviceType, service, location }): TechnicalMaintenance => {
         return {
             title: 'Обращение из ЛК',
-            description: `Заявитель: ${name}\nТелефон: ${phone}\n${location?.title ? `Локация: ${location.title}\n` : ''}${email ? `Почта: ${email}\n` : ''}\nОписание:\n${note}`,
-            custom_fields: {
-                [serviceType!.id.toString()]: Number(service!.id),
-            },
+            description: `Заявитель: ${name}<br/>Телефон: ${phone}<br/>${location?.title ? `Локация: ${location.title}<br/>` : ''}${email ? `Почта: ${email}<br/>` : ''}<br/>Описание:<br/>${note}`,
+            custom_fields: `[${serviceType!.id}]=>${service!.id}`,
             files: files,
             user_email: email,
         }
