@@ -1,0 +1,1 @@
+import{j as t}from"./vendor-fdf02817.js";import{m as e}from"./index-2172af78.js";const a=()=>t.jsx(e,{href:"/",buttonText:"На главную",errorText:"Сервис технического обслуживания находится в разработке"});export{a as default};
