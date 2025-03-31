@@ -65,13 +65,15 @@ sample({
         location: $location,
     },
     filter: ({ serviceType, service }) => !!serviceType && !!service,
-    fn: ({ files, name, phone, email, note, serviceType, service, location }): TechnicalMaintenance => {
+    fn: ({ files, name, phone, email, note, service, location }): TechnicalMaintenance => {
         return {
-            title: 'Обращение из ЛК',
-            description: `Заявитель: ${name}<br/>Телефон: ${phone}<br/>${location?.title ? `Локация: ${location.title}<br/>` : ''}${email ? `Почта: ${email}<br/>` : ''}<br/>Описание:<br/>${note}`,
-            custom_fields: `[${serviceType!.id}]=>${service!.id}`,
-            files: files,
-            user_email: email,
+            applicantName: name,
+            description: note,
+            email,
+            phone,
+            location: location?.title,
+            files,
+            serviceId: service!.id.toString(),
         }
     },
     target: sendFormMutation.start,
