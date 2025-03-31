@@ -6,6 +6,7 @@ import {
     ForgotPasswordPage,
     GetYourLoginPage,
     LoginPage,
+    MaintenancePage,
     MemoFreshmenPage,
     MemoTeacherPage,
 } from './pages'
@@ -18,4 +19,5 @@ export const publicPages: PageRoute = {
     'get-login': GetYourLoginPage,
     'student-attention': MemoFreshmenPage,
     'employee-attention': MemoTeacherPage,
+    maintenance: MaintenancePage,
 }

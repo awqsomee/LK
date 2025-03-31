@@ -8,6 +8,7 @@ import {
     FORGOT_PASSWORD_ROUTE,
     GET_YOUR_LOGIN_ROUTE,
     LOGIN_ROUTE,
+    MAINTENANCE,
     MEMO_FRESHMEN_ROUTE,
     MEMO_TEACHER_ROUTE,
 } from '../paths'
@@ -47,5 +48,10 @@ export const publicRoutes: Route[] = [
         id: 'employee-attention',
         title: 'Вниманию сотрудников!',
         path: MEMO_TEACHER_ROUTE,
+    },
+    {
+        id: 'maintenance',
+        title: 'Техническое обслуживание',
+        path: MAINTENANCE,
     },
 ]

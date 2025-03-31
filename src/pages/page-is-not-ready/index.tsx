@@ -10,6 +10,7 @@ interface Props {
     isRedirectButtonVisible?: boolean
     buttonText?: string
     forceForward?: boolean
+    href?: string
 }
 
 const PageIsNotReady = ({
@@ -18,6 +19,7 @@ const PageIsNotReady = ({
     buttonText = 'Перейти к старому дизайну',
     forceForward = false,
     isRedirectButtonVisible = true,
+    href,
 }: Props) => {
     useEffect(() => {
         if (forceForward) window.location.href = `/old/?p=${oldVersionUrl?.slice(1, oldVersionUrl.length)}`
@@ -25,7 +27,7 @@ const PageIsNotReady = ({
     return (
         <Error text={errorText}>
             {isRedirectButtonVisible && (
-                <a href={`${OLD_LK_URL}/?p=${oldVersionUrl?.slice(1, oldVersionUrl.length)}`}>
+                <a href={href ?? `${OLD_LK_URL}/?p=${oldVersionUrl?.slice(1, oldVersionUrl.length)}`}>
                     <Button
                         text={buttonText}
                         icon={<FiArrowLeftCircle />}
