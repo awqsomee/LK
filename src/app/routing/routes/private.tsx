@@ -61,4 +61,5 @@ export const privateHiddenPages: PageRoute = {
     'filtered-all-teachers': AllTeachersPage,
 
     'useful-info-template': HelpfulInformation,
+    maintenance: MaintenancePage,
 }
