@@ -232,17 +232,6 @@ export const generalRoutes: Omit<IRoutes, 'Component'> = {
         isTemplate: true,
         group: 'GENERAL',
     },
-    'technical-maintenance': {
-        id: 'technical-maintenance',
-        hiddenTitle: true,
-        title: 'КСУТО',
-        icon: FiFileText,
-        color: 'blue',
-        path: TECHNICAL_MAINTENANCE,
-        isTemplate: false,
-        group: 'GENERAL',
-        isSubPage: true,
-    },
     maintenance: {
         id: 'maintenance',
         hiddenTitle: true,
@@ -395,6 +384,17 @@ export const settingsRoutes: IRoutes = {
 }
 
 export const generalHiddenRoutes: IRoutes = {
+    'technical-maintenance': {
+        id: 'technical-maintenance',
+        hiddenTitle: true,
+        title: 'КСУТО',
+        icon: FiFileText,
+        color: 'blue',
+        path: TECHNICAL_MAINTENANCE,
+        isTemplate: false,
+        group: 'GENERAL',
+        isSubPage: true,
+    },
     // 'teachers-schedule': {
     //     id: 'teachers-schedule',
     //     title: 'Расписание преподавателя',
