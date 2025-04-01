@@ -117,7 +117,7 @@ const Select = (props: SelectProps) => {
                         </span>
                     </SelectItem>
                 )}
-                {(currentItems[0].items ? currentItems.some(({ items }) => items?.length) : currentItems.length) ? (
+                {(currentItems[0]?.items ? currentItems.some(({ items }) => items?.length) : currentItems.length) ? (
                     currentItems[0].items ? (
                         currentItems.map(({ id, title, items }) => {
                             if (!items?.length) return null

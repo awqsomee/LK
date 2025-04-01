@@ -111,8 +111,9 @@ const useSelect = (props: SelectProps) => {
                 : currentItems.filter((item) => item.title.toLowerCase().includes(searchQuery.toLowerCase()))
 
             const isExactMatch = currentItems[0]?.items
-                ? foundItems.reduce((acc, el) => acc + (el.items?.length ?? 0), 0)
-                : foundItems.length <= 1
+                ? foundItems.reduce((acc, el) => acc + (el.items?.length ?? 0), 0) === 1 &&
+                  searchQuery === foundItems[0].items![0].title
+                : foundItems.length === 1 && searchQuery === foundItems[0].title
 
             setDebouncedItems(isExactMatch ? items : foundItems)
         }, 300)

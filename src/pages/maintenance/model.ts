@@ -1,9 +1,10 @@
-import { createMutation } from '@farfetched/core'
+import { createMutation, createQuery } from '@farfetched/core'
 import { createEvent, createStore, restore, sample } from 'effector'
+import { or } from 'patronum'
 
 import { applicationsModel } from '@entities/applications'
 
-import { TechnicalMaintenance, postMaintenance } from '@shared/api/maintenance'
+import { TechnicalMaintenance, getLocations, postMaintenance } from '@shared/api/maintenance'
 import { popUpMessageModel } from '@shared/ui/pop-up-message'
 import { SelectPage } from '@shared/ui/select'
 
@@ -17,6 +18,7 @@ const setNote = createEvent<string>()
 const setServiceType = createEvent<SelectPage | null>()
 const setService = createEvent<SelectPage | null>()
 const setLocation = createEvent<SelectPage | null>()
+const setRoom = createEvent<string>()
 
 const $files = createStore<File[]>([])
     .on(setFiles, (_, files) => files)
@@ -38,7 +40,8 @@ const $email = createStore('')
     .on(setEmail, (_, email) => email)
     .on(applicationsModel.stores.applications, (_, { dataUserApplication }) => dataUserApplication?.email ?? '')
 const $serviceType = restore(setServiceType, null).reset(pageMounted)
-const $service = restore(setService, null).reset(pageMounted)
+const $service = restore(setService, null).reset([pageMounted, $serviceType])
+const $room = restore(setRoom, '').reset(pageMounted)
 const $location = createStore<SelectPage | null>(null)
     .on(setLocation, (_, location) => location)
     .reset(pageMounted)
@@ -47,10 +50,13 @@ const $applicationNumber = createStore('').reset(pageMounted)
 const sendFormMutation = createMutation({
     handler: postMaintenance,
 })
+const locationsQuery = createQuery({
+    handler: getLocations,
+})
 
 sample({
     clock: pageMounted,
-    target: [sendFormMutation.reset, applicationsModel.effects.getUserDataApplicationsFx],
+    target: [sendFormMutation.reset, applicationsModel.effects.getUserDataApplicationsFx, locationsQuery.start],
 })
 sample({
     clock: sendForm,
@@ -63,15 +69,17 @@ sample({
         serviceType: $serviceType,
         service: $service,
         location: $location,
+        room: $room,
     },
     filter: ({ serviceType, service }) => !!serviceType && !!service,
-    fn: ({ files, name, phone, email, note, service, location }): TechnicalMaintenance => {
+    fn: ({ files, name, phone, email, note, service, location, room }): TechnicalMaintenance => {
         return {
             applicantName: name,
             description: note,
             email,
             phone,
             location: location?.title,
+            room,
             files,
             serviceId: service!.id.toString(),
         }
@@ -81,7 +89,7 @@ sample({
 
 sample({
     clock: sendFormMutation.finished.success,
-    fn: ({ result }) => result.id,
+    fn: ({ result }) => result.ticketId,
     target: $applicationNumber,
 })
 
@@ -104,10 +112,13 @@ export const events = {
     setServiceType,
     setService,
     setLocation,
+    setRoom,
     sendForm,
 }
 
 export const stores = {
+    locations: locationsQuery.$data,
+    pageLoading: or(locationsQuery.$pending, applicationsModel.effects.getUserDataApplicationsFx.pending),
     files: $files,
     note: $note,
     name: $name,
@@ -116,6 +127,7 @@ export const stores = {
     serviceType: $serviceType,
     service: $service,
     location: $location,
+    room: $room,
     loading: sendFormMutation.$pending,
     done: sendFormMutation.$succeeded,
     applicationNumber: $applicationNumber,
