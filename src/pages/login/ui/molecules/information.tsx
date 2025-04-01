@@ -1,5 +1,5 @@
 import React from 'react'
-import { BiHeadphone } from 'react-icons/bi'
+import { BiHeadphone, BiWrench } from 'react-icons/bi'
 import { BsAsterisk } from 'react-icons/bs'
 import { FiAlertCircle, FiArrowLeftCircle, FiMeh } from 'react-icons/fi'
 import { Link } from 'react-router-dom'
@@ -9,6 +9,7 @@ import {
     CANT_ACCESS_ROUTE,
     FEEDBACK_ROUTE,
     GET_YOUR_LOGIN_ROUTE,
+    MAINTENANCE,
     MEMO_FRESHMEN_ROUTE,
     MEMO_TEACHER_ROUTE,
 } from '@shared/routing'
@@ -65,7 +66,16 @@ const Information = () => {
                             textColor="var(--theme-mild-opposite)"
                         />
                     </Link>
-
+                    <Link to={MAINTENANCE} tabIndex={-1}>
+                        <Button
+                            padding="0"
+                            icon={<BiWrench />}
+                            text="Тех. обслуживание"
+                            height="25px"
+                            background="transparent"
+                            textColor="var(--theme-mild-opposite)"
+                        />
+                    </Link>
                     <Divider />
                     <Link to={CANT_ACCESS_ROUTE} tabIndex={-1}>
                         <Button

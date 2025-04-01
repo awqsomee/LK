@@ -49,6 +49,7 @@ export const privatePages: PageRoute = {
     },
     'safety-information': SafetyInformation,
     'technical-maintenance': TechnicalMaintenance,
+    maintenance: MaintenancePage,
 }
 
 export const privateHiddenPages: PageRoute = {
