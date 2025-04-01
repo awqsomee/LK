@@ -6,6 +6,8 @@ import { useUnit } from 'effector-react'
 import ContentLayout from '@app/routing/content-layout'
 import { useScrollToTop } from '@app/routing/hooks/use-scroll-to-top'
 
+import PopUpMessage from '@widgets/pop-up-message'
+
 import { LOGIN_ROUTE } from '@shared/routing'
 import { publicRoutes } from '@shared/routing/routes/public'
 import { userModel } from '@shared/session'
@@ -24,6 +26,8 @@ const Router = () => {
         <ContentLayout />
     ) : (
         <Suspense fallback={null}>
+            <PopUpMessage />
+
             <Switch>
                 {publicRoutes.map(({ path, id }, i) => {
                     return <Route path={path} component={publicPages[id]} exact={true} key={i} />
