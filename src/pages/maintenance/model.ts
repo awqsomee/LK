@@ -4,7 +4,13 @@ import { or } from 'patronum'
 
 import { applicationsModel } from '@entities/applications'
 
-import { TechnicalMaintenance, getLocations, postMaintenance } from '@shared/api/maintenance'
+import {
+    TechnicalMaintenance,
+    getLocations,
+    getServiceAreas,
+    getServices,
+    postMaintenance,
+} from '@shared/api/maintenance'
 import { popUpMessageModel } from '@shared/ui/pop-up-message'
 import { SelectPage } from '@shared/ui/select'
 
@@ -53,11 +59,32 @@ const sendFormMutation = createMutation({
 const locationsQuery = createQuery({
     handler: getLocations,
 })
+const serviceAreasQuery = createQuery({
+    handler: getServiceAreas,
+})
+const servicesQuery = createQuery({
+    handler: getServices,
+})
 
 sample({
     clock: pageMounted,
-    target: [sendFormMutation.reset, applicationsModel.effects.getUserDataApplicationsFx, locationsQuery.start],
+    target: [
+        sendFormMutation.reset,
+        applicationsModel.effects.getUserDataApplicationsFx,
+        locationsQuery.start,
+        serviceAreasQuery.start,
+    ],
 })
+
+sample({
+    clock: sample({
+        clock: $serviceType,
+        filter: Boolean,
+    }),
+    fn: ({ id }) => ({ serviceArea: id.toString() }),
+    target: servicesQuery.start,
+})
+
 sample({
     clock: sendForm,
     source: {
@@ -72,7 +99,7 @@ sample({
         room: $room,
     },
     filter: ({ serviceType, service }) => !!serviceType && !!service,
-    fn: ({ files, name, phone, email, note, service, location, room }): TechnicalMaintenance => {
+    fn: ({ files, name, phone, email, note, service, location, room, serviceType }): TechnicalMaintenance => {
         return {
             applicantName: name,
             description: note,
@@ -81,7 +108,8 @@ sample({
             location: location?.title,
             room,
             files,
-            serviceId: service!.id.toString(),
+            serviceAreaId: serviceType!.id.toString(),
+            serviceCategoryId: service!.id.toString(),
         }
     },
     target: sendFormMutation.start,
@@ -118,7 +146,14 @@ export const events = {
 
 export const stores = {
     locations: locationsQuery.$data,
-    pageLoading: or(locationsQuery.$pending, applicationsModel.effects.getUserDataApplicationsFx.pending),
+    serviceAreas: serviceAreasQuery.$data,
+    services: servicesQuery.$data,
+    servicesLoading: servicesQuery.$pending,
+    pageLoading: or(
+        locationsQuery.$pending,
+        serviceAreasQuery.$pending,
+        applicationsModel.effects.getUserDataApplicationsFx.pending,
+    ),
     files: $files,
     note: $note,
     name: $name,
