@@ -1,25 +1,27 @@
 import axios from 'axios'
 
-export const MAINTENANCE_URL = 'https://docker.mospolytech.ru:5045/api/v1'
+export const MAINTENANCE_URL = 'https://api.mospolytech.ru/ticketsservice'
 
 export const $maintenanceApi = axios.create({ baseURL: MAINTENANCE_URL })
 
 export type TechnicalMaintenance = {
     applicantName: string
     description: string
-    serviceId: string
     email?: string
     phone?: string
     location?: string
     room?: string
+    serviceAreaId: string
+    serviceCategoryId: string
     files?: File[]
 }
 
 export const postMaintenance = async (req: TechnicalMaintenance) => {
     const formData = new FormData()
-    formData.append('applicantName', req.applicantName)
-    formData.append('description', req.description)
-    formData.append('serviceId', req.serviceId)
+    formData.append('ApplicantName', req.applicantName)
+    formData.append('Description', req.description)
+    formData.append('ServiceAreaId', req.serviceAreaId)
+    formData.append('ServiceCategoryId', req.serviceCategoryId)
     req.phone && formData.append('phone', req.phone)
     req.location && formData.append('location', req.location)
     req.room && formData.append('location', req.room)
@@ -35,6 +37,18 @@ export const postMaintenance = async (req: TechnicalMaintenance) => {
 }
 
 export const getLocations = async () => {
-    const { data } = await $maintenanceApi.get<{ name: string }[]>('/tickets/locations')
+    const { data } = await $maintenanceApi.get<{ name: string }[]>('/handbooks/locations')
+    return data
+}
+
+export const getServiceAreas = async () => {
+    const { data } = await $maintenanceApi.get<{ id: string; title: string }[]>('/handbooks/service-areas')
+    return data
+}
+
+export const getServices = async ({ serviceArea }: { serviceArea: string }) => {
+    const { data } = await $maintenanceApi.get<{ id: string; title: string; items: { id: string; title: string }[] }[]>(
+        `/handbooks/${serviceArea}`,
+    )
     return data
 }
