@@ -2,6 +2,8 @@ import React, { useEffect, useState } from 'react'
 import { FiInfo } from 'react-icons/fi'
 import { Link } from 'react-router-dom'
 
+import { format } from 'date-fns'
+import { ru } from 'date-fns/locale'
 import styled from 'styled-components'
 
 import checkFormFields from '@features/send-form/check-form-fields'
@@ -9,7 +11,7 @@ import checkFormFields from '@features/send-form/check-form-fields'
 import { superiorRoomModel } from '@entities/superior-room'
 
 import { isProduction } from '@shared/consts'
-import { DORMITORY } from '@shared/routing'
+import { DORMITORY, superiorRoomResultsDate } from '@shared/routing'
 import { userModel } from '@shared/session'
 import { Error, FormBlock, Message, SubmitButton, Wrapper } from '@shared/ui/atoms'
 import InputArea from '@shared/ui/input-area'
@@ -78,8 +80,9 @@ const ApplicationForSuperiorRoom = () => {
                         <Message title="Информация по заявке" type="info" icon={<FiInfo />} visible={isDone}>
                             <p>
                                 Ваша заявка направлена на рассмотрение жилищной комиссии. С результатами распределения
-                                мест и датой заселения можно будет ознакомиться 14 марта в Личном кабинете в разделе{' '}
-                                <Link to={DORMITORY}>«Список нуждающихся в общежитии»</Link>.
+                                мест и датой заселения можно будет ознакомиться{' '}
+                                {format(new Date(superiorRoomResultsDate), 'd MMMM', { locale: ru })} в Личном кабинете
+                                в разделе <Link to={DORMITORY}>«Список нуждающихся в общежитии»</Link>.
                             </p>
                         </Message>
                         <SubmitButton
