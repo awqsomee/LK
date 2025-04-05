@@ -1,17 +1,25 @@
 import React, { useCallback, useEffect, useMemo, useState } from 'react'
 
+import { Property } from 'csstype'
 import { useUnit } from 'effector-react'
 
 import { modalModel } from '../../model'
 import { Context } from './context'
 
-interface Props {
+type Props = {
     children: JSX.Element
+} & ModalProps
+
+export type ModalProps = {
+    padding?: Property.Padding
+    gap?: Property.Gap
 }
 
 export const ModalProvider = ({ children }: Props) => {
     const [isOpen, setIsOpen] = useState<boolean>(false)
     const [titles, setTitles] = useState<string[]>([])
+    const [padding, setPadding] = useState<Property.Padding>('')
+    const [gap, setGap] = useState<Property.Gap>('')
     const [openModals, setOpenModals] = useState<React.ReactElement<any, any>[]>([])
     const isModalOpen = useUnit(modalModel.stores.$isModalOpen)
 
@@ -27,7 +35,7 @@ export const ModalProvider = ({ children }: Props) => {
     }, [openModals, setOpenModals])
 
     const open = useCallback(
-        (Component: React.ReactElement<any, any> | undefined, title?: string) => {
+        (Component: React.ReactElement<any, any> | undefined, title?: string, props?: ModalProps) => {
             if (Component) {
                 if (!isOpen) {
                     setOpenModals(() => [Component])
@@ -36,6 +44,8 @@ export const ModalProvider = ({ children }: Props) => {
                     setOpenModals(() => [...openModals, Component])
                     setTitles(() => [...titles, title ?? ''])
                 }
+                if (props?.padding) setPadding(props?.padding)
+                if (props?.gap) setGap(props?.gap)
                 setIsOpen(() => true)
                 modalModel.events.open()
             }
@@ -45,6 +55,8 @@ export const ModalProvider = ({ children }: Props) => {
 
     const close = useCallback(() => {
         setIsOpen(() => false)
+        setPadding('')
+        setGap('')
         modalModel.events.close()
     }, [setOpenModals, setIsOpen])
 
@@ -73,6 +85,8 @@ export const ModalProvider = ({ children }: Props) => {
                 canBack,
                 component,
                 title,
+                gap,
+                padding,
                 setComponent,
             }}
         >
