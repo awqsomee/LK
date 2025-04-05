@@ -21,6 +21,7 @@ export type SpecialFieldsName =
     | 'employed'
     | 'unemployed'
     | 'universityTransfer'
+    | 'not_dorm11'
     | null
 
 export type SpecialFieldsNameConfig = { [key: string]: SpecialFieldsName }

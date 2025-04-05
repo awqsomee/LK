@@ -68,8 +68,9 @@ import {
 } from '../paths'
 import { generalHiddenRoutes, generalRoutes } from './private'
 
-export const StartDateSuperiorRoom = 'Mar 04 2025 12:00:00 GMT+0300'
-export const EndDateSuperiorRoom = 'Mar 09 2025 12:00:00 GMT+0300'
+export const superiorRoomStartDate = 'Apr 07 2025 12:00:00 GMT+0300'
+export const superiorRoomEndDate = 'Apr 18 2025 12:00:00 GMT+0300'
+export const superiorRoomResultsDate = 'Apr 21 2025 00:00:00 GMT+0300'
 
 export const studentRoutes: () => IRoutes = () => ({
     // On this position just to make necessary order
@@ -176,7 +177,7 @@ export const studentRoutes: () => IRoutes = () => ({
         color: 'blue',
         isTemplate: false,
         group: 'GENERAL',
-        show: isProduction ? (new Date() > new Date(EndDateSuperiorRoom) ? false : true) : true,
+        show: isProduction ? (new Date() > new Date(superiorRoomEndDate) ? false : true) : true,
     },
     'all-teachers': {
         id: 'all-teachers',

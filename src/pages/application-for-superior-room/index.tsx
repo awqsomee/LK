@@ -2,6 +2,8 @@ import React, { useEffect, useState } from 'react'
 import { FiInfo } from 'react-icons/fi'
 import { Link } from 'react-router-dom'
 
+import { format } from 'date-fns'
+import { ru } from 'date-fns/locale'
 import styled from 'styled-components'
 
 import checkFormFields from '@features/send-form/check-form-fields'
@@ -9,13 +11,15 @@ import checkFormFields from '@features/send-form/check-form-fields'
 import { superiorRoomModel } from '@entities/superior-room'
 
 import { isProduction } from '@shared/consts'
-import { DORMITORY } from '@shared/routing'
+import { DORMITORY, superiorRoomResultsDate } from '@shared/routing'
 import { userModel } from '@shared/session'
 import { Error, FormBlock, Message, SubmitButton, Wrapper } from '@shared/ui/atoms'
 import InputArea from '@shared/ui/input-area'
 import { IInputArea, IInputAreaData } from '@shared/ui/input-area/model'
+import { SpecialFieldsNameConfig } from '@shared/ui/input-area/types'
 import { SelectPage } from '@shared/ui/select'
 
+import { getDorm } from './lib/get-dorm'
 import getForm from './lib/get-form'
 import { getStatusFormSuperiorRoom } from './lib/get-status'
 import sendForm from './lib/send-form'
@@ -41,6 +45,7 @@ const ApplicationForSuperiorRoom = () => {
     const [dormId, setDormId] = useState<number>(0)
     const [completed, setCompleted] = useState(false)
     const [loading, setLoading] = useState(false)
+    const [specialFieldsName, setSpecialFieldsName] = useState<SpecialFieldsNameConfig>({})
 
     const isDone = (completed || !data?.is_avaliable) ?? false
 
@@ -69,17 +74,29 @@ const ApplicationForSuperiorRoom = () => {
         }
     }, [(form?.data[3] as IInputAreaData)?.value])
 
+    useEffect(() => {
+        if (!!form) {
+            setSpecialFieldsName(getDorm(form.data as IInputAreaData[]))
+        }
+    }, [form])
+
     return (
         <Wrapper load={() => superiorRoomModel.effects.getSuperiorRoomFx()} loading={!data} error={error} data={data}>
             <ApplicationForSuperiorRoomWrapper isDone={isDone}>
                 {!!form && !!setForm && (
                     <FormBlock>
-                        <InputArea {...form} collapsed={isDone} setData={setForm as LoadedState} />
+                        <InputArea
+                            {...form}
+                            collapsed={isDone}
+                            setData={setForm as LoadedState}
+                            specialFieldsNameConfig={specialFieldsName}
+                        />
                         <Message title="Информация по заявке" type="info" icon={<FiInfo />} visible={isDone}>
                             <p>
                                 Ваша заявка направлена на рассмотрение жилищной комиссии. С результатами распределения
-                                мест и датой заселения можно будет ознакомиться 14 марта в Личном кабинете в разделе{' '}
-                                <Link to={DORMITORY}>«Список нуждающихся в общежитии»</Link>.
+                                мест и датой заселения можно будет ознакомиться{' '}
+                                {format(new Date(superiorRoomResultsDate), 'd MMMM', { locale: ru })} в Личном кабинете
+                                в разделе <Link to={DORMITORY}>«Список нуждающихся в общежитии»</Link>.
                             </p>
                         </Message>
                         <SubmitButton

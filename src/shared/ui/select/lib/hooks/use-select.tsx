@@ -92,6 +92,7 @@ const useSelect = (props: SelectProps) => {
         if (isOpen) {
             handleOpen()
         }
+        if (!multiple) setSearchQuery(!selected ? '' : (selected as SelectPage).title)
     })
 
     useEffect(() => {
@@ -100,21 +101,35 @@ const useSelect = (props: SelectProps) => {
             return
         }
 
-        const handler = setTimeout(() => {
-            setDebouncedItems(
-                currentItems.filter((item) => item.title.toLowerCase().includes(searchQuery.toLowerCase())),
-            )
+        const searchHandler = setTimeout(() => {
+            const foundItems = currentItems[0]?.items
+                ? currentItems.map((group) => ({
+                      ...group,
+                      items:
+                          group.items?.filter((item) => item.title.toLowerCase().includes(searchQuery.toLowerCase())) ??
+                          [],
+                  }))
+                : currentItems.filter((item) => item.title.toLowerCase().includes(searchQuery.toLowerCase()))
+
+            const isExactMatch = currentItems[0]?.items
+                ? foundItems.reduce((acc, el) => acc + (el.items?.length ?? 0), 0) === 1 &&
+                  searchQuery === foundItems[0].items![0].title
+                : foundItems.length === 1 && searchQuery === foundItems[0].title
+
+            setDebouncedItems(isExactMatch ? items : foundItems)
         }, 300)
 
         return () => {
-            clearTimeout(handler)
+            clearTimeout(searchHandler)
         }
     }, [currentItems, searchQuery, withSearch])
 
     const clearQuery = useCallback(() => {
         setSelected(null)
         setIsOpen(false)
+        setSearchQuery('')
     }, [])
+
     const changeQuery = useCallback((value: string) => {
         setSelected(null)
         setSearchQuery(value)
@@ -123,7 +138,7 @@ const useSelect = (props: SelectProps) => {
 
     useEffect(() => {
         if (!multiple) setSearchQuery(!selected ? '' : (selected as SelectPage).title)
-    }, [selected])
+    }, [selected, items])
 
     return {
         handleOpen,

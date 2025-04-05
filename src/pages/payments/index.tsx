@@ -58,7 +58,9 @@ const PaymentsPage = () => {
                     Ведутся доработки по информации о долге по оплате и суммам оплат
                 </Message>
                 {paymentType !== 'none' && <PaymentsWidget fullWidth />}
-                {paymentType === 'education' && <Link to={TAX_CERTIFICATES_ROUTE}>Заказать справку в ФНС</Link>}
+                {(paymentType === 'education' || paymentType === 'both') && (
+                    <Link to={TAX_CERTIFICATES_ROUTE}>Заказать справку в ФНС</Link>
+                )}
                 {paymentType === 'none' && <Error text="Нет данных" />}
                 {paymentType === 'both' && (
                     <SliderPage

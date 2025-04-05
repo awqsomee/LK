@@ -18,6 +18,7 @@ import {
     Home,
     InstructionsPage,
     LkNotificationsPage,
+    MaintenancePage,
     ProfilePage,
     SafetyInformation,
     SchedulePage,
@@ -48,6 +49,7 @@ export const privatePages: PageRoute = {
     },
     'safety-information': SafetyInformation,
     'technical-maintenance': TechnicalMaintenance,
+    maintenance: MaintenancePage,
 }
 
 export const privateHiddenPages: PageRoute = {
@@ -59,4 +61,5 @@ export const privateHiddenPages: PageRoute = {
     'filtered-all-teachers': AllTeachersPage,
 
     'useful-info-template': HelpfulInformation,
+    maintenance: MaintenancePage,
 }

@@ -22,15 +22,16 @@ const msAllocationTypes = [
     { id: 0, title: 'Один в комнате' },
     { id: 1, title: 'Двое в комнате' },
     { id: 2, title: 'Трое в комнате' },
+    { id: 3, title: 'Семейная комната' },
 ]
 
 const pkAllocationTypes = [{ id: 2, title: 'Трое в комнате' }]
 
 export const dormLocations: { id: DormId; title: string }[] = [
-    { id: 'bg', title: 'ул. Бориса Галушкина, д. 9' },
-    { id: 'm', title: 'ул. Михалковская, д. 7, корп. 3' },
-    { id: 'ms', title: 'ул. Малая Семеновская, д. 12' },
-    { id: 'pk', title: 'ул. Павла Корчагина, д. 22, к.2' },
+    { id: 'ms', title: 'Общежитие № 1, г. Москва, ул. Малая Семеновская, д. 12' },
+    { id: 'm', title: 'Общежитие № 5, г. Москва, ул. Михалковская, д. 7, к. 3' },
+    { id: 'bg', title: 'Общежитие № 6, г. Москва, ул. Бориса Галушкина, д. 9' },
+    { id: 'pk', title: 'Общежитие № 11, г. Москва, ул. Павла Корчагина, д. 22А, к. 2' },
 ]
 
 export const extracurricularActivities: CheckboxDocs[] = [
@@ -75,7 +76,7 @@ export const extracurricularActivities: CheckboxDocs[] = [
 const getForm = (data: SuperiorRoom, form: IInputArea | null): IInputArea => {
     const { fio, phone, email } = data
     const dormId = ((form?.data[3] as IInputAreaData)?.value as SelectPage)?.id
-    const documentsAppendedValue = (form?.data[7] as IInputAreaData)?.value
+    // const documentsAppendedValue = (form?.data[7] as IInputAreaData)?.value
     const optionalCheckboxValue = form?.optionalCheckbox?.value
     return {
         title: 'Заявка на комнату повышенной комфортности',
@@ -149,25 +150,26 @@ const getForm = (data: SuperiorRoom, form: IInputArea | null): IInputArea => {
                 width: '100%',
                 editable: !!dormId,
                 required: true,
+                specialType: 'not_dorm11',
             },
-            {
-                title: 'Участие во внеучебной деятельности',
-                value: null,
-                fieldName: 'extracurricular',
-                type: 'checkbox-docs',
-                items: extracurricularActivities,
-                width: '100%',
-                editable: true,
-                required: false,
-            },
-            {
-                title: 'Необходимые документы приложены',
-                type: 'checkbox',
-                value: !!documentsAppendedValue,
-                fieldName: '',
-                editable: true,
-                required: true,
-            },
+            // {
+            //     title: 'Участие во внеучебной деятельности',
+            //     value: null,
+            //     fieldName: 'extracurricular',
+            //     type: 'checkbox-docs',
+            //     items: extracurricularActivities,
+            //     width: '100%',
+            //     editable: true,
+            //     required: false,
+            // },
+            // {
+            //     title: 'Необходимые документы приложены',
+            //     type: 'checkbox',
+            //     value: !!documentsAppendedValue,
+            //     fieldName: '',
+            //     editable: true,
+            //     required: true,
+            // },
         ],
         alert: <>{superiorRoomAlert}</>,
         hint: 'Перед отправкой заявки обязательно проверьте указанную в форме контактную информацию (мобильный телефон и адрес электронной почты) и при необходимости внесите изменения.',
