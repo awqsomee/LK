@@ -86,12 +86,14 @@ const PassportActiveElement = () => {
         passportProcessingDone,
         studentsNotFound,
         denyRemainingApplications,
+        dismissed,
     ] = useUnit([
         model.$newPassports,
         model.$passportProcessingProgressPercent,
         model.$passportProcessingDone,
         model.$studentsNotFound,
         model.denyRemainingApplications,
+        model.dismissed,
     ])
 
     const { open } = useModal()
@@ -147,7 +149,7 @@ const PassportActiveElement = () => {
                 <Flex jc="space-between">
                     Сгенерированы все паспорта! 🥳
                     <LKButton
-                        onClick={close}
+                        onClick={dismissed}
                         icon={<FiX />}
                         height="35px"
                         minWidth="35px"

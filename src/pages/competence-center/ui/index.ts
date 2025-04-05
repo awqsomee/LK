@@ -24,7 +24,7 @@ export const Button = styled(ButtonBase)<{ p?: string }>`
     font-weight: 600;
     font-size: 0.9rem;
     line-height: 1.125rem;
-    padding: ${({ p }) => p ?? '1rem 1.25rem'};
+    padding: ${({ p }) => p ?? '1rem 1rem'};
 
     background-color: var(--reallyBlue);
 

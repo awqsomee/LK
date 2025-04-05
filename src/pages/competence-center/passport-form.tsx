@@ -16,7 +16,7 @@ import { LoadedState } from '@shared/ui/input-area/types'
 
 import * as model from './models/competence-center-model'
 
-const ComeptenceCenterForm = () => {
+const CompetenceCenterPassportFormPage = () => {
     const [form, setForm] = useState<IInputArea | null>(null)
     const [completed, setCompleted] = useState(false)
     const [loading] = useState(false)
@@ -46,7 +46,8 @@ const ComeptenceCenterForm = () => {
                                 fio: (form.data[0] as IInputAreaData).value as string,
                                 email: (form.data[1] as IInputAreaData).value as string,
                                 date: new Date().toISOString(),
-                                status: 'В работе',
+                                endDate: new Date().toISOString(),
+                                status: 'Готово',
                                 results: '/passport.pdf',
                             })
                             setCompleted(true)
@@ -134,4 +135,4 @@ const getForm = (dataUserApplication: UserApplication): IInputArea => {
     }
 }
 
-export default ComeptenceCenterForm
+export default CompetenceCenterPassportFormPage

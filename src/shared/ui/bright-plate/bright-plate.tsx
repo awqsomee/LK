@@ -9,18 +9,19 @@ interface Props {
     hasBorder?: boolean
     height?: string
     padding?: string
+    maw?: string
 }
 
-export const BrightPlate = ({ onClick, children, show, hasBorder, height, padding }: Props) => {
+export const BrightPlate = ({ onClick, children, show, ...props }: Props) => {
     if (!show) return null
     return (
-        <Layout onClick={onClick} hasBorder={hasBorder} height={height} padding={padding}>
+        <Layout onClick={onClick} {...props}>
             {children}
         </Layout>
     )
 }
 
-const Layout = styled.button<Pick<Props, 'hasBorder' | 'height' | 'padding'>>`
+const Layout = styled.button<Pick<Props, 'hasBorder' | 'height' | 'padding' | 'maw'>>`
     border: none;
     display: flex;
     cursor: pointer;
@@ -29,7 +30,7 @@ const Layout = styled.button<Pick<Props, 'hasBorder' | 'height' | 'padding'>>`
     display: flex;
     align-items: center;
     gap: 16px;
-    max-width: 750px;
+    max-width: ${({ maw }) => maw ?? '750px'};
     border-radius: var(--brLight);
     background: var(--block);
     box-shadow: var(--very-mild-shadow);

@@ -28,7 +28,8 @@ import {
     ChangingPersonalData,
     ClarificationOfPassportDataApplication,
     CompetenceCenter,
-    CompetenceCenterForm,
+    CompetenceCenterConsultationForm,
+    CompetenceCenterPassportForm,
     DormitoryPage,
     FamilyRoomPage,
     FinancialSupport,
@@ -83,6 +84,7 @@ export const studentPages = {
     'competence-center': CompetenceCenter,
 }
 
+// TODO: make type check for page name
 export const hiddenStudentPages = {
     ...privateHiddenPages,
     'student-employment': StudentEmploymentPage,
@@ -128,5 +130,6 @@ export const hiddenStudentPages = {
     'extension-attestation': ApplicationExtensionAttestation,
     'tax-certificate': TaxCertificatesPage,
     'tax-certificate-form': TaxCertificatePage,
-    'competence-center-form': CompetenceCenterForm,
+    'competence-center-consultation-form': CompetenceCenterConsultationForm,
+    'competence-center-passport-form': CompetenceCenterPassportForm,
 }

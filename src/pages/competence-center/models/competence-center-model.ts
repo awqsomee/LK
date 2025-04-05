@@ -15,4 +15,4 @@ export type PassportReq = {
     results?: string
 }
 export const $passportReq = createStore<PassportReq | null>(null).on(applicationFilled, (_, payload) => payload)
-export const $passportStatus = createStore<PassportStatus | null>(null).on(applicationFilled, () => 'in_review')
+export const $passportStatus = createStore<PassportStatus | null>(null).on(applicationFilled, () => 'ready')

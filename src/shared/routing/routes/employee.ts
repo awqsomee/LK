@@ -456,7 +456,7 @@ export const employeeRoutes: (params: { allowancesRoles: Role[] }) => IRoutes = 
     },
     'competence-center-admin': {
         id: 'competence-center-admin',
-        title: 'Новые заявки',
+        title: 'Центр компетенций',
         icon: RiPassValidLine,
         path: COMPETENCE_CENTER_STAFF,
         color: 'orange',

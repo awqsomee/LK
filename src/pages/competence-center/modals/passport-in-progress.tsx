@@ -17,7 +17,7 @@ export const PassportInProgress = () => {
             <LabledData label="Запрос" data="Генерация паспорта компетенций" />
             {Object.keys(passportReq).map((key) => {
                 const data =
-                    key === 'date'
+                    key === 'date' || key === 'endDate'
                         ? localizeDate(passportReq[key as keyof model.PassportReq], 'numeric')
                         : passportReq[key as keyof model.PassportReq]
 

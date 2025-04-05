@@ -56,4 +56,5 @@ export const STUDENT_EMPLOYMENT = STUDENT_EMPLOYMENT_ROUTE + '/employment'
 export const TAX_CERTIFICATES_ROUTE = '/tax-certificates'
 export const TAX_CERTIFICATE_ROUTE = '/tax-certificates/:id'
 
-export const COMPETENCE_CENTER_FORM = '/competence-center-form'
+export const COMPETENCE_CENTER_CONSULTATION_FORM = '/competence-center-consultation-form'
+export const COMPETENCE_CENTER_PASSPORT_FORM = '/competence-center-passport-form'

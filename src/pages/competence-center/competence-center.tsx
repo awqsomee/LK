@@ -1,11 +1,10 @@
 import React from 'react'
 import { FiPlus } from 'react-icons/fi'
-import { GoArchive } from 'react-icons/go'
 import { LiaArrowRightSolid } from 'react-icons/lia'
 import { LuSendHorizonal } from 'react-icons/lu'
 import { PiFileMagnifyingGlassLight } from 'react-icons/pi'
 import { TbDownload } from 'react-icons/tb'
-import { Link } from 'react-router-dom'
+import { Link, useHistory } from 'react-router-dom'
 
 import { Property } from 'csstype'
 import { useUnit } from 'effector-react'
@@ -14,9 +13,13 @@ import styled from 'styled-components'
 import { ApplicationStatusType, ApplicationsConstants } from '@entities/applications/consts'
 
 import { useIntersectionObserver } from '@shared/lib/hooks/use-intersection-observer'
-import { COMPETENCE_CENTER, COMPETENCE_CENTER_FORM } from '@shared/routing'
+import {
+    COMPETENCE_CENTER,
+    COMPETENCE_CENTER_CONSULTATION_FORM,
+    COMPETENCE_CENTER_PASSPORT_FORM,
+} from '@shared/routing'
 import { ButtonBase } from '@shared/ui'
-import { Message, Title, Wrapper } from '@shared/ui/atoms'
+import { Message, Title } from '@shared/ui/atoms'
 import { BrightPlate } from '@shared/ui/bright-plate/bright-plate'
 import { MEDIA_QUERIES } from '@shared/ui/consts'
 import Flex from '@shared/ui/flex'
@@ -28,21 +31,21 @@ import { ColumnProps } from '@shared/ui/table/types'
 
 import * as model from './models/competence-center-model'
 import { PassportInProgress } from './modals/passport-in-progress'
-import { Button, DimmedButton, IconButton, IconLink, OutlinedButton, Stack, Text } from './ui'
+import { Button, IconButton, IconLink, OutlinedButton, Stack, Text } from './ui'
 
 const CompetenceCenter = () => {
     const { isMobile } = useCurrentDevice()
     return (
-        <Wrapper load={() => {}} loading={false} error={null} data={true}>
-            <PageBlock>
+        <PageBlock padding="0">
+            <Flex d="column" gap="3rem" p="0.75rem 3rem 2rem">
                 <Stack gap={isMobile ? 48 : 64}>
                     <PassportBlock />
                     <HowToGet />
                     <Information />
                     <Consultations />
                 </Stack>
-            </PageBlock>
-        </Wrapper>
+            </Flex>
+        </PageBlock>
     )
 }
 
@@ -137,7 +140,7 @@ const howToGetSteps: Step[] = [
     {
         title: 'Получение результатов',
         text: 'После прохождения тестирования ты можешь подать заявку в Центр компетенций на формирование результатов и выдачу паспорта компетенций',
-        link: COMPETENCE_CENTER_FORM,
+        link: COMPETENCE_CENTER_PASSPORT_FORM,
     },
 ]
 
@@ -170,7 +173,7 @@ const HowToGet = () => {
 
 const HowToGetStep = ({ title, text, index }: Step & { index: number }) => {
     return (
-        <Card h="100%" withBg withBorder>
+        <HowToGetCard h="100%" withBg withBorder>
             <Flex ai="stretch" jc="space-between" gap="0.5rem" h="100%">
                 <Stack gap={24} h="100%">
                     <Title size={3} align="left">
@@ -185,7 +188,7 @@ const HowToGetStep = ({ title, text, index }: Step & { index: number }) => {
                     </CircleLink>
                 </Stack>
             </Flex>
-        </Card>
+        </HowToGetCard>
     )
 }
 
@@ -205,9 +208,13 @@ const Information = () => {
                         </Title>
                         <Text mw="37.5rem">
                             Паспорт компетенций – официальный документ, подтверждающий прохождение студентом
-                            тестирования по оценке надпрофессиональных навыков, среди которых: анализ информации и
-                            выработка решений ориентация на результат партнёрство/сотрудничество стрессоустойчивость
-                            планирование и организация следование процедурам и правилам
+                            тестирования по оценке надпрофессиональных навыков, среди которых:
+                            <UL style={{ marginTop: '1rem', marginLeft: '1rem' }}>
+                                <li>анализ информации и выработка решений</li> <li>ориентация на результат</li>
+                                <li>партнёрство/сотрудничество</li> <li>стрессоустойчивость</li>
+                                <li>планирование и организация</li>
+                                <li>следование процедурам и правилам</li>
+                            </UL>
                         </Text>
                     </Stack>
                 </Card>
@@ -217,13 +224,18 @@ const Information = () => {
                             Зачем нужен паспорт компетенций?
                         </Title>
                         <Text>
-                            Паспорт компетенций даёт следующие преимущества: 5 дополнительных баллов при поступлении в
-                            магистратуру; на платформе hh.ru его можно приложить к резюме, а работодатель сможет узнать
-                            ваш уровень softskills.
+                            Паспорт компетенций даёт следующие преимущества:
+                            <UL>
+                                <li>5 дополнительных баллов при поступлении в магистратуру;</li>
+                                <li>
+                                    на платформе hh.ru его можно приложить к резюме, а работодатель сможет узнать ваш
+                                    уровень softskills.
+                                </li>
+                            </UL>
                         </Text>
                     </Stack>
                 </Card>
-                <BrightPlate show onClick={() => {}} height="auto" padding="0.75rem">
+                <BrightPlate show onClick={() => {}} height="auto" padding="0.75rem" maw="100%">
                     <Text>✨ Улучшить компетенции ✨</Text>
                 </BrightPlate>
             </InformationGrid>
@@ -233,13 +245,14 @@ const Information = () => {
 
 const Consultations = () => {
     const { isMobile } = useCurrentDevice()
+    const history = useHistory()
 
     const { isIntersecting, ref } = useIntersectionObserver({
         threshold: 0.5,
     })
 
     return (
-        <Stack w="100%">
+        <Stack w="100%" gap={32}>
             <Flex gap="0.5rem" jc="space-between">
                 <Flex w="fit-content">
                     <Title size={2} align="left">
@@ -251,7 +264,7 @@ const Consultations = () => {
                         <FiPlus size={20} />
                     </IconButton>
                 ) : (
-                    <Button ref={ref} c="white">
+                    <Button ref={ref} c="white" onClick={() => history.push(COMPETENCE_CENTER_CONSULTATION_FORM)}>
                         Связаться с Центром
                         <LuSendHorizonal size={14} />
                     </Button>
@@ -269,7 +282,7 @@ const Consultations = () => {
                         req: 'Консультация',
                         date: '2022-12-12',
                         status: 'В работе',
-                        communicationMethod: '89256458989',
+                        communicationMethod: '+7 (999) 999-99-99',
                         comment: '',
                     },
                     {
@@ -281,9 +294,6 @@ const Consultations = () => {
                     },
                 ]}
             />
-            <DimmedButton margin={isMobile ? undefined : '0 0 0 auto'}>
-                Перейти к завершенным <GoArchive size={14} />
-            </DimmedButton>
             {!isIntersecting && (
                 <CallCenterButton c="white">
                     Связаться с Центром
@@ -396,12 +406,29 @@ const Card = styled.div<{ w?: Property.Width; h?: Property.Height; withBorder?: 
     border-radius: var(--brLight);
 `
 
+const HowToGetCard = styled(Card)`
+    transition: all 0.3s ease-in-out;
+    ${CircleLink} svg {
+        transition: all 0.3s ease-in-out;
+    }
+
+    &:hover {
+        ${CircleLink} svg {
+            scale: 1.2;
+            translate: 20%;
+            transition: all 0.2s ease-in-out;
+        }
+        background: linear-gradient(353.15deg, #567dff -21.96%, rgba(0, 0, 0, 0.12) 111.04%);
+        border-color: var(--almostTransparentOpposite);
+    }
+`
+
+const UL = styled.ul`
+    margin-top: 1rem;
+    margin-left: 1rem;
+`
+
 const getColumns = (): ColumnProps[] => [
-    // {
-    //     title: 'Запрос',
-    //     field: 'req',
-    //     priority: 'two',
-    // },
     {
         title: 'Дата подачи',
         field: 'date',

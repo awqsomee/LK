@@ -2,6 +2,7 @@ import { BiBookReader, BiBrain, BiCheckCircle, BiIdCard, BiInfoCircle, BiRuble, 
 import { BsFileMedical } from 'react-icons/bs'
 import { FaRegLightbulb } from 'react-icons/fa6'
 import { FiBriefcase, FiFileText } from 'react-icons/fi'
+import { IoDocumentTextOutline } from 'react-icons/io5'
 import { MdOutlineBedroomChild } from 'react-icons/md'
 import { RiPassValidLine } from 'react-icons/ri'
 
@@ -22,7 +23,8 @@ import {
     CHANGING_PERSONAL_DATA,
     CLARIFICATION_OF_PASSPORT_DATA_ROUTE,
     COMPETENCE_CENTER,
-    COMPETENCE_CENTER_FORM,
+    COMPETENCE_CENTER_CONSULTATION_FORM,
+    COMPETENCE_CENTER_PASSPORT_FORM,
     DORMITORY,
     EXIT_ACADEMIC_LEAVE,
     EXTENSION_ATTESTATION,
@@ -127,6 +129,8 @@ export const studentRoutes: () => IRoutes = () => ({
         isTemplate: false,
         pageSize: 'large',
         group: 'COMPETENCE_CENTER',
+        hiddenTitle: true,
+        subPageHeaderTitle: '',
     },
     'acad-performance': {
         id: 'acad-performance',
@@ -739,12 +743,29 @@ export const studentHiddenRoutes: ({ studentFinance }: { studentFinance: Student
         pageSize: 'big',
         hiddenTitle: true,
     },
-    'competence-center-form': {
-        id: 'competence-center-form',
-        title: 'Мои заявления',
-        icon: RiPassValidLine,
-        path: COMPETENCE_CENTER_FORM,
-        color: 'orange',
+
+    // TODO: merge key and id
+    // TODO: make competence center section
+    // TODO: make unified form type with similar styles and icons
+    'competence-center-consultation-form': {
+        id: 'competence-center-consultation-form',
+        title: 'Связаться с Центром компетенции',
+        icon: IoDocumentTextOutline,
+        path: COMPETENCE_CENTER_CONSULTATION_FORM,
+        color: 'blue',
+        isTemplate: false,
+        isSubPage: true,
+        backButtonText: 'Назад к заявкам',
+        fallbackPrevPage: COMPETENCE_CENTER,
+        group: 'COMPETENCE_CENTER',
+        hiddenTitle: true,
+    },
+    'competence-center-passport-form': {
+        id: 'competence-center-passport-form',
+        title: 'Оставить заявку на выдачу паспорта',
+        icon: IoDocumentTextOutline,
+        path: COMPETENCE_CENTER_PASSPORT_FORM,
+        color: 'blue',
         isTemplate: false,
         isSubPage: true,
         backButtonText: 'Назад к заявкам',
