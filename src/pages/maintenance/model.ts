@@ -22,6 +22,7 @@ const setPhone = createEvent<string>()
 const setEmail = createEvent<string>()
 const setNote = createEvent<string>()
 const setServiceType = createEvent<SelectPage | null>()
+const setServiceId = createEvent<SelectPage | null>()
 const setService = createEvent<SelectPage | null>()
 const setLocation = createEvent<SelectPage | null>()
 const setRoom = createEvent<string>()
@@ -46,6 +47,7 @@ const $email = createStore('')
     .on(setEmail, (_, email) => email)
     .on(applicationsModel.stores.applications, (_, { dataUserApplication }) => dataUserApplication?.email ?? '')
 const $serviceType = restore(setServiceType, null).reset(pageMounted)
+const $serviceId = restore(setServiceId, null).reset(pageMounted)
 const $service = restore(setService, null).reset([pageMounted, $serviceType])
 const $room = restore(setRoom, '').reset(pageMounted)
 const $location = createStore<SelectPage | null>(null)
@@ -88,6 +90,7 @@ sample({
 sample({
     clock: sendForm,
     source: {
+        services: servicesQuery.$data,
         files: $files,
         name: $name,
         phone: $phone,
@@ -98,8 +101,10 @@ sample({
         location: $location,
         room: $room,
     },
-    filter: ({ serviceType, service }) => !!serviceType && !!service,
-    fn: ({ files, name, phone, email, note, service, location, room, serviceType }): TechnicalMaintenance => {
+    filter: ({ serviceType, service, services }) => !!serviceType && !!services && !!service,
+    fn: ({ services, files, name, phone, email, note, service, location, room, serviceType }): TechnicalMaintenance => {
+        const serviceCategoryId =
+            services!.find((s) => s.items.find((item) => item.id === service!.id.toString()))?.id ?? ''
         return {
             applicantName: name,
             description: note,
@@ -109,7 +114,8 @@ sample({
             room,
             files,
             serviceAreaId: serviceType!.id.toString(),
-            serviceCategoryId: service!.id.toString(),
+            serviceId: service!.id.toString(),
+            serviceCategoryId,
         }
     },
     target: sendFormMutation.start,
@@ -138,6 +144,7 @@ export const events = {
     setEmail,
     setNote,
     setServiceType,
+    setServiceId,
     setService,
     setLocation,
     setRoom,
@@ -160,6 +167,7 @@ export const stores = {
     phone: $phone,
     email: $email,
     serviceType: $serviceType,
+    serviceId: $serviceId,
     service: $service,
     location: $location,
     room: $room,

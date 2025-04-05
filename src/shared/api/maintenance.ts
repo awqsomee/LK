@@ -12,6 +12,7 @@ export type TechnicalMaintenance = {
     location?: string
     room?: string
     serviceAreaId: string
+    serviceId: string
     serviceCategoryId: string
     files?: File[]
 }
@@ -21,13 +22,13 @@ export const postMaintenance = async (req: TechnicalMaintenance) => {
     formData.append('ApplicantName', req.applicantName)
     formData.append('Description', req.description)
     formData.append('ServiceAreaId', req.serviceAreaId)
+    formData.append('ServiceId', req.serviceId)
     formData.append('ServiceCategoryId', req.serviceCategoryId)
-    req.phone && formData.append('phone', req.phone)
-    req.location && formData.append('location', req.location)
-    req.room && formData.append('location', req.room)
-    req.email && formData.append('email', req.email)
-    req.room && formData.append('room', req.room)
-    req.files && req.files[0] && formData.append('files', req.files[0])
+    formData.append('Phone', req.phone ?? '')
+    formData.append('Location', req.location ?? '')
+    formData.append('Room', req.room ?? '')
+    formData.append('Email', req.email ?? '')
+    //  req.files[0] && formData.append('files', req.files[0])
     const { data } = await $maintenanceApi.post<{ ticketId: string }>(`/tickets`, formData, {
         headers: {
             'Content-Type': 'multipart/form-data',
