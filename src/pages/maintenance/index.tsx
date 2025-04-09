@@ -94,6 +94,7 @@ const Phone = () => {
             type="tel"
             value={value}
             setValue={setValue}
+            required
         ></Input>
     )
 }
@@ -107,6 +108,7 @@ const Email = () => {
             value={value}
             type="email"
             setValue={setValue}
+            required
         ></Input>
     )
 }
@@ -193,12 +195,14 @@ const Room = () => {
 // }
 
 const Submit = () => {
-    const [sendForm, done, loading, note, name, serviceType, service] = useUnit([
+    const [sendForm, done, loading, note, name, phone, email, serviceType, service] = useUnit([
         model.events.sendForm,
         model.stores.done,
         model.stores.loading,
         model.stores.note,
         model.stores.name,
+        model.stores.phone,
+        model.stores.email,
         model.stores.serviceType,
         model.stores.service,
     ])
@@ -212,7 +216,14 @@ const Submit = () => {
             repeatable={false}
             buttonSuccessText="Отправлено"
             isDone={done}
-            isActive={Boolean(note) && Boolean(name) && Boolean(serviceType) && Boolean(service)}
+            isActive={
+                Boolean(note) &&
+                Boolean(name) &&
+                Boolean(phone) &&
+                Boolean(email) &&
+                Boolean(serviceType) &&
+                Boolean(service)
+            }
             popUpFailureMessage={'Для отправки формы необходимо, чтобы все поля были заполнены'}
             popUpSuccessMessage="Данные формы успешно отправлены"
         />
