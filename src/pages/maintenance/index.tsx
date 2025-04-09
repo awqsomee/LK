@@ -45,10 +45,10 @@ const Maintenance = () => {
                         <Name />
                         <Phone />
                         <Email />
-                        <Location />
-                        <Room />
                         <ServiceType />
                         <Service />
+                        <Location />
+                        <Room />
                         <Note />
                         {/* <File /> */}
                         <Submit />
@@ -166,7 +166,7 @@ const Location = () => {
         <Select
             title="Локация, где необходимо выполнить заявку"
             placeholder="Начните вводить локацию"
-            required={serviceType?.id === 'campus'}
+            required={serviceType?.id === 'campus-services'}
             width="100%"
             isActive={!!locations?.length}
             items={locations ?? []}
@@ -179,7 +179,17 @@ const Location = () => {
 
 const Room = () => {
     const [value, setValue] = useUnit([model.stores.room, model.events.setRoom])
-    return <Input title="№ аудитории" placeholder="Введите № аудитории" value={value} setValue={setValue}></Input>
+    const [serviceType] = useUnit([model.stores.serviceType])
+
+    return (
+        <Input
+            title="№ аудитории"
+            placeholder="Введите № аудитории"
+            value={value}
+            setValue={setValue}
+            required={serviceType?.id === 'campus-services'}
+        />
+    )
 }
 
 // const File = () => {
@@ -195,7 +205,7 @@ const Room = () => {
 // }
 
 const Submit = () => {
-    const [sendForm, done, loading, note, name, phone, email, serviceType, service] = useUnit([
+    const [sendForm, done, loading, note, name, phone, email, serviceType, service, location, room] = useUnit([
         model.events.sendForm,
         model.stores.done,
         model.stores.loading,
@@ -205,6 +215,8 @@ const Submit = () => {
         model.stores.email,
         model.stores.serviceType,
         model.stores.service,
+        model.stores.location,
+        model.stores.room,
     ])
     return (
         <SubmitButton
@@ -222,7 +234,8 @@ const Submit = () => {
                 Boolean(phone) &&
                 Boolean(email) &&
                 Boolean(serviceType) &&
-                Boolean(service)
+                Boolean(service) &&
+                (serviceType?.id === 'campus-services' ? Boolean(location) && Boolean(room) : true)
             }
             popUpFailureMessage={'Для отправки формы необходимо, чтобы все поля были заполнены'}
             popUpSuccessMessage="Данные формы успешно отправлены"
