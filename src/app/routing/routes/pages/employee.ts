@@ -107,3 +107,7 @@ export const Science = lazy(() => import('@pages/science/pages/upload'))
 export const ArticleList = lazy(() => import('@pages/science/pages/article-list'))
 export const Article = lazy(() => import('@pages/science/pages/article'))
 export const Children = lazy(() => import('@pages/children'))
+
+export const AdminCompetenceCenter = lazy(() => import('@pages/competence-center/admin-competence-center'))
+export const PassportGenerationList = lazy(() => import('@pages/competence-center/passport-generation-list'))
+export const CompletedConsultationList = lazy(() => import('@pages/competence-center/completed-consultation-list'))
