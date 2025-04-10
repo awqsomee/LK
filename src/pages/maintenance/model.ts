@@ -102,15 +102,7 @@ sample({
         room: $room,
     },
     filter: ({ serviceType, service, services, name, phone, email, location, room }) =>
-        !!name &&
-        !!phone &&
-        !!email &&
-        !!serviceType &&
-        !!services &&
-        !!service &&
-        serviceType?.id === 'campus-services'
-            ? !!location && !!room
-            : true,
+        !!name && !!phone && !!email && !!serviceType && !!services && !!service && !!location && !!room,
     fn: ({ services, files, name, phone, email, note, service, location, room, serviceType }): TechnicalMaintenance => {
         const serviceCategoryId =
             services!.find((s) => s.items.find((item) => item.id === service!.id.toString()))?.id ?? ''

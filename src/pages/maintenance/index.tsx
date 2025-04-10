@@ -166,7 +166,7 @@ const Location = () => {
         <Select
             title="Локация, где необходимо выполнить заявку"
             placeholder="Начните вводить локацию"
-            required={serviceType?.id === 'campus-services'}
+            required
             width="100%"
             isActive={!!locations?.length}
             items={locations ?? []}
@@ -181,15 +181,7 @@ const Room = () => {
     const [value, setValue] = useUnit([model.stores.room, model.events.setRoom])
     const [serviceType] = useUnit([model.stores.serviceType])
 
-    return (
-        <Input
-            title="№ аудитории"
-            placeholder="Введите № аудитории"
-            value={value}
-            setValue={setValue}
-            required={serviceType?.id === 'campus-services'}
-        />
-    )
+    return <Input title="№ аудитории" placeholder="Введите № аудитории" value={value} setValue={setValue} required />
 }
 
 // const File = () => {
@@ -235,7 +227,8 @@ const Submit = () => {
                 Boolean(email) &&
                 Boolean(serviceType) &&
                 Boolean(service) &&
-                (serviceType?.id === 'campus-services' ? Boolean(location) && Boolean(room) : true)
+                Boolean(location) &&
+                Boolean(room)
             }
             popUpFailureMessage={'Для отправки формы необходимо, чтобы все поля были заполнены'}
             popUpSuccessMessage="Данные формы успешно отправлены"
