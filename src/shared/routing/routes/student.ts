@@ -65,9 +65,9 @@ import {
 } from '../paths'
 import { generalHiddenRoutes, generalRoutes } from './private'
 
-export const superiorRoomStartDate = 'Apr 07 2025 12:00:00 GMT+0300'
-export const superiorRoomEndDate = 'Apr 18 2025 12:00:00 GMT+0300'
-export const superiorRoomResultsDate = 'Apr 21 2025 00:00:00 GMT+0300'
+export const superiorRoomStartDate = 'Apr 11 2025 12:00:00 GMT+0300'
+export const superiorRoomEndDate = 'Apr 23 2025 12:00:00 GMT+0300'
+export const superiorRoomResultsDate = 'Apr 25 2025 00:00:00 GMT+0300'
 
 export const studentRoutes: () => IRoutes = () => ({
     // On this position just to make necessary order
