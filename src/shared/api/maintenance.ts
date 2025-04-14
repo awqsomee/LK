@@ -1,6 +1,10 @@
 import axios from 'axios'
 
-export const MAINTENANCE_URL = 'https://api.mospolytech.ru/ticketsservice'
+import { isProduction } from '@shared/consts'
+
+export const MAINTENANCE_URL = isProduction
+    ? 'https://api.mospolytech.ru/ticketsservice'
+    : 'https://docker.mospolytech.ru:5045/ticketsservice'
 
 export const $maintenanceApi = axios.create({ baseURL: MAINTENANCE_URL })
 
@@ -30,7 +34,7 @@ export const postMaintenance = async (req: TechnicalMaintenance) => {
     formData.append('Email', req.email ?? '')
     if (req.files) {
         for (let i = 0; i < req.files.length; i++) {
-            formData.append('files[]', req.files[i])
+            formData.append('Files', req.files[i])
         }
     }
     const { data } = await $maintenanceApi.post<{ ticketId: string }>(`/tickets`, formData, {
