@@ -5,6 +5,7 @@ import { useStoreMap, useUnit } from 'effector-react'
 import { userModel } from '@shared/session'
 import { CenterPage, Input, Loading, SubmitButton, TextArea, Title } from '@shared/ui/atoms'
 import FormBlockWrapper from '@shared/ui/atoms/form-block'
+import FileInput from '@shared/ui/file-input'
 import Flex from '@shared/ui/flex'
 import GoBackButton from '@shared/ui/go-back-button'
 import Select from '@shared/ui/select'
@@ -50,7 +51,7 @@ const Maintenance = () => {
                         <Location />
                         <Room />
                         <Note />
-                        {/* <File /> */}
+                        <Files />
                         <Submit />
                     </>
                 )}
@@ -160,7 +161,6 @@ const Location = () => {
                 title: location.name,
             })) ?? [],
     )
-    const [serviceType] = useUnit([model.stores.serviceType])
 
     return (
         <Select
@@ -179,22 +179,21 @@ const Location = () => {
 
 const Room = () => {
     const [value, setValue] = useUnit([model.stores.room, model.events.setRoom])
-    const [serviceType] = useUnit([model.stores.serviceType])
 
     return <Input title="№ аудитории" placeholder="Введите № аудитории" value={value} setValue={setValue} required />
 }
 
-// const File = () => {
-//     const [files, setFiles] = useUnit([model.stores.files, model.events.setFiles])
-//     return (
-//         <>
-//             <Title size={4} align="left" bottomGap="5px">
-//                 Фотография
-//             </Title>
-//             <FileInput files={files} setFiles={setFiles} isActive />
-//         </>
-//     )
-// }
+const Files = () => {
+    const [files, setFiles] = useUnit([model.stores.files, model.events.setFiles])
+    return (
+        <>
+            <Title size={4} align="left" bottomGap="5px">
+                Приложите файлы
+            </Title>
+            <FileInput files={files} setFiles={setFiles} isActive />
+        </>
+    )
+}
 
 const Submit = () => {
     const [sendForm, done, loading, note, name, phone, email, serviceType, service, location, room] = useUnit([
