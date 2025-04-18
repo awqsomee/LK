@@ -1,20 +1,25 @@
 import React, { useEffect } from 'react'
 import { useParams } from 'react-router'
+import { Link } from 'react-router-dom'
 
 import { useStoreMap, useUnit } from 'effector-react'
 
 import { taxCertificateModel } from '@entities/payments'
 
+import { TAX_CERT_REQUEST_ROUTE, TAX_CERT_REQUEST_ROUTE_PREFIX } from '@shared/routing'
 import { Error, Loading, Title, Wrapper } from '@shared/ui/atoms'
 import KeyValue from '@shared/ui/atoms/key-value'
 import Flex from '@shared/ui/flex'
 import useCurrentDevice from '@shared/ui/hooks/use-current-device'
+import { useModal } from '@shared/ui/modal'
 import PageBlock from '@shared/ui/page-block'
 import Table from '@shared/ui/table'
+import { ColumnProps } from '@shared/ui/table/types'
 
 import { Docs, File } from './docs'
 
 const TaxCertificatePage = () => {
+    const { close } = useModal()
     const { id } = useParams<{ id: string }>()
     const { isTablet } = useCurrentDevice()
     const [pageMounted, loading] = useUnit([taxCertificateModel.pageMounted, taxCertificateModel.certificatesLoading])
@@ -36,6 +41,19 @@ const TaxCertificatePage = () => {
                 <Error text="Справка не найдена"></Error>
             </Flex>
         )
+
+    const getExtendedPaymentColumns = (): ColumnProps[] => [
+        ...paymentColumns,
+        {
+            field: '',
+            title: '',
+            render: (_, data) => (
+                <Link to={`${TAX_CERT_REQUEST_ROUTE_PREFIX}/${id}/${data.paymentGuid}`} onClick={close}>
+                    Изменить плательщика
+                </Link>
+            ),
+        },
+    ]
     return (
         <Wrapper data={true} load={() => {}} error={null}>
             <PageBlock>
@@ -83,24 +101,8 @@ const TaxCertificatePage = () => {
                                 loading={loading}
                                 innerPadding="0.33rem"
                                 fontSize="0.75rem"
-                                columns={[
-                                    {
-                                        title: 'Дата оплаты',
-                                        field: 'paymentDate',
-                                    },
-                                    {
-                                        title: 'Сумма оплаты',
-                                        field: 'summ',
-                                    },
-                                    {
-                                        title: 'Тип редакции',
-                                        field: 'versionType',
-                                    },
-                                    {
-                                        title: 'Дата редакции',
-                                        field: 'versionDate',
-                                    },
-                                ]}
+                                columns={paymentColumns}
+                                columnsExtended={getExtendedPaymentColumns()}
                                 data={certificate.payments}
                             />
                         </Flex>
@@ -110,4 +112,29 @@ const TaxCertificatePage = () => {
         </Wrapper>
     )
 }
+
+const paymentColumns: ColumnProps[] = [
+    {
+        title: 'Дата оплаты',
+        field: 'paymentDate',
+    },
+    {
+        title: 'Сумма оплаты',
+        field: 'summ',
+    },
+    {
+        title: 'Тип редакции',
+        field: 'versionType',
+    },
+    {
+        title: 'Дата редакции',
+        field: 'versionDate',
+    },
+    {
+        title: 'Плательщик',
+        field: 'payer',
+        render: (val) => val || '-',
+    },
+]
+
 export default TaxCertificatePage

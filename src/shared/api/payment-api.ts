@@ -99,10 +99,10 @@ export type TaxCertificate = {
     cert_file_stamp: string
     cert_file_sign: string
     cert_file_with_sign: string
-    payments: Payments[]
+    payments: TaxPayments[]
     contracts: Contracts[]
 }
-type Payments = {
+type TaxPayments = {
     contractNumber: string
     contractGuid: string
     paymentDate: string
@@ -110,6 +110,8 @@ type Payments = {
     signatory: string
     versionType: string
     versionDate: string
+    payer: string
+    paymentGuid: string
 }
 type Contracts = {
     contractGuid: string
