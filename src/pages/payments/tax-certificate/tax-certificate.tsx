@@ -6,7 +6,7 @@ import { useStoreMap, useUnit } from 'effector-react'
 
 import { taxCertificateModel } from '@entities/payments'
 
-import { TAX_CERT_REQUEST_ROUTE, TAX_CERT_REQUEST_ROUTE_PREFIX } from '@shared/routing'
+import { TAX_CERT_REQUEST_ROUTE_PREFIX } from '@shared/routing'
 import { Error, Loading, Title, Wrapper } from '@shared/ui/atoms'
 import KeyValue from '@shared/ui/atoms/key-value'
 import Flex from '@shared/ui/flex'

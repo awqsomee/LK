@@ -1,23 +1,32 @@
 import React, { useEffect, useState } from 'react'
 import { useParams } from 'react-router'
 
+import { useUnit } from 'effector-react'
 import { z } from 'zod'
 
+import { globalPrepareFormData } from '@pages/applications/lib/prepare-form-data'
 import BaseApplicationWrapper from '@pages/applications/ui/base-application-wrapper'
 
 import checkFormFields from '@features/send-form/check-form-fields'
 
+import { ApplicationFormCodes } from '@shared/consts/models/application-form-codes'
 import { FormBlock } from '@shared/ui/atoms'
 import InputArea from '@shared/ui/input-area'
 import { IInputArea } from '@shared/ui/input-area/model'
 import { LoadedState } from '@shared/ui/input-area/types'
+import { SelectPage } from '@shared/ui/select'
 import SubmitButton from '@shared/ui/submit-button'
+
+import * as model from './model'
 
 const TaxCertRequest = () => {
     const { id, paymentId } = useParams<{ id: string; paymentId: string }>()
     const [form, setForm] = useState<IInputArea | null>(null)
-    const [completed, setCompleted] = useState(false)
-    const [loading, setLoading] = useState(false)
+    const [pending, completed, setCompleted] = useUnit([
+        model.$pending,
+        model.completed.value,
+        model.completed.setValue,
+    ])
     const isDone = completed ?? false
 
     useEffect(() => {
@@ -36,8 +45,11 @@ const TaxCertRequest = () => {
                     <InputArea {...form} collapsed={isDone} setData={setForm as LoadedState} />
                     <SubmitButton
                         text={'Отправить'}
-                        action={() => {}}
-                        isLoading={loading}
+                        action={() => {
+                            const result = globalPrepareFormData(ApplicationFormCodes[''], [form], true)
+                            model.sendFormClicked(result)
+                        }}
+                        isLoading={pending}
                         completed={completed}
                         setCompleted={setCompleted}
                         repeatable={false}
@@ -93,6 +105,8 @@ const DocumentCode: Record<DocumentCode, string> = {
     '91': 'Иной документ',
 }
 
+const documents: SelectPage[] = Object.entries(DocumentCode).map(([code, name]) => ({ id: code, title: name }))
+
 const getForm = ({ taxCertGuid, paymentGuid }: { taxCertGuid: string; paymentGuid: string }): IInputArea => {
     return {
         title: 'Предоставление права проживания в каникулярный период (для выпускников университета, проживающих в общежитиях)',
@@ -115,55 +129,67 @@ const getForm = ({ taxCertGuid, paymentGuid }: { taxCertGuid: string; paymentGui
                 value: '',
                 type: 'textarea',
                 editable: true,
+                required: true,
             },
             {
                 fieldName: 'FIO',
                 title: 'ФИО нового плетельщика',
                 value: '',
                 editable: true,
+                required: true,
             },
             {
-                fieldName: 'Дата рождения плательщика',
-                title: 'GUID',
+                fieldName: 'Birthday',
+                title: 'Дата рождения плательщика',
                 value: '',
                 type: 'date',
                 editable: true,
+                required: true,
             },
             {
                 fieldName: 'INN',
                 title: 'ИНН',
                 value: '',
                 editable: true,
+                required: true,
             },
             {
                 fieldName: 'SNILS',
                 title: 'СНИЛС',
                 value: '',
                 editable: true,
+                required: true,
             },
             {
                 fieldName: 'DocumentKindCode',
                 title: 'Код документа удостоверения личности',
-                value: '',
+                type: 'select',
+                value: null,
+                items: documents,
                 editable: true,
+                required: true,
+                width: '100%',
             },
             {
                 fieldName: 'Series',
                 title: 'Серия документа удостоверения личности',
                 value: '',
                 editable: true,
+                required: true,
             },
             {
                 fieldName: 'Number',
                 title: 'Номер документа',
                 value: '',
                 editable: true,
+                required: true,
             },
             {
                 fieldName: 'DateIssue',
                 title: 'Дата выдачи',
                 value: '',
                 editable: true,
+                required: true,
                 type: 'date',
             },
             {
@@ -171,12 +197,14 @@ const getForm = ({ taxCertGuid, paymentGuid }: { taxCertGuid: string; paymentGui
                 title: 'Подразделение',
                 value: '',
                 editable: true,
+                required: true,
             },
             {
                 fieldName: 'DepartmentCode',
                 title: 'Код подразделения',
                 value: '',
                 editable: true,
+                required: true,
             },
         ],
         documents: {
