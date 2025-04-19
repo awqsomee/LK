@@ -169,6 +169,7 @@ const getForm = ({ taxCertGuid, paymentGuid }: { taxCertGuid: string; paymentGui
                 editable: true,
                 required: true,
                 width: '100%',
+                isSpecificSelect: true,
             },
             {
                 fieldName: 'Series',
