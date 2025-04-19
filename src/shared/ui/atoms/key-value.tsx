@@ -40,7 +40,7 @@ const KeyValue = ({ keyStr, value, fontSize, visible = true, direction = 'horizo
 
     return (
         <Line direction={direction} fontSize={fontSize}>
-            <strong>{keyStr}:</strong>
+            {keyStr && <strong>{keyStr}:</strong>}
             <span className="value">{value}</span>
         </Line>
     )

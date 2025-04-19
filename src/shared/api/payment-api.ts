@@ -1,6 +1,9 @@
+import { createEffect } from 'effector'
+
 import { $api } from '@shared/api/config'
 import token from '@shared/lib/token'
 
+import { ApplicationCreating } from './applications/application-api'
 import { LoadPayments } from './model'
 
 export type SendAgreementCodesReq = {
@@ -99,10 +102,10 @@ export type TaxCertificate = {
     cert_file_stamp: string
     cert_file_sign: string
     cert_file_with_sign: string
-    payments: Payments[]
+    payments: TaxPayments[]
     contracts: Contracts[]
 }
-type Payments = {
+type TaxPayments = {
     contractNumber: string
     contractGuid: string
     paymentDate: string
@@ -110,6 +113,8 @@ type Payments = {
     signatory: string
     versionType: string
     versionDate: string
+    payer: string
+    paymentGuid: string
 }
 type Contracts = {
     contractGuid: string
@@ -126,3 +131,19 @@ export const createTaxCertificate = async ({ year }: { year: string }) => {
         )
     return data
 }
+
+export const createTaxCertRequestFx = createEffect(async (req: ApplicationCreating) => {
+    const formData = new FormData()
+    formData.set('token', token())
+    for (const [key, value] of Object.entries(req)) {
+        formData.set(key, value)
+    }
+
+    const { data } = await $api.post(`?createTaxCertRequest`, formData, {
+        headers: {
+            'Content-Type': 'multipart/form-data',
+        },
+    })
+    if (data.result !== 'ok') throw new Error(data.error_text)
+    return data
+})

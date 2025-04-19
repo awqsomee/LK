@@ -60,6 +60,7 @@ import {
     STUDENT_STATUS,
     TAX_CERTIFICATES_ROUTE,
     TAX_CERTIFICATE_ROUTE,
+    TAX_CERT_REQUEST_ROUTE,
     TERMINATION_OF_EMPLOYMENT_CONTRACT,
     USEFUL_INFO_ROUTE,
 } from '../paths'
@@ -188,12 +189,28 @@ export const studentRoutes: () => IRoutes = () => ({
     },
 })
 
+export const paymentHiddenRoutes: IRoutes = {
+    'tax-cert-request': {
+        id: 'tax-cert-request',
+        title: 'Замена плательщика по платежу',
+        icon: BiInfoCircle,
+        path: TAX_CERT_REQUEST_ROUTE,
+        color: 'blue',
+        isTemplate: false,
+        isSubPage: true,
+        backButtonText: 'Назад',
+        subPageHeaderTitle: '',
+        hiddenTitle: true,
+    },
+}
+
 export const studentHiddenRoutes: ({ studentFinance }: { studentFinance: StudentAccount['finance'] }) => IRoutes = ({
     studentFinance,
 }: {
     studentFinance: StudentAccount['finance']
 }) => ({
     ...generalHiddenRoutes,
+    ...paymentHiddenRoutes,
     'student-employment-type': {
         id: 'student-employment-type',
         title: 'Практика и трудоустройство',
