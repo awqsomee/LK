@@ -132,22 +132,6 @@ export const createTaxCertificate = async ({ year }: { year: string }) => {
     return data
 }
 
-type TaxCertRequest = {
-    TaxCertGuid: string
-    PaymentGuid: string
-    FIO: string
-    Comment: string
-    Birthday: string
-    INN: string
-    SNILS: string
-    DocumentKindCode: string
-    Series: string
-    Number: string
-    DateIssue: string
-    Department: string
-    DepartmentCode: string
-}
-
 export const createTaxCertRequestFx = createEffect(async (req: ApplicationCreating) => {
     const formData = new FormData()
     formData.set('token', token())
