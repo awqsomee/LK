@@ -54,3 +54,4 @@ export const STUDENT_EMPLOYMENT = STUDENT_EMPLOYMENT_ROUTE + '/employment'
 
 export const TAX_CERTIFICATES_ROUTE = '/tax-certificates'
 export const TAX_CERTIFICATE_ROUTE = '/tax-certificates/:id'
+export const STUD_ACCOUNTING = APPLICATIONS_ROUTE + '/accounting'

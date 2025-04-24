@@ -49,6 +49,7 @@ import {
     RestoringTheMagneticPass,
     RetakeForDiploma,
     StateAccreditation,
+    StudAccountingPage,
     StudentEmploymentApplicationPage,
     StudentEmploymentPage,
     StudentStatus,
@@ -125,4 +126,5 @@ export const hiddenStudentPages = {
     'extension-attestation': ApplicationExtensionAttestation,
     'tax-certificate': TaxCertificatesPage,
     'tax-certificate-form': TaxCertificatePage,
+    'stud-accounting': StudAccountingPage,
 }
