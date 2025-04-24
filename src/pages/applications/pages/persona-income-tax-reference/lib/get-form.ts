@@ -5,6 +5,18 @@ import getMethodObtainingFields from '@features/applications/lib/get-method-obta
 import { UserApplication } from '@shared/api/model'
 import { IInputArea } from '@shared/ui/input-area/model'
 
+const numberOfCopiesOptions = [
+    { id: 1, title: '1' },
+    { id: 2, title: '2' },
+    { id: 3, title: '3' },
+    { id: 4, title: '4' },
+    { id: 5, title: '5' },
+    { id: 6, title: '6' },
+    { id: 7, title: '7' },
+    { id: 8, title: '8' },
+    { id: 9, title: '9' },
+]
+
 const getForm = (data: UserApplication): IInputArea => {
     const { surname, name, patronymic, group, email, phone } = data
 
@@ -72,11 +84,13 @@ const getForm = (data: UserApplication): IInputArea => {
             },
             {
                 title: 'Количество копий',
-                value: null,
+                type: 'select',
+                width: '100',
                 fieldName: 'number_copies',
-                type: 'number',
+                value: numberOfCopiesOptions[0],
                 editable: true,
                 required: true,
+                items: numberOfCopiesOptions,
             },
             ...getMethodObtainingFields(),
             ...getTeacherSubdivisions(),
