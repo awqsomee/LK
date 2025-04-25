@@ -109,7 +109,7 @@ const documents: SelectPage[] = Object.entries(DocumentCode).map(([code, name]) 
 
 const getForm = ({ taxCertGuid, paymentGuid }: { taxCertGuid: string; paymentGuid: string }): IInputArea => {
     return {
-        title: 'Предоставление права проживания в каникулярный период (для выпускников университета, проживающих в общежитиях)',
+        title: 'Замена плательщика по платежу',
         data: [
             {
                 fieldName: 'TaxCertGuid',
