@@ -1,6 +1,7 @@
 import styled from 'styled-components'
 
 const FormBlockWrapper = styled.div<{ maxWidth?: string; noHeader?: boolean }>`
+    position: relative;
     width: 100%;
     height: fit-content;
     max-width: ${({ maxWidth }) => maxWidth ?? '700px'};
