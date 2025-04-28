@@ -52,7 +52,6 @@ const TaxCertRequest = () => {
                         isLoading={pending}
                         completed={completed}
                         setCompleted={setCompleted}
-                        repeatable={false}
                         buttonSuccessText="Отправлено"
                         isDone={isDone}
                         isActive={checkFormFields(form)}
@@ -165,7 +164,7 @@ const getForm = ({ taxCertGuid, paymentGuid }: { taxCertGuid: string; paymentGui
             },
             {
                 fieldName: 'DocumentKindCode',
-                title: 'Код документа удостоверения личности',
+                title: 'Тип документа удостоверения личности',
                 type: 'select',
                 value: null,
                 items: documents,
@@ -176,7 +175,7 @@ const getForm = ({ taxCertGuid, paymentGuid }: { taxCertGuid: string; paymentGui
             },
             {
                 fieldName: 'Series',
-                title: 'Серия документа удостоверения личности',
+                title: 'Серия документа',
                 value: '',
                 editable: true,
                 required: true,
