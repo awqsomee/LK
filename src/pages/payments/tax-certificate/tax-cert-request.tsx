@@ -84,9 +84,11 @@ const documentCodes = z.enum([
     '91',
 ])
 
+const xx = documentCodes.options
+
 type DocumentCode = z.infer<typeof documentCodes>
 
-const DocumentCode: Record<DocumentCode, string> = {
+const documentCode: Record<DocumentCode, string> = {
     '21': 'Паспорт гражданина Российской Федерации',
     '03': 'Свидетельство о рождении',
     '07': 'Военный билет',
@@ -105,7 +107,7 @@ const DocumentCode: Record<DocumentCode, string> = {
     '91': 'Иной документ',
 }
 
-const documents: SelectPage[] = Object.entries(DocumentCode).map(([code, name]) => ({ id: code, title: name }))
+const documents: SelectPage[] = xx.map((code) => ({ id: code, title: documentCode[code] }))
 
 const getForm = ({ taxCertGuid, paymentGuid }: { taxCertGuid: string; paymentGuid: string }): IInputArea => {
     return {
@@ -145,6 +147,7 @@ const getForm = ({ taxCertGuid, paymentGuid }: { taxCertGuid: string; paymentGui
                 type: 'date',
                 editable: true,
                 required: true,
+                maxValueInput: new Date().toISOString(),
             },
             {
                 fieldName: 'INN',
@@ -192,6 +195,7 @@ const getForm = ({ taxCertGuid, paymentGuid }: { taxCertGuid: string; paymentGui
                 editable: true,
                 required: true,
                 type: 'date',
+                maxValueInput: new Date().toISOString(),
             },
             {
                 fieldName: 'Department',

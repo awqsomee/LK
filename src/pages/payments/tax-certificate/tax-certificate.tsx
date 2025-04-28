@@ -2,6 +2,8 @@ import React, { useEffect } from 'react'
 import { useParams } from 'react-router'
 import { Link } from 'react-router-dom'
 
+import { format } from 'date-fns'
+import { ru } from 'date-fns/locale'
 import { useStoreMap, useUnit } from 'effector-react'
 
 import { taxCertificateModel } from '@entities/payments'
@@ -10,6 +12,7 @@ import { TAX_CERT_REQUEST_ROUTE_PREFIX } from '@shared/routing'
 import { Error, Loading, Title, Wrapper } from '@shared/ui/atoms'
 import KeyValue from '@shared/ui/atoms/key-value'
 import Flex from '@shared/ui/flex'
+import { Grid } from '@shared/ui/grid'
 import useCurrentDevice from '@shared/ui/hooks/use-current-device'
 import { useModal } from '@shared/ui/modal'
 import PageBlock from '@shared/ui/page-block'
@@ -45,7 +48,25 @@ const TaxCertificatePage = () => {
     const getExtendedPaymentColumns = (): ColumnProps[] => [
         ...paymentColumns,
         {
-            field: '',
+            field: '0',
+            title: '',
+            render: (val, data) => {
+                if (data.requestDate)
+                    return (
+                        <Flex d="column" ai="flex-start">
+                            <Grid columns="1fr 1fr" rows="1fr 1fr" columnGap="0.5rem">
+                                <p>Новый плательщик:</p>
+                                <p>{data.requestFIO}</p>
+                                <p>Дата заявления:</p>
+                                <p>{format(new Date(data.requestDate), 'dd MMMM yyyy, HH:mm', { locale: ru })}</p>
+                            </Grid>
+                        </Flex>
+                    )
+                return null
+            },
+        },
+        {
+            field: '1',
             title: '',
             render: (_, data) => (
                 <Link to={`${TAX_CERT_REQUEST_ROUTE_PREFIX}/${id}/${data.paymentGuid}`} onClick={close}>
@@ -72,7 +93,7 @@ const TaxCertificatePage = () => {
                         <KeyValue keyStr="Подписант" value={certificate.signatory} />
                     </Flex>
                     <Flex gap="2rem" d={isTablet ? 'column' : 'row'} ai="flex-start">
-                        <Flex d="column" gap="0.5rem" jc="space-between" h="100%">
+                        <Flex d="column" gap="0.5rem" jc="space-between" h="100%" style={{ overflow: 'hidden' }}>
                             <Title size={4} align="left" bottomGap={isTablet ? '0' : '1lh'}>
                                 Список договоров к справке
                             </Title>
@@ -93,7 +114,7 @@ const TaxCertificatePage = () => {
                                 data={certificate.contracts}
                             />
                         </Flex>
-                        <Flex d="column" gap="0.5rem">
+                        <Flex d="column" gap="0.5rem" style={{ overflow: 'hidden' }}>
                             <Title size={4} align="left">
                                 Список оплат с редакциями к договору к справке (договор, доп.соглашение)
                             </Title>
@@ -133,7 +154,10 @@ const paymentColumns: ColumnProps[] = [
     {
         title: 'Плательщик',
         field: 'payer',
-        render: (val) => val || '-',
+        render: (val, data) => {
+            if (data.requestDate) return 'Отправлено заявление на изменение'
+            return val || '-'
+        },
     },
 ]
 
