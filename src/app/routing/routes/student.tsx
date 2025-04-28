@@ -52,6 +52,7 @@ import {
     StudentEmploymentApplicationPage,
     StudentEmploymentPage,
     StudentStatus,
+    TaxCertRequestPage,
     TaxCertificatePage,
     TaxCertificatesPage,
     TerminationOfEmploymentContractPage,
@@ -125,4 +126,5 @@ export const hiddenStudentPages = {
     'extension-attestation': ApplicationExtensionAttestation,
     'tax-certificate': TaxCertificatesPage,
     'tax-certificate-form': TaxCertificatePage,
+    'tax-cert-request': TaxCertRequestPage,
 }
