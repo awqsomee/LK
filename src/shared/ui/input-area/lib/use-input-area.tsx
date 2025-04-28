@@ -31,7 +31,7 @@ const useInputArea = ({
     const [included, setIncluded] = useState(false)
 
     const handleConfirm = () => {
-        if (data[0] === undefined && !optionalCheckbox?.value && optionalCheckbox?.required)
+        if (data[0] === undefined && !documents?.files.length && !optionalCheckbox?.value && optionalCheckbox?.required)
             return popUpMessageModel.events.evokePopUpMessage({
                 message: 'Не все необходимые поля заполнены',
                 type: 'failure',
