@@ -214,6 +214,10 @@ const getSectionLinks = ({ studentFinance }: { studentFinance: StudentAccount['f
                     title: 'Техническая эксплуатация',
                 },
                 {
+                    link: STUD_ACCOUNTING,
+                    title: 'Запрос справки из бухгалтерии',
+                },
+                {
                     link: ARBITRARY_REQUEST_ROUTE,
                     title: 'Произвольный запрос',
                 },
@@ -226,10 +230,6 @@ const getSectionLinks = ({ studentFinance }: { studentFinance: StudentAccount['f
                 {
                     link: STUDENT_EMPLOYMENT_APPLICATION_ROUTE,
                     title: 'Трудоустройство студентов',
-                },
-                {
-                    link: STUD_ACCOUNTING,
-                    title: 'Запрос справки из бухгалтерии',
                 },
             ],
         },
