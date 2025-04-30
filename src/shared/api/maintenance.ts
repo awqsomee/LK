@@ -1,10 +1,6 @@
 import axios from 'axios'
 
-import { isProduction } from '@shared/consts'
-
-export const MAINTENANCE_URL = isProduction
-    ? 'https://api.mospolytech.ru/ticketsservice'
-    : 'https://docker.mospolytech.ru:5045/ticketsservice'
+export const MAINTENANCE_URL = 'https://api.mospolytech.ru/ticketsservice'
 
 export const $maintenanceApi = axios.create({ baseURL: MAINTENANCE_URL })
 

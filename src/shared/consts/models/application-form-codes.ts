@@ -48,6 +48,7 @@ export enum ApplicationFormCodes {
     DISMISSAL = '',
     HOLIDAY_POSTPONED = '',
     PART_TIME_EMPLOYMENT = '',
+    '' = '',
 }
 
 export enum ApplicationTeachersFormCodes {

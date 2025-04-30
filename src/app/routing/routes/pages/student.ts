@@ -130,3 +130,4 @@ export const StudentEmploymentApplicationPage = lazy(() => import('@pages/applic
 
 export const TaxCertificatesPage = lazy(() => import('@pages/payments/tax-certificate'))
 export const TaxCertificatePage = lazy(() => import('@pages/payments/tax-certificate/tax-certificate'))
+export const TaxCertRequestPage = lazy(() => import('@pages/payments/tax-certificate/tax-cert-request'))
