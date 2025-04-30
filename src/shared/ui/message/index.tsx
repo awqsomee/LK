@@ -92,11 +92,9 @@ export function Message({
             lineHeight={lineHeight}
             solidBackground={solidBackground}
         >
-            {title !== undefined && title && (
-                <Title size={4} align={align} icon={icon === null ? null : (icon ?? messageType[type].icon({}))}>
-                    {title ?? messageType[type].title}
-                </Title>
-            )}
+            <Title size={4} align={align} icon={icon === null ? null : (icon ?? messageType[type].icon({}))}>
+                {title ?? messageType[type].title}
+            </Title>
             {onClose && <Button onClick={onClose} icon={<FiX />} className="close-button" />}
             {children && <div className="info-text">{children}</div>}
             {loading && <Loading />}
