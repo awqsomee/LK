@@ -38,7 +38,7 @@ const $name = createStore('')
     .on(applicationsModel.stores.applications, (_, { dataUserApplication }) => {
         if (!dataUserApplication) return ''
         const { name, surname, patronymic } = dataUserApplication
-        return `${name} ${surname} ${patronymic}`
+        return `${surname} ${name} ${patronymic}`
     })
 const $phone = createStore('')
     .on(setPhone, (_, phone) => phone)
