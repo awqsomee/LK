@@ -58,6 +58,7 @@ reset({
 })
 export const taxCertificateModel = {
     pageMounted,
+    getTaxCertsFx,
     certificatedRequested,
     certificates: $taxCerts,
     presentYears: $presentYears,

@@ -359,7 +359,7 @@ export const employeeRoutes: (params: { allowancesRoles: Role[] }) => IRoutes = 
         group: 'FINANCES_DOCS',
         pageSize: 'big',
         isNew: true,
-        show: allowancesRoles.includes('Approver') || allowancesRoles.includes('Initiator'),
+        show: !isProduction && (allowancesRoles.includes('Approver') || allowancesRoles.includes('Initiator')),
     },
     'data-verification': {
         id: 'data-verification',

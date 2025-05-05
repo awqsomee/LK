@@ -28,7 +28,11 @@ export const postMaintenance = async (req: TechnicalMaintenance) => {
     formData.append('Location', req.location ?? '')
     formData.append('Room', req.room ?? '')
     formData.append('Email', req.email ?? '')
-    //  req.files[0] && formData.append('files', req.files[0])
+    if (req.files) {
+        for (let i = 0; i < req.files.length; i++) {
+            formData.append('Files', req.files[i])
+        }
+    }
     const { data } = await $maintenanceApi.post<{ ticketId: string }>(`/tickets`, formData, {
         headers: {
             'Content-Type': 'multipart/form-data',

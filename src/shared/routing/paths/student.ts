@@ -58,3 +58,5 @@ export const TAX_CERTIFICATE_ROUTE = '/tax-certificates/:id'
 
 export const COMPETENCE_CENTER_CONSULTATION_FORM = '/competence-center-consultation-form'
 export const COMPETENCE_CENTER_PASSPORT_FORM = '/competence-center-passport-form'
+export const TAX_CERT_REQUEST_ROUTE_PREFIX = '/tax-cert-request'
+export const TAX_CERT_REQUEST_ROUTE = TAX_CERT_REQUEST_ROUTE_PREFIX + '/:id/:paymentId'

@@ -5,6 +5,7 @@ import { useStoreMap, useUnit } from 'effector-react'
 import { userModel } from '@shared/session'
 import { CenterPage, Input, Loading, SubmitButton, TextArea, Title } from '@shared/ui/atoms'
 import FormBlockWrapper from '@shared/ui/atoms/form-block'
+import FileInput from '@shared/ui/file-input'
 import Flex from '@shared/ui/flex'
 import GoBackButton from '@shared/ui/go-back-button'
 import Select from '@shared/ui/select'
@@ -45,12 +46,12 @@ const Maintenance = () => {
                         <Name />
                         <Phone />
                         <Email />
-                        <Location />
-                        <Room />
                         <ServiceType />
                         <Service />
+                        <Location />
+                        <Room />
                         <Note />
-                        {/* <File /> */}
+                        <Files />
                         <Submit />
                     </>
                 )}
@@ -94,6 +95,7 @@ const Phone = () => {
             type="tel"
             value={value}
             setValue={setValue}
+            required
         ></Input>
     )
 }
@@ -107,6 +109,7 @@ const Email = () => {
             value={value}
             type="email"
             setValue={setValue}
+            required
         ></Input>
     )
 }
@@ -158,13 +161,12 @@ const Location = () => {
                 title: location.name,
             })) ?? [],
     )
-    const [serviceType] = useUnit([model.stores.serviceType])
 
     return (
         <Select
             title="Локация, где необходимо выполнить заявку"
             placeholder="Начните вводить локацию"
-            required={serviceType?.id === 'campus'}
+            required
             width="100%"
             isActive={!!locations?.length}
             items={locations ?? []}
@@ -177,30 +179,35 @@ const Location = () => {
 
 const Room = () => {
     const [value, setValue] = useUnit([model.stores.room, model.events.setRoom])
-    return <Input title="№ аудитории" placeholder="Введите № аудитории" value={value} setValue={setValue}></Input>
+
+    return <Input title="№ аудитории" placeholder="Введите № аудитории" value={value} setValue={setValue} required />
 }
 
-// const File = () => {
-//     const [files, setFiles] = useUnit([model.stores.files, model.events.setFiles])
-//     return (
-//         <>
-//             <Title size={4} align="left" bottomGap="5px">
-//                 Фотография
-//             </Title>
-//             <FileInput files={files} setFiles={setFiles} isActive />
-//         </>
-//     )
-// }
+const Files = () => {
+    const [files, setFiles] = useUnit([model.stores.files, model.events.setFiles])
+    return (
+        <>
+            <Title size={4} align="left" bottomGap="5px">
+                Приложите файлы
+            </Title>
+            <FileInput files={files} setFiles={setFiles} isActive />
+        </>
+    )
+}
 
 const Submit = () => {
-    const [sendForm, done, loading, note, name, serviceType, service] = useUnit([
+    const [sendForm, done, loading, note, name, phone, email, serviceType, service, location, room] = useUnit([
         model.events.sendForm,
         model.stores.done,
         model.stores.loading,
         model.stores.note,
         model.stores.name,
+        model.stores.phone,
+        model.stores.email,
         model.stores.serviceType,
         model.stores.service,
+        model.stores.location,
+        model.stores.room,
     ])
     return (
         <SubmitButton
@@ -212,7 +219,16 @@ const Submit = () => {
             repeatable={false}
             buttonSuccessText="Отправлено"
             isDone={done}
-            isActive={Boolean(note) && Boolean(name) && Boolean(serviceType) && Boolean(service)}
+            isActive={
+                Boolean(note) &&
+                Boolean(name) &&
+                Boolean(phone) &&
+                Boolean(email) &&
+                Boolean(serviceType) &&
+                Boolean(service) &&
+                Boolean(location) &&
+                Boolean(room)
+            }
             popUpFailureMessage={'Для отправки формы необходимо, чтобы все поля были заполнены'}
             popUpSuccessMessage="Данные формы успешно отправлены"
         />

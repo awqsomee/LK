@@ -38,7 +38,7 @@ const $name = createStore('')
     .on(applicationsModel.stores.applications, (_, { dataUserApplication }) => {
         if (!dataUserApplication) return ''
         const { name, surname, patronymic } = dataUserApplication
-        return `${name} ${surname} ${patronymic}`
+        return `${surname} ${name} ${patronymic}`
     })
 const $phone = createStore('')
     .on(setPhone, (_, phone) => phone)
@@ -101,7 +101,8 @@ sample({
         location: $location,
         room: $room,
     },
-    filter: ({ serviceType, service, services }) => !!serviceType && !!services && !!service,
+    filter: ({ serviceType, service, services, name, phone, email, location, room }) =>
+        !!name && !!phone && !!email && !!serviceType && !!services && !!service && !!location && !!room,
     fn: ({ services, files, name, phone, email, note, service, location, room, serviceType }): TechnicalMaintenance => {
         const serviceCategoryId =
             services!.find((s) => s.items.find((item) => item.id === service!.id.toString()))?.id ?? ''

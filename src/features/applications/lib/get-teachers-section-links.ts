@@ -26,6 +26,7 @@ import {
     ISSUANCE_OF_LICENSES,
     ISSUANCE_OF_PASS,
     LIVING_IN_RESIDENTIAL_PREMISES,
+    MAINTENANCE,
     NUMBER_OF_UNUSED_VACATION_DAYS,
     OTHER_IT_SERVICES,
     PAYMENT_FOR_CHILD_CARE,
@@ -105,15 +106,8 @@ const getInDevelopmentStaffLinks = () => [
         links: [{ link: CONTACT_INFO_ACTUALIZATION, title: 'Актуализация контактных данных' }],
     },
     {
-        title: 'ИТ-обслуживание',
-        links: [
-            { link: GETTING_COMPUTER_EQUIPMENT, title: 'Получение нового компьютерного оборудования' },
-            { link: CONNECTING_COMPUTER, title: 'Подключение компьютера, МФУ, телефона, WiFi' },
-            { link: PRINTER_MAINTENANCE, title: 'Обслуживание принтеров, МФУ' },
-            { link: QUESTION_SED, title: 'Вопрос по СЭД Directum и 1С' },
-            { link: QUESTION_PERSONAL_ACCOUNT, title: 'Вопрос по Личному кабинету' },
-            { link: OTHER_IT_SERVICES, title: 'Прочее ИТ-обслуживание' },
-        ],
+        title: 'Обслуживание кампуса и в сфере ИТ',
+        links: [{ link: MAINTENANCE, title: 'Обслуживание кампуса и в сфере ИТ' }],
     },
     {
         title: 'Бухгалтерия',

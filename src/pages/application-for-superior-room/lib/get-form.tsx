@@ -76,7 +76,7 @@ export const extracurricularActivities: CheckboxDocs[] = [
 const getForm = (data: SuperiorRoom, form: IInputArea | null): IInputArea => {
     const { fio, phone, email } = data
     const dormId = ((form?.data[3] as IInputAreaData)?.value as SelectPage)?.id
-    // const documentsAppendedValue = (form?.data[7] as IInputAreaData)?.value
+    const documentsAppendedValue = (form?.data[7] as IInputAreaData)?.value
     const optionalCheckboxValue = form?.optionalCheckbox?.value
     return {
         title: 'Заявка на комнату повышенной комфортности',
@@ -152,24 +152,24 @@ const getForm = (data: SuperiorRoom, form: IInputArea | null): IInputArea => {
                 required: true,
                 specialType: 'not_dorm11',
             },
-            // {
-            //     title: 'Участие во внеучебной деятельности',
-            //     value: null,
-            //     fieldName: 'extracurricular',
-            //     type: 'checkbox-docs',
-            //     items: extracurricularActivities,
-            //     width: '100%',
-            //     editable: true,
-            //     required: false,
-            // },
-            // {
-            //     title: 'Необходимые документы приложены',
-            //     type: 'checkbox',
-            //     value: !!documentsAppendedValue,
-            //     fieldName: '',
-            //     editable: true,
-            //     required: true,
-            // },
+            {
+                title: 'Участие во внеучебной деятельности',
+                value: null,
+                fieldName: 'extracurricular',
+                type: 'checkbox-docs',
+                items: extracurricularActivities,
+                width: '100%',
+                editable: true,
+                required: false,
+            },
+            {
+                title: 'Необходимые документы приложены',
+                type: 'checkbox',
+                value: !!documentsAppendedValue,
+                fieldName: '',
+                editable: true,
+                required: true,
+            },
         ],
         alert: <>{superiorRoomAlert}</>,
         hint: 'Перед отправкой заявки обязательно проверьте указанную в форме контактную информацию (мобильный телефон и адрес электронной почты) и при необходимости внесите изменения.',

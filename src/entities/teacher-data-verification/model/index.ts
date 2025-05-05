@@ -1,4 +1,4 @@
-import { createEffect, createEvent, createStore } from 'effector'
+import { createEffect, createEvent, createStore, sample } from 'effector'
 import { useStore } from 'effector-react/compat'
 import { forward } from 'effector/effector.mjs'
 
@@ -72,6 +72,8 @@ const $teacherDataVerificationStore = createStore<TeacherDataVerificationStore>(
     .on(userModel.stores.userGuid, () => ({
         ...DEFAULT_STORE,
     }))
+
+sample({ clock: changeCompleted, target: getTeacherDataVerificationFx })
 
 export const selectors = {
     useTeacherDataVerification,

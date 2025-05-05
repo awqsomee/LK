@@ -55,6 +55,7 @@ import {
     StudentEmploymentApplicationPage,
     StudentEmploymentPage,
     StudentStatus,
+    TaxCertRequestPage,
     TaxCertificatePage,
     TaxCertificatesPage,
     TerminationOfEmploymentContractPage,
@@ -132,4 +133,5 @@ export const hiddenStudentPages = {
     'tax-certificate-form': TaxCertificatePage,
     'competence-center-consultation-form': CompetenceCenterConsultationForm,
     'competence-center-passport-form': CompetenceCenterPassportForm,
+    'tax-cert-request': TaxCertRequestPage,
 }

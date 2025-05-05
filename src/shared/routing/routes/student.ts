@@ -65,14 +65,15 @@ import {
     STUDENT_STATUS,
     TAX_CERTIFICATES_ROUTE,
     TAX_CERTIFICATE_ROUTE,
+    TAX_CERT_REQUEST_ROUTE,
     TERMINATION_OF_EMPLOYMENT_CONTRACT,
     USEFUL_INFO_ROUTE,
 } from '../paths'
 import { generalHiddenRoutes, generalRoutes } from './private'
 
-export const superiorRoomStartDate = 'Apr 07 2025 12:00:00 GMT+0300'
-export const superiorRoomEndDate = 'Apr 18 2025 12:00:00 GMT+0300'
-export const superiorRoomResultsDate = 'Apr 21 2025 00:00:00 GMT+0300'
+export const superiorRoomStartDate = 'Apr 11 2025 12:00:00 GMT+0300'
+export const superiorRoomEndDate = 'Apr 23 2025 12:00:00 GMT+0300'
+export const superiorRoomResultsDate = 'Apr 25 2025 00:00:00 GMT+0300'
 
 export const studentRoutes: () => IRoutes = () => ({
     // On this position just to make necessary order
@@ -205,12 +206,28 @@ export const studentRoutes: () => IRoutes = () => ({
     },
 })
 
+export const paymentHiddenRoutes: IRoutes = {
+    'tax-cert-request': {
+        id: 'tax-cert-request',
+        title: 'Замена плательщика по платежу',
+        icon: BiInfoCircle,
+        path: TAX_CERT_REQUEST_ROUTE,
+        color: 'blue',
+        isTemplate: false,
+        isSubPage: true,
+        backButtonText: 'Назад',
+        subPageHeaderTitle: '',
+        hiddenTitle: true,
+    },
+}
+
 export const studentHiddenRoutes: ({ studentFinance }: { studentFinance: StudentAccount['finance'] }) => IRoutes = ({
     studentFinance,
 }: {
     studentFinance: StudentAccount['finance']
 }) => ({
     ...generalHiddenRoutes,
+    ...paymentHiddenRoutes,
     'student-employment-type': {
         id: 'student-employment-type',
         title: 'Практика и трудоустройство',

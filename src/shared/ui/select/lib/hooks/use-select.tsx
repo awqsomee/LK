@@ -113,7 +113,8 @@ const useSelect = (props: SelectProps) => {
 
             const isExactMatch = currentItems[0]?.items
                 ? foundItems.reduce((acc, el) => acc + (el.items?.length ?? 0), 0) === 1 &&
-                  searchQuery === foundItems[0].items![0].title
+                  foundItems[0].items?.length &&
+                  searchQuery === foundItems[0].items[0].title
                 : foundItems.length === 1 && searchQuery === foundItems[0].title
 
             setDebouncedItems(isExactMatch ? items : foundItems)
