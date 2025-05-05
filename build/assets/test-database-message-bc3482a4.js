@@ -1,0 +1,1 @@
+import{j as e}from"./vendor-8a1e4858.js";import{cl as r,g as s}from"./index-a5cbed1f.js";const a=()=>r?null:e.jsx(s,{type:"alert",children:"Вы работаете с тестовой базой"});export{a as D};
