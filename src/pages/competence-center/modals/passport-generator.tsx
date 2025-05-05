@@ -83,6 +83,7 @@ const Button = styled(ButtonBase)`
     padding: 1rem 1.25rem;
 
     background-color: var(--reallyBlue);
+    color: ${({ c }) => c ?? '#ffffff'};
 
     ${MEDIA_QUERIES.isMobile} {
         padding-block: 0.75rem;

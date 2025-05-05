@@ -407,18 +407,53 @@ const Card = styled.div<{ w?: Property.Width; h?: Property.Height; withBorder?: 
 `
 
 const HowToGetCard = styled(Card)`
-    transition: all 0.3s ease-in-out;
+    @property --myColor1 {
+        syntax: '<color>';
+        initial-value: #567dff00;
+        inherits: false;
+    }
+
+    @property --myColor2 {
+        syntax: '<color>';
+        initial-value: rgba(0, 0, 0, 0);
+        inherits: false;
+    }
+    position: relative;
+    &::before {
+        content: '';
+        min-width: 100%;
+        min-height: 100%;
+        position: absolute;
+        top: 0;
+        left: 0;
+        background: linear-gradient(353.15deg, var(--myColor1) -50.96%, var(--myColor2) 80.04%);
+    }
+    transition:
+        --myColor1 0.3s ease-in-out,
+        --myColor2 0.3s ease-in-out,
+        all 0.3s ease-in-out;
     ${CircleLink} svg {
         transition: all 0.3s ease-in-out;
     }
+    overflow: hidden;
 
     &:hover {
         ${CircleLink} svg {
             scale: 1.2;
             translate: 20%;
             transition: all 0.2s ease-in-out;
+            stroke-width: 0.5px;
         }
-        background: linear-gradient(353.15deg, #567dff -21.96%, rgba(0, 0, 0, 0.12) 111.04%);
+
+        &::before {
+            transition:
+                --myColor1 0.3s ease-in-out,
+                --myColor2 0.3s ease-in-out,
+                all 0.3s ease-in-out;
+            --myColor1: #567dff;
+            --myColor2: rgba(0, 0, 0, 0.12);
+        }
+
         border-color: var(--almostTransparentOpposite);
     }
 `
