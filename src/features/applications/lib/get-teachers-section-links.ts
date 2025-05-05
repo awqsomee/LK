@@ -106,6 +106,7 @@ const getInDevelopmentStaffLinks = () => [
     },
     {
         title: 'ИТ-обслуживание',
+        disabled: isProduction,
         links: [
             { link: GETTING_COMPUTER_EQUIPMENT, title: 'Получение нового компьютерного оборудования' },
             { link: CONNECTING_COMPUTER, title: 'Подключение компьютера, МФУ, телефона, WiFi' },
