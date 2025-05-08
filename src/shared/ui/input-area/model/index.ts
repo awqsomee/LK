@@ -37,7 +37,7 @@ type IInputAreaTypes =
     | 'text-header'
     | 'auto-complete-input'
     | 'text-warning'
-
+    | 'month'
 export interface IInputAreaFiles {
     files: File[]
     required: boolean
