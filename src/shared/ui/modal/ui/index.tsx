@@ -1,6 +1,7 @@
 import React, { useMemo, useRef } from 'react'
 import { FiChevronLeft, FiX } from 'react-icons/fi'
 
+import { Property } from 'csstype'
 import styled from 'styled-components'
 
 import { Button, Title } from '@shared/ui/atoms'
@@ -11,12 +12,12 @@ import useCoreModal from '../lib/hooks/use-core-modal'
 import ModalContent from './atoms/modal-content'
 import ModalWrapper from './atoms/modal-wrapper'
 
-const Content = styled.div`
-    padding-top: 30px;
+const Content = styled.div<{ gap?: Property.Gap }>`
+    padding-top: ${({ gap }) => gap || '30px'};
 `
 
 const ModalWindow = () => {
-    const { isOpen, component: Component, canBack, back, close, title } = useCoreModal()
+    const { isOpen, component: Component, canBack, back, close, title, padding, gap } = useCoreModal()
     const ref = useRef(null)
     const isValid = useMemo(() => isOpen && !!Component, [isOpen, Component])
     // Escape === 27
@@ -33,7 +34,7 @@ const ModalWindow = () => {
 
     return (
         <ModalWrapper isOpen={isValid}>
-            <ModalContent isOpen={isValid} ref={ref} hasBack={canBack} hasTitle={!!title}>
+            <ModalContent isOpen={isValid} ref={ref} hasBack={canBack} hasTitle={!!title} padding={padding}>
                 {canBack && (
                     <Button
                         onClick={back}
@@ -63,7 +64,7 @@ const ModalWindow = () => {
                     background="var(--almostTransparent)"
                 />
 
-                <Content>{Component}</Content>
+                <Content gap={gap}>{Component}</Content>
             </ModalContent>
         </ModalWrapper>
     )

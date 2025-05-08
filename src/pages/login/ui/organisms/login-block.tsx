@@ -142,6 +142,7 @@ const LoginBlock = () => {
             orientation="horizontal"
             gap="4px"
             maxWidth="fit-content"
+            width="fit-content"
             padding="0"
         >
             <Information />
