@@ -10,6 +10,7 @@ export enum ApplicationFormCodes {
     USG_RELOCATION = 'usg_relocation', // Переселение в другое общежитие
     ACCOMMODATION_FOR_GRADUATES = 'accommodation_for_graduates', // Предоставление права проживания в период каникул
     OBUCH = 'obuch',
+    STUD_ACCOUNTING = 'stud-accounting',
     STATUS_SOBES = 'status_sobes',
     SPRVIZOV = 'sprvizov',
     PERS_DATA = 'pers_data',

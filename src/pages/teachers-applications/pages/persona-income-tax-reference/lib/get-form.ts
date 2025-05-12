@@ -1,27 +1,74 @@
-import getBasicFieldsApplicationTeacher from '@pages/teachers-applications/lib/get-basic-fields-application-teacher'
-import { getLastYearForPeriod } from '@pages/teachers-applications/lib/get-last-year-for-period'
-import getTeacherSubdivisions from '@pages/teachers-applications/lib/get-teacher-subdivisions'
-
-import getAddressFields from '@features/applications/lib/get-address-fields'
 import getMethodObtainingFields from '@features/applications/lib/get-method-obtaining-fields'
+
+import getTeacherSubdivisions from '@entities/applications/lib/get-teacher-subdivisions'
 
 import { UserApplication } from '@shared/api/model'
 import { IInputArea } from '@shared/ui/input-area/model'
 
 const getForm = (data: UserApplication): IInputArea => {
+    const { surname, name, patronymic, group, email, phone } = data
+
     return {
-        title: 'Справка по форме 2-НДФЛ',
+        title: 'Запрос справки из бухгалтерии',
         data: [
-            ...getBasicFieldsApplicationTeacher(data),
             {
-                title: 'Период',
+                title: 'ФИО',
+                fieldName: 'fio',
+                value: surname + ' ' + name + ' ' + patronymic,
+                editable: false,
+            },
+            {
+                title: 'Учебная группа',
+                fieldName: 'group',
+                type: 'tel',
+                value: group,
+                editable: false,
+            },
+            {
+                title: 'Электронная почта',
+                fieldName: 'email',
+                type: 'email',
+                value: email,
+                editable: true,
+                required: true,
+            },
+            {
+                title: 'Телефон',
+                fieldName: 'phone',
+                type: 'tel',
+                value: phone,
+                editable: true,
+                required: true,
+            },
+            {
+                title: 'Тип справки',
                 type: 'select',
                 value: null,
-                fieldName: 'period',
+                fieldName: 'type',
                 editable: true,
                 width: '100',
                 required: true,
-                items: getLastYearForPeriod(),
+                items: [
+                    { id: '0', title: 'Справка по стипендии' },
+                    { id: '1', title: 'Запрос для субсидии по форме #2 за 7 месяцев' },
+                    { id: '2', title: 'Запрос для субсидии по форме #2 за 13 месяцев' },
+                ],
+            },
+            {
+                title: 'Период c',
+                type: 'month',
+                fieldName: 'time-from',
+                value: '',
+                editable: true,
+                required: true,
+            },
+            {
+                title: 'по',
+                type: 'month',
+                fieldName: 'time-to',
+                value: '',
+                editable: true,
+                required: true,
             },
             {
                 title: 'Количество копий',
@@ -32,10 +79,9 @@ const getForm = (data: UserApplication): IInputArea => {
                 required: true,
             },
             ...getMethodObtainingFields(),
-            ...getTeacherSubdivisions('buhg'),
-            ...getAddressFields(),
+            ...getTeacherSubdivisions(),
             {
-                title: 'Текст заявки',
+                title: 'Дополнительная информация',
                 type: 'textarea',
                 fieldName: 'commentary',
                 value: '',

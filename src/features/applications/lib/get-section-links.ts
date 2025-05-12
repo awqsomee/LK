@@ -41,6 +41,7 @@ import {
     STATE_ACCREDITATION,
     STUDENT_EMPLOYMENT_APPLICATION_ROUTE,
     STUDENT_STATUS,
+    STUD_ACCOUNTING,
     TECHNICAL_MAINTENANCE,
     TERMINATION_OF_EMPLOYMENT_CONTRACT,
 } from '@shared/routing'
@@ -71,6 +72,10 @@ const getSectionLinks = ({ studentFinance }: { studentFinance: StudentAccount['f
                 { link: EXIT_ACADEMIC_LEAVE, title: 'Выход из академического отпуска' },
                 { link: INDEPENDENTLY_DEDUCTED, title: 'Отчисление по инициативе обучающегося' },
                 { link: EXTENSION_ATTESTATION, title: 'Продление промежуточной аттестации или ГИА' },
+                {
+                    link: STUD_ACCOUNTING,
+                    title: 'Запрос справки из бухгалтерии',
+                },
             ],
         },
         {
