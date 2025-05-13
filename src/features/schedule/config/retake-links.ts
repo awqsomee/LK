@@ -54,6 +54,10 @@ const RETAKE_LINKS: Record<string, RetakeLink> = {
                 title: 'ФИТ 2024-2025-зима, кафедра СМАРТ',
                 href: 'https://e.mospolytech.ru/old/storage/files/arrears/Grafik_priema_akademicheskih_zadolzhennostej_SMART_tehnologii_osen.docx',
             },
+            {
+                title: 'Выпускные группы',
+                href: 'https://e.mospolytech.ru/old/storage/files/arrears/Grafik_peresdach_leto_24_25_IiIT_Vypusknye_gruppy.pdf',
+            },
         ],
         href: '',
     },
