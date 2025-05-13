@@ -16,7 +16,7 @@ const Container = styled.div`
 `
 
 const CustomLink = styled.a`
-    display: inline-block;
+    display: block;
     font-size: 18px;
     line-height: 22px;
     :not(:first-child) {
