@@ -9,7 +9,7 @@ const getForm = (data: UserApplication): IInputArea => {
     const { surname, name, patronymic, group, email, phone } = data
 
     return {
-        title: 'Запрос справки из бухгалтерии',
+        title: 'Справка о выплате стипендии и иные выплаты (из бухгалтерии)',
         data: [
             {
                 title: 'ФИО',
