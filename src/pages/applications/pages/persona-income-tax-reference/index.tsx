@@ -7,7 +7,6 @@ import BaseApplicationWrapper from '@pages/applications/ui/base-application-wrap
 import { listTeacherMfc } from '@entities/applications'
 import { TeacherMethodObtainingOptions } from '@entities/applications/consts'
 
-import { isProduction } from '@shared/consts'
 import { Input, Message, TextArea, Title } from '@shared/ui/atoms'
 import FormBlockWrapper from '@shared/ui/atoms/form-block'
 import FileInput from '@shared/ui/file-input'
@@ -205,8 +204,6 @@ function Files() {
         model.fields.files.setValue,
         model.$isFilesRequired,
     ])
-
-    if (isProduction) return null
 
     return (
         <Flex d="column" gap="0.5rem">
