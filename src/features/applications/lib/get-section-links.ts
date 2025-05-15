@@ -53,6 +53,10 @@ const getSectionLinks = ({ studentFinance }: { studentFinance: StudentAccount['f
             title: 'Многофункциональный центр',
             links: [
                 {
+                    link: STUD_ACCOUNTING,
+                    title: 'Справка о выплате стипендии и иные выплаты (из бухгалтерии)',
+                },
+                {
                     link: CERTIFICATE_OF_ATTENDANCE,
                     title: 'Справка о прослушанных дисциплинах за период обучения (справка об обучении)',
                 },
@@ -72,10 +76,6 @@ const getSectionLinks = ({ studentFinance }: { studentFinance: StudentAccount['f
                 { link: EXIT_ACADEMIC_LEAVE, title: 'Выход из академического отпуска' },
                 { link: INDEPENDENTLY_DEDUCTED, title: 'Отчисление по инициативе обучающегося' },
                 { link: EXTENSION_ATTESTATION, title: 'Продление промежуточной аттестации или ГИА' },
-                {
-                    link: STUD_ACCOUNTING,
-                    title: 'Запрос справки из бухгалтерии',
-                },
             ],
         },
         {

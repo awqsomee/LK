@@ -3,7 +3,6 @@ import { createEvent, createStore, sample } from 'effector'
 
 import { applicationsModel } from '@entities/applications'
 
-import { isProduction } from '@shared/consts'
 import { ApplicationFormCodes } from '@shared/consts/models/application-form-codes'
 import { createCheckboxField } from '@shared/effector/form/create-checkbox-field'
 import { createDatePeriodField } from '@shared/effector/form/create-date-period-field'
@@ -45,9 +44,7 @@ const commentary = createInputField({ reset: pageMounted })
 const files = createFilesField({ reset: pageMounted })
 export const $errorMessage = createStore<string>('')
 export const completed = createCheckboxField({ reset: pageMounted })
-export const $isFilesRequired = applicationType.value.map((item) =>
-    isProduction ? false : item?.id === '7month' || item?.id === '13month',
-)
+export const $isFilesRequired = applicationType.value.map((item) => item?.id === '7month' || item?.id === '13month')
 
 type FormRequest = {
     fio: string
