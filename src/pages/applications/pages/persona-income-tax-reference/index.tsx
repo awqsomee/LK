@@ -124,7 +124,15 @@ function Dates() {
 
     return (
         <Grid columnGap="0.5rem" columns="1fr 1fr" rows="1fr">
-            <Input title="Период c" value={startDate} setValue={setStartDate} type="month" required width="100%" />
+            <Input
+                title="Период c"
+                value={startDate}
+                setValue={setStartDate}
+                type="month"
+                required
+                width="100%"
+                maxValue={model.maxDate}
+            />
             <Input
                 title="по"
                 value={endDate}
@@ -133,6 +141,7 @@ function Dates() {
                 required
                 width="100%"
                 minValue={startDate}
+                maxValue={model.maxDate}
             />
         </Grid>
     )

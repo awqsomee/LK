@@ -10,6 +10,9 @@ import { createFilesField } from '@shared/effector/form/create-file-filed'
 import { createInputField } from '@shared/effector/form/create-input-field'
 import { createSelectField } from '@shared/effector/form/create-select-field'
 
+const today = new Date()
+export const maxDate = new Date(today.getFullYear(), today.getMonth()).toISOString().slice(0, 7)
+
 export const numberOfCopiesOptions = [
     { id: 1, title: '1' },
     { id: 2, title: '2' },
@@ -157,6 +160,9 @@ sample({
         files,
         isFilesRequired,
     }) => {
+        const periodStart = new Date(periodStartDate)
+        const periodEnd = new Date(periodEndDate)
+        const periodMax = new Date(maxDate)
         if (!fio)
             return 'Для заполнения формы необходимо указать ФИО. Обновите страницу или обратитесь к администратору'
         if (!group)
@@ -169,6 +175,9 @@ sample({
         if (!methodObtaining) return 'Выберите способ получения справки'
         if (methodObtaining?.id === 1 && !mfc) return 'Выберите место получения справки'
         if (isFilesRequired && files.length === 0) return 'Приложите файл'
+        if (periodStart > periodMax) return 'Дата начала  не может быть позднее текущей даты'
+        if (periodEnd > periodMax) return 'Дата окончания  не может быть позднее текущей даты'
+        if (periodEnd < periodStart) return 'Дата окончания справки не может быть раньше даты начала'
         return ''
     },
     target: $errorMessage,
