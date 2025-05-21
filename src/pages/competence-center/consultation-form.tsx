@@ -1,11 +1,14 @@
 import React, { useEffect, useState } from 'react'
 
+import { useUnit } from 'effector-react'
+
 import BaseApplicationWrapper from '@pages/applications/ui/base-application-wrapper'
 
 import checkFormFields from '@features/send-form/check-form-fields'
 
 import { applicationsModel } from '@entities/applications'
 
+import { CommunicationType } from '@shared/api/competence-center/student'
 import { UserApplication } from '@shared/api/model'
 import { FormBlock, SubmitButton } from '@shared/ui/atoms'
 import InputArea from '@shared/ui/input-area'
@@ -13,10 +16,16 @@ import { IInputArea, IInputAreaData } from '@shared/ui/input-area/model'
 import { LoadedState, SpecialFieldsName, SpecialFieldsNameConfig } from '@shared/ui/input-area/types'
 import { SelectPage } from '@shared/ui/select'
 
+import * as model from './models/competence-center-model'
+
 const CompetenceCenterConsultationFormPage = () => {
+    const [completed, setCompleted, loading, applicationFilled] = useUnit([
+        model.completed.value,
+        model.completed.setValue,
+        model.$consultationLoading,
+        model.consultationApplicationFilled,
+    ])
     const [form, setForm] = useState<IInputArea | null>(null)
-    const [completed, setCompleted] = useState(false)
-    const [loading] = useState(false)
     const [specialFieldsName, setSpecialFieldsName] = useState<SpecialFieldsNameConfig>({})
     const isDone = completed ?? false
     const {
@@ -48,9 +57,15 @@ const CompetenceCenterConsultationFormPage = () => {
 
                     <SubmitButton
                         text={!isDone ? 'Отправить' : 'Отправлено'}
-                        action={() => {
-                            setCompleted(true)
-                        }}
+                        action={() =>
+                            applicationFilled({
+                                fio: (form.data[0] as IInputAreaData).value as string,
+                                communicationType: (
+                                    (form.data[1] as IInputAreaData).value as SelectPage
+                                ).id.toString() as CommunicationType,
+                                communication: (form.data[2] as IInputAreaData).value as string,
+                            })
+                        }
                         isLoading={loading}
                         completed={completed}
                         setCompleted={setCompleted}

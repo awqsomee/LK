@@ -2,7 +2,7 @@ import React from 'react'
 import { FaArrowRightLong } from 'react-icons/fa6'
 import { FiArchive, FiX } from 'react-icons/fi'
 
-import { useUnit } from 'effector-react'
+import { useGate, useUnit } from 'effector-react'
 import styled from 'styled-components'
 
 import getCorrectWordForm from '@shared/lib/get-correct-word-form'
@@ -47,7 +47,7 @@ const AdminCompetenceCenter = () => {
                     <Flex>
                         <Title align="left" justify="baseline" size={2}>
                             Консультации
-                            {newConsultations && (
+                            {!!newConsultations && (
                                 <Subtext>
                                     {newConsultations} {getCorrectWordForm(newConsultations, config.consultationRules)}
                                 </Subtext>
@@ -79,18 +79,12 @@ const AdminCompetenceCenter = () => {
 }
 
 const PassportActiveElement = () => {
+    useGate(model.CompetenceCenterEmployeeGate)
+
     const { isMobile } = useCurrentDevice()
-    const [
-        newPassports,
-        passportProcessingProgressPercent,
-        passportProcessingDone,
-        studentsNotFound,
-        denyRemainingApplications,
-        dismissed,
-    ] = useUnit([
+    const [newPassports, passportStatus, studentsNotFound, denyRemainingApplications, dismissed] = useUnit([
         model.$newPassports,
-        model.$passportProcessingProgressPercent,
-        model.$passportProcessingDone,
+        model.$passportStatus,
         model.$studentsNotFound,
         model.denyRemainingApplications,
         model.dismissed,
@@ -104,7 +98,7 @@ const PassportActiveElement = () => {
             gap: isMobile ? '1.5rem' : '2rem',
         })
 
-    if (passportProcessingDone && studentsNotFound)
+    if (passportStatus?.status === 'done' && studentsNotFound)
         return (
             <PassportActiveElementWrapper>
                 <Flex
@@ -143,7 +137,7 @@ const PassportActiveElement = () => {
             </PassportActiveElementWrapper>
         )
 
-    if (passportProcessingDone)
+    if (passportStatus?.status === 'done')
         return (
             <SuccessfulActiveElementWrapper>
                 <Flex jc="space-between">
@@ -161,15 +155,15 @@ const PassportActiveElement = () => {
             </SuccessfulActiveElementWrapper>
         )
 
-    if (!!passportProcessingProgressPercent)
+    if (passportStatus?.status === 'pending')
         return (
             <PassportActiveElementWrapper>
                 <Flex d="column" ai="flex-start" gap="0.75rem">
                     <Flex jc="space-between" gap="2.5rem" ai="flex-end">
                         <ProgressText>Идет генерация. Вы можете покинуть страницу 😊</ProgressText>
-                        <ProgressText>{passportProcessingProgressPercent}%</ProgressText>
+                        <ProgressText>{passportStatus.progress}%</ProgressText>
                     </Flex>
-                    <Progress max="100" value={passportProcessingProgressPercent} />
+                    <Progress max="100" value={passportStatus.progress} />
                 </Flex>
             </PassportActiveElementWrapper>
         )
@@ -188,6 +182,7 @@ const PassportActiveElement = () => {
                 </Flex>
             </GeneratePassportsButton>
         )
+
     return (
         <GeneratePassportsButton
             onClick={() =>

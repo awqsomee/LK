@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React from 'react'
 
 import { useUnit } from 'effector-react'
 import styled from 'styled-components'
@@ -15,13 +15,18 @@ import * as model from '../models/competence-center-admin-model'
 export const PassportGenerator = () => {
     const { isMobile } = useCurrentDevice()
     const { close } = useModal()
-    const [files, setFiles] = useState([])
 
-    const [generationStarted, generationFinished] = useUnit([model.generationStarted, model.generationFinished])
+    const [generationStarted, files, setFiles, loading] = useUnit([
+        model.generationStarted,
+        model.files.value,
+        model.files.setValue,
+        model.$loading,
+    ])
 
     return (
         <Flex w={isMobile ? '100%' : '36rem'} d="column" gap={isMobile ? '2.5rem' : '1.5rem'}>
             <Flex d="column" ai="start" gap={isMobile ? '1rem' : '1.5rem'}>
+                {/* TODO: replace link */}
                 <Text>
                     Выбрать и скачать таблицу с данными:{' '}
                     <a href="https://rsv.ru/" target="_blank" rel="noreferrer">
@@ -30,17 +35,16 @@ export const PassportGenerator = () => {
                 </Text>
                 <Flex ai="start" d="column" gap={isMobile ? '0.5rem' : '0.75rem'}>
                     <Text>Загрузите таблицу</Text>
-                    <FileInput isActive files={files} setFiles={setFiles} formats={['xlsx']} />
+                    <FileInput isActive files={files} setFiles={setFiles} formats={['xlsx']} maxFiles={1} />
                 </Flex>
             </Flex>
             <Flex gap={isMobile ? '0.625rem' : '2rem'} ai="stretch">
                 <OutlinedButton onClick={close}>Отмена</OutlinedButton>
                 <Button
-                    disabled={!files.length}
+                    disabled={!files.length || loading}
                     onClick={() => {
                         close()
                         generationStarted()
-                        setTimeout(generationFinished, 8000)
                     }}
                 >
                     Начать генерацию

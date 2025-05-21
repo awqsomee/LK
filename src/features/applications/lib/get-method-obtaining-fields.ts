@@ -1,5 +1,4 @@
-import { TeacherMethodObtainingOptions } from '@entities/applications/consts'
-
+import { TeacherMethodObtainingOptions } from '@shared/consts/applications'
 import { IInputAreaData } from '@shared/ui/input-area/model'
 
 const getMethodObtainingFields = (): IInputAreaData[] => {

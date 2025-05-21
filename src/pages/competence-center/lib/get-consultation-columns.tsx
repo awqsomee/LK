@@ -11,10 +11,8 @@ export const getConsColumns = (): ColumnProps[] => [
     },
     {
         title: 'Способ связи',
-        field: 'type',
+        field: 'communication',
         width: '250px',
-        render: (_, row) =>
-            row.type === 'phone' ? `Телефон: ${row.phone}` : row.type === 'email' ? `Email: ${row.email}` : 'ЛК',
     },
     {
         title: 'Дата',

@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react'
 
-import { useUnit } from 'effector-react'
+import { useGate, useUnit } from 'effector-react'
 
 import BaseApplicationWrapper from '@pages/applications/ui/base-application-wrapper'
 
@@ -17,9 +17,14 @@ import { LoadedState } from '@shared/ui/input-area/types'
 import * as model from './models/competence-center-model'
 
 const CompetenceCenterPassportFormPage = () => {
+    useGate(model.CompetenceCenterPassportFormGate)
+    const [applicationFilled, loading, completed, setCompleted] = useUnit([
+        model.passportApplicationFilled,
+        model.$passportLoading,
+        model.completed.value,
+        model.completed.setValue,
+    ])
     const [form, setForm] = useState<IInputArea | null>(null)
-    const [completed, setCompleted] = useState(false)
-    const [loading] = useState(false)
     const isDone = completed ?? false
     const {
         data: { dataUserApplication },
@@ -30,8 +35,6 @@ const CompetenceCenterPassportFormPage = () => {
             setForm(getForm(dataUserApplication))
         }
     }, [dataUserApplication])
-
-    const [applicationFilled] = useUnit([model.applicationFilled])
 
     return (
         <BaseApplicationWrapper isDone={isDone}>
@@ -45,12 +48,7 @@ const CompetenceCenterPassportFormPage = () => {
                             applicationFilled({
                                 fio: (form.data[0] as IInputAreaData).value as string,
                                 email: (form.data[1] as IInputAreaData).value as string,
-                                date: new Date().toISOString(),
-                                endDate: new Date().toISOString(),
-                                status: 'Готово',
-                                results: '/passport.pdf',
                             })
-                            setCompleted(true)
                         }}
                         isLoading={loading}
                         completed={completed}

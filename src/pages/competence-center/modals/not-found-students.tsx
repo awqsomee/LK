@@ -18,9 +18,7 @@ export const NotFoundStudents = () => {
     return (
         <Flex d="column" gap="1.5rem">
             <Flex d="column" gap="1rem" ai="start">
-                {notFoundStudents.map((student) => (
-                    <FioCopy key={student.email} fio={student.fio} />
-                ))}
+                {notFoundStudents?.map((student) => <FioCopy key={student.email} fio={student.fio} />)}
             </Flex>
             <Button onClick={close}>Закрыть</Button>
         </Flex>

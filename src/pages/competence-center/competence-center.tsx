@@ -7,15 +7,16 @@ import { TbDownload } from 'react-icons/tb'
 import { Link, useHistory } from 'react-router-dom'
 
 import { Property } from 'csstype'
-import { useUnit } from 'effector-react'
+import { useGate, useUnit } from 'effector-react'
 import styled from 'styled-components'
 
-import { ApplicationStatusType, ApplicationsConstants } from '@entities/applications/consts'
-
+import { Colors } from '@shared/consts'
+import { ApplicationsConstants } from '@shared/consts/applications'
 import { useIntersectionObserver } from '@shared/lib/hooks/use-intersection-observer'
 import {
     COMPETENCE_CENTER,
     COMPETENCE_CENTER_CONSULTATION_FORM,
+    COMPETENCE_CENTER_PASSPORTS,
     COMPETENCE_CENTER_PASSPORT_FORM,
 } from '@shared/routing'
 import { ButtonBase } from '@shared/ui'
@@ -34,7 +35,9 @@ import { PassportInProgress } from './modals/passport-in-progress'
 import { Button, IconButton, IconLink, OutlinedButton, Stack, Text } from './ui'
 
 const CompetenceCenter = () => {
+    useGate(model.CompetenceCenterStudentGate)
     const { isMobile } = useCurrentDevice()
+
     return (
         <PageBlock padding="0">
             <Flex d="column" gap="3rem" p="0.75rem 3rem 2rem">
@@ -50,9 +53,11 @@ const CompetenceCenter = () => {
 }
 
 const PassportBlock = () => {
+    const history = useHistory()
     const { isMobile } = useCurrentDevice()
     const { open } = useModal()
-    const [passportStatus] = useUnit([model.$passportStatus])
+    const [currentPassport] = useUnit([model.$currentPassport])
+    const passportStatus = currentPassport?.status
 
     if (!passportStatus) return null
 
@@ -65,52 +70,68 @@ const PassportBlock = () => {
                     jc="space-between"
                     ai={isMobile ? 'flex-start' : 'center'}
                 >
-                    <Flex w="fit-content">
-                        <Title size={3} align="left">
-                            Актуальный паспорт компетенций
-                        </Title>
-                    </Flex>
-                    {passportStatus === 'in_review' ? (
+                    {passportStatus === 'not_found' ? (
                         <>
-                            <Flex
-                                cursor="pointer"
-                                gap="0.5rem"
-                                w="fit-content"
-                                onClick={() =>
-                                    open(<PassportInProgress />, 'Подробная информация о заявке', {
-                                        gap: '2rem',
-                                        padding: '1.5rem',
-                                    })
-                                }
-                            >
-                                <Text>Заявка на рассмотрении</Text>
-                                <IconLink to={COMPETENCE_CENTER}>
-                                    <LiaArrowRightSolid size={14} />
-                                </IconLink>
+                            <Flex w="fit-content">
+                                <Title size={4} align="left" style={{ color: Colors.red.light3 }}>
+                                    Не удалось найти паспорт компетенций
+                                </Title>
+                                <Text>Пройдите все базовые тестирования и подайте заявку заново</Text>
                             </Flex>
                         </>
                     ) : (
-                        <Flex gap="0.5rem" ai="stretch" w={isMobile ? '100%' : '50%'}>
-                            <OutlinedButton w={isMobile ? '100%' : '50%'} onClick={() => window.open('/passport.pdf')}>
-                                Открыть
-                                <PiFileMagnifyingGlassLight size={14} />
-                            </OutlinedButton>
-                            {isMobile ? (
-                                <Button size={38} p="0">
-                                    <TbDownload size={14} />
-                                </Button>
+                        <>
+                            <Flex w="fit-content">
+                                <Title size={3} align="left">
+                                    Актуальный паспорт компетенций
+                                </Title>
+                            </Flex>
+                            {passportStatus === 'pending' ? (
+                                <>
+                                    <Flex
+                                        cursor="pointer"
+                                        gap="0.5rem"
+                                        w="fit-content"
+                                        onClick={() =>
+                                            open(<PassportInProgress />, 'Подробная информация о заявке', {
+                                                gap: '2rem',
+                                                padding: '1.5rem',
+                                            })
+                                        }
+                                    >
+                                        <Text>Заявка на рассмотрении</Text>
+                                        <IconLink to={COMPETENCE_CENTER}>
+                                            <LiaArrowRightSolid size={14} />
+                                        </IconLink>
+                                    </Flex>
+                                </>
                             ) : (
-                                <Button w="50%">
-                                    Скачать
-                                    <TbDownload size={14} />
-                                </Button>
+                                <Flex gap="0.5rem" ai="stretch" w={isMobile ? '100%' : '50%'}>
+                                    <OutlinedButton
+                                        w={isMobile ? '100%' : '50%'}
+                                        onClick={() => model.openFile(currentPassport.id)}
+                                    >
+                                        Открыть
+                                        <PiFileMagnifyingGlassLight size={14} />
+                                    </OutlinedButton>
+                                    {isMobile ? (
+                                        <Button size={38} p="0" onClick={() => model.downloadFile(currentPassport.id)}>
+                                            <TbDownload size={14} />
+                                        </Button>
+                                    ) : (
+                                        <Button w="50%" onClick={() => model.downloadFile(currentPassport.id)}>
+                                            Скачать
+                                            <TbDownload size={14} />
+                                        </Button>
+                                    )}
+                                </Flex>
                             )}
-                        </Flex>
+                        </>
                     )}
                 </Flex>
             </Card>
 
-            <ToArchivedButton margin="0 0 0 auto">
+            <ToArchivedButton margin="0 0 0 auto" onClick={() => history.push(COMPETENCE_CENTER_PASSPORTS)}>
                 Перейти к завершенным
                 <LiaArrowRightSolid size={14} />
             </ToArchivedButton>
@@ -235,7 +256,13 @@ const Information = () => {
                         </Text>
                     </Stack>
                 </Card>
-                <BrightPlate show onClick={() => {}} height="auto" padding="0.75rem" maw="100%">
+                <BrightPlate
+                    show
+                    onClick={() => window.open('https://softskills.rsv.ru/', '_blank')}
+                    height="auto"
+                    padding="0.75rem"
+                    maw="100%"
+                >
                     <Text>✨ Улучшить компетенции ✨</Text>
                 </BrightPlate>
             </InformationGrid>
@@ -246,6 +273,8 @@ const Information = () => {
 const Consultations = () => {
     const { isMobile } = useCurrentDevice()
     const history = useHistory()
+
+    const [recentConsultations] = useUnit([model.$recentConsultations])
 
     const { isIntersecting, ref } = useIntersectionObserver({
         threshold: 0.5,
@@ -277,25 +306,10 @@ const Consultations = () => {
                 rowPadding="1.25rem"
                 loading={false}
                 columns={getColumns()}
-                data={[
-                    {
-                        req: 'Консультация',
-                        date: '2022-12-12',
-                        status: 'В работе',
-                        communicationMethod: '+7 (999) 999-99-99',
-                        comment: '',
-                    },
-                    {
-                        req: 'Консультация',
-                        date: '2022-10-12',
-                        status: 'В работе',
-                        communicationMethod: 'pochta[pochta@gmail.com',
-                        comment: '',
-                    },
-                ]}
+                data={recentConsultations}
             />
             {!isIntersecting && (
-                <CallCenterButton c="white">
+                <CallCenterButton c="white" onClick={() => history.push(COMPETENCE_CENTER_CONSULTATION_FORM)}>
                     Связаться с Центром
                     <LuSendHorizonal size={14} />
                 </CallCenterButton>
@@ -466,14 +480,14 @@ const UL = styled.ul`
 const getColumns = (): ColumnProps[] => [
     {
         title: 'Дата подачи',
-        field: 'date',
+        field: 'createdAt',
         sort: true,
         type: 'date',
         width: '8.75rem',
     },
     {
         title: 'Способ связи',
-        field: 'communicationMethod',
+        field: 'communication',
         render: (val) => val || '-',
     },
     {
@@ -482,17 +496,18 @@ const getColumns = (): ColumnProps[] => [
         priority: 'three',
         width: '10.375rem',
         catalogs: [...(Object.values(ApplicationsConstants).map((val, i) => ({ id: i.toString(), title: val })) ?? [])],
-        render: (value: ApplicationStatusType) => {
+        render: (value: keyof typeof ApplicationsConstants) => {
+            const status = ApplicationsConstants[value]
             return (
                 <Message
                     type={
-                        value === 'Готово' || value === 'Выдано' || value === 'Получено' || value === 'Выполнена'
+                        value === 'accepted' || value === 'completed' || value === 'ready' || value === 'recieved'
                             ? 'success'
-                            : value === 'Отклонено'
+                            : value === 'rejected'
                               ? 'failure'
                               : 'alert'
                     }
-                    title={value || '—'}
+                    title={status || '—'}
                     align="center"
                     icon={null}
                 />
