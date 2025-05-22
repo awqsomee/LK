@@ -37,9 +37,6 @@ const SelectWrapper = styled.div<{
     &:focus:not(:focus-visible) {
         outline: none;
     }
-    &:active {
-        transform: translateY(3px);
-    }
 `
 
 export default SelectWrapper
