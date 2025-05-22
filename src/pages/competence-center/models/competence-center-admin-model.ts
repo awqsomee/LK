@@ -9,7 +9,6 @@ import {
     getConsultationsQuery,
     getFailedPassportsQuery,
     getPassportGenerationStatusFx,
-    getPassportRequestsQuery,
     getPassportsQuery,
     resetGenerationStatusMutation,
 } from '@shared/api/competence-center/employee'
@@ -22,9 +21,15 @@ export const CompetenceCenterEmployeeGate = createGate()
 export const PassportGeneratorGate = createGate()
 export const AllPassportsGate = createGate()
 
-export const $newPassportApplications = getPassportRequestsQuery.$data
+const getGenerationStatusFx = attach({
+    effect: getPassportGenerationStatusFx,
+})
+
+export const $passportStatus = createStore<PassportGenerationStatus | null>(null)
+export const $loading = generatePassportsMutation.$pending
+
 export const $passports = getPassportsQuery.$data
-export const $newPassports = $newPassportApplications.map((applications) => applications?.length ?? 0)
+export const $newPassports = $passportStatus.map((status) => status?.passportsCount ?? 0)
 export const $newConsultationApplications = getConsultationsQuery.$data
 export const $newConsultations = $newConsultationApplications.map((applications) => applications?.length ?? 0)
 export const $failedPassportApplications = getFailedPassportsQuery.$data
@@ -33,9 +38,6 @@ export const $studentsNotFound = $notFoundStudents.map((students) => students?.l
 export const files = createFilesField({
     reset: [PassportGeneratorGate.open, generatePassportsMutation.finished.success],
 })
-
-export const $passportStatus = createStore<PassportGenerationStatus | null>(null)
-export const $loading = generatePassportsMutation.$pending
 
 const $connection = createStore<WebSocket | null>(null)
 const $lastMessage = createStore<PassportGenerationStatus | null>(null)
@@ -49,10 +51,6 @@ const socketError = createEvent<Error>()
 const disconnected = createEvent()
 const messageSent = createEvent<string>()
 const rawMessageReceived = createEvent<string>()
-
-const getGenerationStatusFx = attach({
-    effect: getPassportGenerationStatusFx,
-})
 
 const connectWebSocketFx = createEffect((url: string): Promise<WebSocket> => {
     const ws = new WebSocket(url)
@@ -92,7 +90,7 @@ const disconnectWebSocketFx = createEffect((socket: WebSocket) => socket.close()
 const sendMessageFx = createEffect((params: { socket: WebSocket; message: string }) => {
     params.socket.send(params.message)
 })
-$connection.on(connectWebSocketFx.doneData, (_, ws) => ws).reset(disconnected)
+$connection.on(connectWebSocketFx.doneData, (_, ws) => ws).reset(disconnectWebSocketFx.done)
 $socketError.on(socketError, (_, error) => error.message).reset(connectWebSocketFx.done)
 $lastMessage.on(rawMessageReceived, (_, newMessage) => JSON.parse(newMessage)).reset(connectWebSocketFx.done)
 
@@ -115,10 +113,15 @@ const messageReceived = sample({
 $passportStatus
     .on(getGenerationStatusFx.doneData, (_, status) => status)
     .on(resetGenerationStatusMutation.finished.success, (_, { result }) => result)
+    .on(generatePassportsMutation.finished.success, (_, { result }) => ({
+        progress: result.progress,
+        status: result.status,
+        passportsCount: result.passportsCount,
+    }))
 
 sample({
     clock: CompetenceCenterEmployeeGate.open,
-    target: [getPassportRequestsQuery.start, getConsultationsQuery.start, getGenerationStatusFx],
+    target: [getConsultationsQuery.start, getGenerationStatusFx],
 })
 
 sample({
@@ -138,37 +141,35 @@ sample({
 
 sample({
     clock: generatePassportsMutation.finished.success,
-    target: getGenerationStatusFx,
-})
-
-sample({
-    clock: generatePassportsMutation.finished.success,
+    filter: ({ result }) => result.status === 'pending',
     fn: () => COMPETENCE_CENTER_WEBSOCKET_URL,
     target: connectWebSocketFx,
 })
 
 sample({
     clock: messageReceived,
-    filter: (data) => 'status' in data,
+    source: $passportStatus,
+    filter: (_, data) => 'status' in data,
+    fn: (status, data) => ({
+        ...status,
+        ...data,
+    }),
     target: $passportStatus,
 })
 
 sample({
-    clock: messageReceived,
+    clock: sample({
+        clock: $passportStatus,
+        filter: Boolean,
+    }),
     filter: ({ status }) => status === 'done',
-    target: [getFailedPassportsQuery.start, disconnected],
+    target: [disconnected],
 })
 
 sample({
     clock: generatePassportsMutation.finished.success,
     fn: ({ result }) => result.notFound,
     target: $notFoundStudents,
-})
-
-sample({
-    clock: [resetGenerationStatusMutation.finished.success],
-    fn: () => ({}),
-    target: getPassportRequestsQuery.start,
 })
 
 reset({

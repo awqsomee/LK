@@ -5,8 +5,8 @@ import { $competenceCenterApi, CompetenceConsultation, CompetencePassport } from
 
 export type PassportGenerationStatus = {
     status: 'idle' | 'pending' | 'done'
-    filesAmount: number
     progress: number
+    passportsCount: number
 }
 
 type GeneratePassportsRequest = {
@@ -16,15 +16,13 @@ export const generatePassportsMutation = createMutation({
     handler: async (req: GeneratePassportsRequest) => {
         const formData = new FormData()
         formData.append('excelData', req.excelData)
-        const { data } = await $competenceCenterApi.post<{ message: string; notFound: CompetencePassport[] }>(
-            '/employee/passports/generate',
-            req,
-            {
-                headers: {
-                    'Content-Type': 'multipart/form-data',
-                },
+        const { data } = await $competenceCenterApi.post<
+            { message: string; notFound: CompetencePassport[] } & PassportGenerationStatus
+        >('/employee/passports/generate', req, {
+            headers: {
+                'Content-Type': 'multipart/form-data',
             },
-        )
+        })
         return data
     },
 })
@@ -46,13 +44,6 @@ export const getFailedPassportsQuery = createQuery({
 export const resetGenerationStatusMutation = createMutation({
     handler: async (req: { decline?: boolean }) => {
         const { data } = await $competenceCenterApi.post<PassportGenerationStatus>('/employee/passports/status', req)
-        return data
-    },
-})
-
-export const getPassportRequestsQuery = createQuery({
-    handler: async () => {
-        const { data } = await $competenceCenterApi.get<CompetencePassport[]>('/employee/passports/requests')
         return data
     },
 })
