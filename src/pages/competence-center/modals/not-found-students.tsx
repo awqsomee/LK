@@ -15,10 +15,11 @@ import { IconButton } from '../ui'
 export const NotFoundStudents = () => {
     const { close } = useModal()
     const [notFoundStudents] = useUnit([model.$notFoundStudents])
+    const set = new Set((notFoundStudents ?? []).map((student) => student.fio))
     return (
         <Flex d="column" gap="1.5rem">
             <Flex d="column" gap="1rem" ai="start">
-                {notFoundStudents?.map((student) => <FioCopy key={student.email} fio={student.fio} />)}
+                {Array.from(set)?.map((student) => <FioCopy key={student} fio={student} />)}
             </Flex>
             <Button onClick={close}>Закрыть</Button>
         </Flex>

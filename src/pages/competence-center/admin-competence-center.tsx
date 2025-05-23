@@ -6,7 +6,7 @@ import { useGate, useUnit } from 'effector-react'
 import styled from 'styled-components'
 
 import getCorrectWordForm from '@shared/lib/get-correct-word-form'
-import { CC_COMPLETED_CONSULTATIONS, CC_PASSPORT_LOG } from '@shared/routing'
+import { CC_COMPLETED_CONSULTATIONS, CC_PASSPORT_LOG, COMPETENCE_CENTER_STAFF } from '@shared/routing'
 import { ButtonBase } from '@shared/ui'
 import { Title } from '@shared/ui/atoms'
 import { Button as LKButton } from '@shared/ui/button'
@@ -19,7 +19,7 @@ import Table from '@shared/ui/table'
 
 import * as config from './config'
 import * as model from './models/competence-center-admin-model'
-import { getConsColumns } from './lib/get-consultation-columns'
+import { getConsColumns, getExtendedConsColumns } from './lib/get-consultation-columns'
 import { NotFoundStudents } from './modals/not-found-students'
 import { PassportGenerator } from './modals/passport-generator'
 import { Button, ButtonLink, IconLink, OutlinedButton } from './ui'
@@ -66,7 +66,8 @@ const AdminCompetenceCenter = () => {
                             headerPadding="1rem 1.25rem"
                             fw={500}
                             loading={false}
-                            columns={getConsColumns()}
+                            columns={getConsColumns(() => {}, COMPETENCE_CENTER_STAFF)}
+                            columnsExtended={getExtendedConsColumns()}
                             data={newConsultationApplications}
                             maxOnPage={7}
                         />

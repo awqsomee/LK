@@ -70,6 +70,13 @@ export const downloadPassportFx = createEffect({
     },
 })
 
+export const getRecentConsultationsQuery = createQuery({
+    handler: async () => {
+        const { data } = await $competenceCenterApi.get<CompetenceConsultation[]>('/employee/consultations/recent')
+        return data
+    },
+})
+
 export const getConsultationsQuery = createQuery({
     handler: async () => {
         const { data } = await $competenceCenterApi.get<CompetenceConsultation[]>('/employee/consultations')
@@ -77,13 +84,14 @@ export const getConsultationsQuery = createQuery({
     },
 })
 
-type SetConsultationStatusRequest = {
+export type SetConsultationStatusRequest = {
     id: string
     status: string
+    comment?: string
 }
 export const setConsultationStatusMutation = createMutation({
-    handler: async ({ id, status }: SetConsultationStatusRequest) => {
-        const { data } = await $competenceCenterApi.put(`/employee/consultations/${id}`, { status })
+    handler: async ({ id, ...req }: SetConsultationStatusRequest) => {
+        const { data } = await $competenceCenterApi.put(`/employee/consultations/${id}`, req)
         return data
     },
 })

@@ -29,7 +29,7 @@ export const PassportInProgress = () => {
         <Stack gap={24}>
             <LabledData label="Запрос" data="Генерация паспорта компетенций" />
             {Object.keys(passportData).map((key) => {
-                const data = passportReq[key as keyof CompetencePassport]
+                const data = passportData[key as keyof PassportData]
                 if (!data) return null
 
                 if (key === 'status')

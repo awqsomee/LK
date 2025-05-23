@@ -5,12 +5,14 @@ import { reset } from 'patronum'
 import { COMPETENCE_CENTER_WEBSOCKET_URL, CompetencePassport } from '@shared/api/competence-center/api'
 import {
     PassportGenerationStatus,
+    SetConsultationStatusRequest,
     generatePassportsMutation,
-    getConsultationsQuery,
     getFailedPassportsQuery,
     getPassportGenerationStatusFx,
     getPassportsQuery,
+    getRecentConsultationsQuery,
     resetGenerationStatusMutation,
+    setConsultationStatusMutation,
 } from '@shared/api/competence-center/employee'
 import { getJwtToken } from '@shared/api/session/jwt-token'
 import { createFilesField } from '@shared/effector/form/create-file-filed'
@@ -30,11 +32,13 @@ export const $loading = generatePassportsMutation.$pending
 
 export const $passports = getPassportsQuery.$data
 export const $newPassports = $passportStatus.map((status) => status?.passportsCount ?? 0)
-export const $newConsultationApplications = getConsultationsQuery.$data
+export const $newConsultationApplications = getRecentConsultationsQuery.$data
 export const $newConsultations = $newConsultationApplications.map((applications) => applications?.length ?? 0)
 export const $failedPassportApplications = getFailedPassportsQuery.$data
 export const $notFoundStudents = createStore<CompetencePassport[] | null>(null)
-export const $studentsNotFound = $notFoundStudents.map((students) => students?.length ?? 0)
+export const $studentsNotFound = $notFoundStudents.map(
+    (students) => new Set(students?.map((student) => student.fio)).size,
+)
 export const files = createFilesField({
     reset: [PassportGeneratorGate.open, generatePassportsMutation.finished.success],
 })
@@ -51,6 +55,8 @@ const socketError = createEvent<Error>()
 const disconnected = createEvent()
 const messageSent = createEvent<string>()
 const rawMessageReceived = createEvent<string>()
+
+export const setConsultationStatus = createEvent<SetConsultationStatusRequest>()
 
 const connectWebSocketFx = createEffect((url: string): Promise<WebSocket> => {
     const ws = new WebSocket(url)
@@ -121,7 +127,7 @@ $passportStatus
 
 sample({
     clock: CompetenceCenterEmployeeGate.open,
-    target: [getConsultationsQuery.start, getGenerationStatusFx],
+    target: [getRecentConsultationsQuery.start, getGenerationStatusFx],
 })
 
 sample({
@@ -207,4 +213,14 @@ sample({
     source: $connection,
     filter: Boolean,
     target: disconnectWebSocketFx,
+})
+
+sample({
+    clock: setConsultationStatus,
+    target: setConsultationStatusMutation.start,
+})
+
+sample({
+    clock: setConsultationStatusMutation.finished.success,
+    target: getRecentConsultationsQuery.start,
 })

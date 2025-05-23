@@ -2,37 +2,27 @@ import React from 'react'
 import { FiPlus } from 'react-icons/fi'
 import { LiaArrowRightSolid } from 'react-icons/lia'
 import { LuSendHorizonal } from 'react-icons/lu'
-import { PiFileMagnifyingGlassLight } from 'react-icons/pi'
-import { TbDownload } from 'react-icons/tb'
 import { Link, useHistory } from 'react-router-dom'
 
-import { Property } from 'csstype'
 import { useGate, useUnit } from 'effector-react'
 import styled from 'styled-components'
 
-import { Colors } from '@shared/consts'
 import { ApplicationsConstants } from '@shared/consts/applications'
 import { useIntersectionObserver } from '@shared/lib/hooks/use-intersection-observer'
-import {
-    COMPETENCE_CENTER,
-    COMPETENCE_CENTER_CONSULTATION_FORM,
-    COMPETENCE_CENTER_PASSPORTS,
-    COMPETENCE_CENTER_PASSPORT_FORM,
-} from '@shared/routing'
+import { COMPETENCE_CENTER_CONSULTATION_FORM, COMPETENCE_CENTER_PASSPORT_FORM } from '@shared/routing'
 import { ButtonBase } from '@shared/ui'
 import { Message, Title } from '@shared/ui/atoms'
 import { BrightPlate } from '@shared/ui/bright-plate/bright-plate'
 import { MEDIA_QUERIES } from '@shared/ui/consts'
 import Flex from '@shared/ui/flex'
 import useCurrentDevice from '@shared/ui/hooks/use-current-device'
-import { useModal } from '@shared/ui/modal'
 import PageBlock from '@shared/ui/page-block'
 import Table from '@shared/ui/table'
 import { ColumnProps } from '@shared/ui/table/types'
 
-import * as model from './models/competence-center-model'
-import { PassportInProgress } from './modals/passport-in-progress'
-import { Button, IconButton, IconLink, OutlinedButton, Stack, Text } from './ui'
+import * as model from '../models/competence-center-model'
+import { Button, Card, IconButton, Stack, Text } from '../ui'
+import { PassportBlock } from './passport'
 
 const CompetenceCenter = () => {
     useGate(model.CompetenceCenterStudentGate)
@@ -52,98 +42,6 @@ const CompetenceCenter = () => {
     )
 }
 
-const PassportBlock = () => {
-    const history = useHistory()
-    const { isMobile } = useCurrentDevice()
-    const { open } = useModal()
-    const [currentPassport] = useUnit([model.$currentPassport])
-    const passportStatus = currentPassport?.status
-
-    if (!passportStatus) return null
-
-    return (
-        <Stack gap={8}>
-            <Card w="100%" withBorder>
-                <Flex
-                    gap="1rem"
-                    d={isMobile ? 'column' : 'row'}
-                    jc="space-between"
-                    ai={isMobile ? 'flex-start' : 'center'}
-                >
-                    {passportStatus === 'not_found' ? (
-                        <>
-                            <Flex w="fit-content">
-                                <Title size={4} align="left" style={{ color: Colors.red.light3 }}>
-                                    Не удалось найти паспорт компетенций
-                                </Title>
-                                <Text>Пройдите все базовые тестирования и подайте заявку заново</Text>
-                            </Flex>
-                        </>
-                    ) : (
-                        <>
-                            <Flex w="fit-content">
-                                <Title size={3} align="left">
-                                    Актуальный паспорт компетенций
-                                </Title>
-                            </Flex>
-                            {passportStatus === 'pending' ? (
-                                <>
-                                    <Flex
-                                        cursor="pointer"
-                                        gap="0.5rem"
-                                        w="fit-content"
-                                        onClick={() =>
-                                            open(<PassportInProgress />, 'Подробная информация о заявке', {
-                                                gap: '2rem',
-                                                padding: '1.5rem',
-                                            })
-                                        }
-                                    >
-                                        <Text>Заявка на рассмотрении</Text>
-                                        <IconLink to={COMPETENCE_CENTER}>
-                                            <LiaArrowRightSolid size={14} />
-                                        </IconLink>
-                                    </Flex>
-                                </>
-                            ) : (
-                                <Flex gap="0.5rem" ai="stretch" w={isMobile ? '100%' : '50%'}>
-                                    <OutlinedButton
-                                        w={isMobile ? '100%' : '50%'}
-                                        onClick={() => model.openFile(currentPassport.id)}
-                                    >
-                                        Открыть
-                                        <PiFileMagnifyingGlassLight size={14} />
-                                    </OutlinedButton>
-                                    {isMobile ? (
-                                        <Button size={38} p="0" onClick={() => model.downloadFile(currentPassport.id)}>
-                                            <TbDownload size={14} />
-                                        </Button>
-                                    ) : (
-                                        <Button w="50%" onClick={() => model.downloadFile(currentPassport.id)}>
-                                            Скачать
-                                            <TbDownload size={14} />
-                                        </Button>
-                                    )}
-                                </Flex>
-                            )}
-                        </>
-                    )}
-                </Flex>
-            </Card>
-
-            <ToArchivedButton margin="0 0 0 auto" onClick={() => history.push(COMPETENCE_CENTER_PASSPORTS)}>
-                Перейти к завершенным
-                <LiaArrowRightSolid size={14} />
-            </ToArchivedButton>
-        </Stack>
-    )
-}
-
-const ToArchivedButton = styled(ButtonBase)`
-    padding: 0.75rem;
-
-    background: var(--theme-1t);
-`
 type Step = { title: string; text: string; link: string; isExternalLink?: boolean }
 const howToGetSteps: Step[] = [
     {
@@ -306,6 +204,7 @@ const Consultations = () => {
                 rowPadding="1.25rem"
                 loading={false}
                 columns={getColumns()}
+                columnsExtended={getExtColumns()}
                 data={recentConsultations}
             />
             {!isIntersecting && (
@@ -411,15 +310,6 @@ const CircleLink = styled.div`
     color: white;
 `
 
-const Card = styled.div<{ w?: Property.Width; h?: Property.Height; withBorder?: boolean; withBg?: boolean }>`
-    width: ${({ w }) => w};
-    height: ${({ h }) => h};
-    border: ${({ withBorder }) => withBorder && '1px solid var(--bgLink3)'};
-    padding: 1.5rem;
-    background: ${({ withBg }) => withBg && 'var(--block-content)'};
-    border-radius: var(--brLight);
-`
-
 const HowToGetCard = styled(Card)`
     @property --myColor1 {
         syntax: '<color>';
@@ -501,7 +391,58 @@ const getColumns = (): ColumnProps[] => [
             return (
                 <Message
                     type={
-                        value === 'accepted' || value === 'completed' || value === 'ready' || value === 'recieved'
+                        value === 'accepted' ||
+                        value === 'completed' ||
+                        value === 'ready' ||
+                        value === 'recieved' ||
+                        value === 'done'
+                            ? 'success'
+                            : value === 'rejected'
+                              ? 'failure'
+                              : 'alert'
+                    }
+                    title={status || '—'}
+                    align="center"
+                    icon={null}
+                />
+            )
+        },
+    },
+]
+
+const getExtColumns = (): ColumnProps[] => [
+    {
+        title: 'Дата подачи',
+        field: 'createdAt',
+        sort: true,
+        type: 'date',
+        width: '8.75rem',
+    },
+    {
+        title: 'Способ связи',
+        field: 'communication',
+        render: (val) => val || '-',
+    },
+    {
+        title: 'Комментарий',
+        field: 'comment',
+    },
+    {
+        title: 'Статус',
+        field: 'status',
+        priority: 'three',
+        width: '10.375rem',
+        catalogs: [...(Object.values(ApplicationsConstants).map((val, i) => ({ id: i.toString(), title: val })) ?? [])],
+        render: (value: keyof typeof ApplicationsConstants) => {
+            const status = ApplicationsConstants[value]
+            return (
+                <Message
+                    type={
+                        value === 'accepted' ||
+                        value === 'completed' ||
+                        value === 'ready' ||
+                        value === 'recieved' ||
+                        value === 'done'
                             ? 'success'
                             : value === 'rejected'
                               ? 'failure'

@@ -133,6 +133,7 @@ export const ButtonBase = styled.button<{ w?: string; size?: number; margin?: st
     border-radius: var(--brLight);
     outline: none;
     border: none;
+    text-wrap: nowrap;
 
     transition: all 200ms;
 

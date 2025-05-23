@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react'
 
-import { useUnit } from 'effector-react'
+import { useGate, useUnit } from 'effector-react'
 
 import BaseApplicationWrapper from '@pages/applications/ui/base-application-wrapper'
 
@@ -19,6 +19,7 @@ import { SelectPage } from '@shared/ui/select'
 import * as model from './models/competence-center-model'
 
 const CompetenceCenterConsultationFormPage = () => {
+    useGate(model.CompetenceCenterConsultationFormGate)
     const [completed, setCompleted, loading, applicationFilled] = useUnit([
         model.completed.value,
         model.completed.setValue,
@@ -63,7 +64,12 @@ const CompetenceCenterConsultationFormPage = () => {
                                 communicationType: (
                                     (form.data[1] as IInputAreaData).value as SelectPage
                                 ).id.toString() as CommunicationType,
-                                communication: (form.data[2] as IInputAreaData).value as string,
+                                communication:
+                                    ((form.data[1] as IInputAreaData).value as SelectPage).id === 'lk'
+                                        ? 'Личный кабинет'
+                                        : ((form.data[1] as IInputAreaData).value as SelectPage).id === 'email'
+                                          ? ((form.data[2] as IInputAreaData).value as string)
+                                          : ((form.data[3] as IInputAreaData).value as string),
                             })
                         }
                         isLoading={loading}

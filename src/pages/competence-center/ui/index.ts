@@ -108,3 +108,12 @@ export const Stack = styled.div<{
     justify-content: ${({ justify }) => justify};
     align-items: ${({ align }) => align};
 `
+
+export const Card = styled.div<{ w?: Property.Width; h?: Property.Height; withBorder?: boolean; withBg?: boolean }>`
+    width: ${({ w }) => w};
+    height: ${({ h }) => h};
+    border: ${({ withBorder }) => withBorder && '1px solid var(--bgLink3)'};
+    padding: 1.5rem;
+    background: ${({ withBg }) => withBg && 'var(--block-content)'};
+    border-radius: var(--brLight);
+`
