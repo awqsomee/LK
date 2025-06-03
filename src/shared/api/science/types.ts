@@ -32,3 +32,14 @@ export type Filter = {
     value: string | boolean | number
     operation: 'Eq' | 'Like'
 }
+
+export type Subdivision = {
+    guid: string
+    name: string
+    headGuid: string | null
+    parentGuid: string | null
+    isActive: boolean
+    isDepartment: boolean
+    isFaculty: boolean
+    childSubdivisions: Subdivision[]
+}

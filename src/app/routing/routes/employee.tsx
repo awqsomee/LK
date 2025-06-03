@@ -24,6 +24,7 @@ import {
     AllowanceInfo,
     Allowances,
     Article,
+    ArticleApply,
     ArticleList,
     CertificateFromPlaceOfWorkPage,
     CertificateOfWorkExperiencePage,
@@ -62,7 +63,7 @@ import {
     PersonaIncomeTaxReferencePage,
     PersonalNotificationsPage,
     PhysicalEducationStudent,
-    PrinterMaintenancePage,
+    // PrinterMaintenancePage,
     QuestionPersonalAccountPage,
     QuestionSedPage,
     Relocation,
@@ -255,4 +256,5 @@ export const employeeHiddenPages = {
         return <Redirect to={ONBOARDING} />
     },
     article: Article,
+    'article-apply': ArticleApply,
 }

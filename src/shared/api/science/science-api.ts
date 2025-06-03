@@ -1,3 +1,5 @@
+import { createEffect } from 'effector'
+
 import { Article, Changes, Filter, Sort } from '@shared/api/science/types'
 
 import { $scienceApi } from '../config/science-config'
@@ -60,3 +62,12 @@ function convertKeysToLowerCase(obj: Record<string, any>): Record<string, any> {
         {} as Record<string, any>,
     )
 }
+
+export type ApplyArticleFxParams = {
+    articleId: string
+    departmentId: string
+}
+export const applyArticleFx = createEffect(async (params: ApplyArticleFxParams) => {
+    const { data } = await $scienceApi.post('/article/application', params)
+    return data
+})
