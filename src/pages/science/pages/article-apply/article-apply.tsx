@@ -15,7 +15,7 @@ const ArticleApply = () => {
     useGate(model.ArticleApplyGate, { articleId: id })
 
     return (
-        <CenterPage>
+        <CenterPage padding="10px">
             <FormBlockWrapper noHeader>
                 <Title size={4} align="left">
                     Заявить об авторстве

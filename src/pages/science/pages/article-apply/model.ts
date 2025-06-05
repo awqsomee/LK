@@ -5,7 +5,7 @@ import { and, pending } from 'patronum'
 
 import { articleModel } from '@entities/science'
 
-import { Subdivision, getAllSubdivisionsFx, scienceApi } from '@shared/api/science'
+import { Subdivision, scienceApi, subdivisionsApi } from '@shared/api/science'
 import { createCheckboxField } from '@shared/effector/form/create-checkbox-field'
 import { createInputField } from '@shared/effector/form/create-input-field'
 import { createSelectField } from '@shared/effector/form/create-select-field'
@@ -24,6 +24,7 @@ export const completed = createCheckboxField({ reset: [ArticleApplyGate.open, Ar
 export const $isActive = and(title.value, department.value)
 
 const applyArticleFx = attach({ effect: scienceApi.applyArticleFx })
+const getUserSubdivisionsFx = attach({ effect: subdivisionsApi.getUserSubdivisionsFx })
 export const $formPending = pending([applyArticleFx])
 
 sample({
@@ -48,11 +49,12 @@ sample({
         includeDisabled: null,
         includeChildSubdivisions: null,
     }),
-    target: getAllSubdivisionsFx,
+    target: getUserSubdivisionsFx,
 })
 
 sample({
-    clock: getAllSubdivisionsFx.doneData,
+    clock: getUserSubdivisionsFx.doneData,
+    fn: (data) => data.filter((subdivision) => subdivision.isDepartment),
     target: $departments,
 })
 

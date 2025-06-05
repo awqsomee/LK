@@ -43,3 +43,25 @@ export type Subdivision = {
     isFaculty: boolean
     childSubdivisions: Subdivision[]
 }
+
+export const ArticleApplicationStatuses = {
+    HeadOfDepartmentReview: 'На рассмотрении заведующим кафедрой',
+    DeanOrDeputyDeanReview: 'На рассмотрении деканом или заместителем декана',
+    AdminReview: 'На рассмотрении администратором',
+    Accepted: 'Принято',
+    Declined: 'Отклонено',
+}
+
+export type ArticleApplicationStatus = keyof typeof ArticleApplicationStatuses
+
+export type ArticleApplication = {
+    id: string
+    authorId: string
+    articleId: string
+    departmentId: string
+    status: ArticleApplicationStatus
+    createdAt: string
+    article: {
+        title: string
+    }
+}

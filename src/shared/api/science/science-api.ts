@@ -1,6 +1,6 @@
 import { createEffect } from 'effector'
 
-import { Article, Changes, Filter, Sort } from '@shared/api/science/types'
+import { Article, ArticleApplication, ArticleApplicationStatus, Changes, Filter, Sort } from '@shared/api/science/types'
 
 import { $scienceApi } from '../config/science-config'
 
@@ -70,4 +70,26 @@ export type ApplyArticleFxParams = {
 export const applyArticleFx = createEffect(async (params: ApplyArticleFxParams) => {
     const { data } = await $scienceApi.post('/article/application', params)
     return data
+})
+
+export type GetUserArticleApplicationsFxParams = { limit: number; offset: number }
+export const getUserArticleApplicationsFx = createEffect(async (params: GetUserArticleApplicationsFxParams) => {
+    const { data } = await $scienceApi.post<{
+        data: {
+            totalCount: number
+            data: ArticleApplication[]
+        }
+    }>('/article/application/all', params)
+    return data.data
+})
+
+export type GetAllArticleApplicationsFxParams = { limit: number; offset: number; statuses: ArticleApplicationStatus[] }
+export const getAllArticleApplicationsFx = createEffect(async (params: GetAllArticleApplicationsFxParams) => {
+    const { data } = await $scienceApi.post<{
+        data: {
+            totalCount: number
+            data: ArticleApplication[]
+        }
+    }>('/article/application/approver/all', params)
+    return data.data
 })

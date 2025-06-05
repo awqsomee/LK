@@ -94,3 +94,5 @@ export const DEFERMENT_FROM_CONSCRIPTION = APPLICATIONS_ROUTE + '/deferment-from
 export const CERTIFIED_COPIES_OF_MILITARY_DOCS = APPLICATIONS_ROUTE + '/certified-copies-of-military-docs'
 
 export const ARTICLE_APPLY = '/articles/:id/apply'
+export const ARTICLE_APPLICATIONS = '/article-applications'
+export const ARTICLE_APPLICATIONS_ADMIN = '/article-applications/approver'

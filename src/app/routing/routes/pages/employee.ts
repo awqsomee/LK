@@ -107,4 +107,8 @@ export const Science = lazy(() => import('@pages/science/pages/upload'))
 export const ArticleList = lazy(() => import('@pages/science/pages/article-list'))
 export const Article = lazy(() => import('@pages/science/pages/article'))
 export const ArticleApply = lazy(() => import('@pages/science/pages/article-apply/article-apply'))
+export const ArticleApplications = lazy(() => import('@pages/science/pages/article-applications/article-applications'))
+export const ArticleApplicationsAdmin = lazy(
+    () => import('@pages/science/pages/article-applications-admin/article-applications-admin'),
+)
 export const Children = lazy(() => import('@pages/children'))

@@ -24,6 +24,8 @@ import {
     AllowanceInfo,
     Allowances,
     Article,
+    ArticleApplications,
+    ArticleApplicationsAdmin,
     ArticleApply,
     ArticleList,
     CertificateFromPlaceOfWorkPage,
@@ -143,6 +145,7 @@ export const employeePages = {
     'all-staff': AllStaff,
     'publication-activity': Science,
     'article-list': ArticleList,
+    'article-applications-admin': ArticleApplicationsAdmin,
     'open-publication': () => {
         React.useEffect(() => {
             window.location.replace('https://e.mospolytech.ru/old/index.php?p=exp_concl')
@@ -257,4 +260,5 @@ export const employeeHiddenPages = {
     },
     article: Article,
     'article-apply': ArticleApply,
+    'article-applications': ArticleApplications,
 }
