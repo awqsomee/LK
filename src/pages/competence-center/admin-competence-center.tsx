@@ -82,13 +82,100 @@ const AdminCompetenceCenter = () => {
 const PassportActiveElement = () => {
     useGate(model.CompetenceCenterEmployeeGate)
 
-    const { isMobile } = useCurrentDevice()
-    const [newPassports, passportStatus, studentsNotFound, denyRemainingApplications, dismissed] = useUnit([
+    const [newPassports, passportStatus, studentsNotFound] = useUnit([
         model.$newPassports,
         model.$passportStatus,
         model.$studentsNotFound,
+    ])
+
+    if (passportStatus?.status === 'done') {
+        if (studentsNotFound) return <GenerationFinishedWithFailures />
+
+        return <GenerationSucceeded />
+    }
+
+    if (passportStatus?.status === 'pending') return <GenerationPending progress={passportStatus.progress} />
+
+    if (newPassports) return <PassportRequests />
+
+    return <NoPassportRequests />
+}
+
+const PassportRequests = () => {
+    useGate(model.CompetenceCenterEmployeeGate)
+
+    const { isMobile } = useCurrentDevice()
+    const [newPassports] = useUnit([model.$newPassports])
+
+    const { open } = useModal()
+
+    const openGeneratorModal = () =>
+        open(<PassportGenerator />, 'Создание паспортов компетенций', {
+            padding: isMobile ? '2rem 1rem' : '1.5rem',
+            gap: isMobile ? '1.5rem' : '2rem',
+        })
+
+    return (
+        <GeneratePassportsButton onClick={openGeneratorModal}>
+            <Flex d={isMobile ? 'column' : 'row'} ai="flex-start" jc="space-between" gap="1rem">
+                <NewApplicationsAmount>
+                    {newPassports} {getCorrectWordForm(newPassports, config.newApplicationRules)}
+                </NewApplicationsAmount>
+                <Flex w="fit-content" gap="2.5rem">
+                    {newPassports > 1 ? 'Создать паспорта' : 'Создать паспорт'}
+                    <FaArrowRightLong size={24} />
+                </Flex>
+            </Flex>
+        </GeneratePassportsButton>
+    )
+}
+
+const GenerationPending = ({ progress }: { progress: number }) => {
+    useGate(model.CompetenceCenterEmployeeGate)
+
+    return (
+        <PassportActiveElementWrapper>
+            <Flex d="column" ai="flex-start" gap="0.75rem">
+                <Flex jc="space-between" gap="2.5rem" ai="flex-end">
+                    <ProgressText>Идет генерация. Вы можете покинуть страницу 😊</ProgressText>
+                    <ProgressText>{progress}%</ProgressText>
+                </Flex>
+                <Progress max="100" value={progress} />
+            </Flex>
+        </PassportActiveElementWrapper>
+    )
+}
+
+const GenerationSucceeded = () => {
+    useGate(model.CompetenceCenterEmployeeGate)
+
+    const [dismissed] = useUnit([model.dismissed])
+
+    return (
+        <SuccessfulActiveElementWrapper>
+            <Flex jc="space-between">
+                Сгенерированы все паспорта! 🥳
+                <LKButton
+                    onClick={dismissed}
+                    icon={<FiX />}
+                    height="35px"
+                    minWidth="35px"
+                    width="35px"
+                    background="var(--almostTransparent)"
+                    radius="50%"
+                />
+            </Flex>
+        </SuccessfulActiveElementWrapper>
+    )
+}
+
+const GenerationFinishedWithFailures = () => {
+    useGate(model.CompetenceCenterEmployeeGate)
+
+    const { isMobile } = useCurrentDevice()
+    const [studentsNotFound, denyRemainingApplications] = useUnit([
+        model.$studentsNotFound,
         model.denyRemainingApplications,
-        model.dismissed,
     ])
 
     const { open } = useModal()
@@ -99,90 +186,51 @@ const PassportActiveElement = () => {
             gap: isMobile ? '1.5rem' : '2rem',
         })
 
-    if (passportStatus?.status === 'done' && studentsNotFound)
-        return (
-            <PassportActiveElementWrapper>
+    return (
+        <PassportActiveElementWrapper>
+            <Flex
+                d={isMobile ? 'column' : 'row'}
+                jc="space-between"
+                ai={isMobile ? 'flex-start' : 'center'}
+                gap={isMobile ? '0.75rem' : '2.5rem'}
+            >
+                <ProgressText>Генерация паспортов завершена</ProgressText>
                 <Flex
                     d={isMobile ? 'column' : 'row'}
-                    jc="space-between"
                     ai={isMobile ? 'flex-start' : 'center'}
+                    w={isMobile ? '100%' : 'auto'}
                     gap={isMobile ? '0.75rem' : '2.5rem'}
                 >
-                    <ProgressText>Генерация паспортов завершена</ProgressText>
-                    <Flex
-                        d={isMobile ? 'column' : 'row'}
-                        ai={isMobile ? 'flex-start' : 'center'}
-                        w={isMobile ? '100%' : 'auto'}
-                        gap={isMobile ? '0.75rem' : '2.5rem'}
+                    <NotFoundButton
+                        onClick={() =>
+                            open(<NotFoundStudents />, 'Не смогли найти следующих студентов', {
+                                padding: isMobile ? '2rem 1rem' : '1.5rem',
+                                gap: isMobile ? '1.5rem' : '2rem',
+                            })
+                        }
                     >
-                        <NotFoundButton
-                            onClick={() =>
-                                open(<NotFoundStudents />, 'Не смогли найти следующих студентов', {
-                                    padding: isMobile ? '2rem 1rem' : '1.5rem',
-                                    gap: isMobile ? '1.5rem' : '2rem',
-                                })
-                            }
-                        >
-                            Не найдено студентов: {studentsNotFound}
-                        </NotFoundButton>
-                        <Flex w={isMobile ? '100%' : 'auto'} gap="0.5rem" ai="stretch">
-                            <OutlinedButton onClick={denyRemainingApplications}>
-                                {studentsNotFound > 1 ? 'Отклонить заявки' : 'Отклонить заявку'}
-                            </OutlinedButton>
-                            <Button w="100%" onClick={openGeneratorModal}>
-                                Попробовать снова
-                            </Button>
-                        </Flex>
+                        Не найдено студентов: {studentsNotFound}
+                    </NotFoundButton>
+                    <Flex w={isMobile ? '100%' : 'auto'} gap="0.5rem" ai="stretch">
+                        <OutlinedButton onClick={denyRemainingApplications}>
+                            {studentsNotFound > 1 ? 'Отклонить заявки' : 'Отклонить заявку'}
+                        </OutlinedButton>
+                        <Button w="100%" onClick={openGeneratorModal}>
+                            Попробовать снова
+                        </Button>
                     </Flex>
                 </Flex>
-            </PassportActiveElementWrapper>
-        )
+            </Flex>
+        </PassportActiveElementWrapper>
+    )
+}
 
-    if (passportStatus?.status === 'done')
-        return (
-            <SuccessfulActiveElementWrapper>
-                <Flex jc="space-between">
-                    Сгенерированы все паспорта! 🥳
-                    <LKButton
-                        onClick={dismissed}
-                        icon={<FiX />}
-                        height="35px"
-                        minWidth="35px"
-                        width="35px"
-                        background="var(--almostTransparent)"
-                        radius="50%"
-                    />
-                </Flex>
-            </SuccessfulActiveElementWrapper>
-        )
+const NoPassportRequests = () => {
+    useGate(model.CompetenceCenterEmployeeGate)
 
-    if (passportStatus?.status === 'pending')
-        return (
-            <PassportActiveElementWrapper>
-                <Flex d="column" ai="flex-start" gap="0.75rem">
-                    <Flex jc="space-between" gap="2.5rem" ai="flex-end">
-                        <ProgressText>Идет генерация. Вы можете покинуть страницу 😊</ProgressText>
-                        <ProgressText>{passportStatus.progress}%</ProgressText>
-                    </Flex>
-                    <Progress max="100" value={passportStatus.progress} />
-                </Flex>
-            </PassportActiveElementWrapper>
-        )
+    const { isMobile } = useCurrentDevice()
 
-    if (newPassports)
-        return (
-            <GeneratePassportsButton onClick={openGeneratorModal}>
-                <Flex d={isMobile ? 'column' : 'row'} ai="flex-start" jc="space-between" gap="1rem">
-                    <NewApplicationsAmount>
-                        {newPassports} {getCorrectWordForm(newPassports, config.newApplicationRules)}
-                    </NewApplicationsAmount>
-                    <Flex w="fit-content" gap="2.5rem">
-                        {newPassports > 1 ? 'Создать паспорта' : 'Создать паспорт'}
-                        <FaArrowRightLong size={24} />
-                    </Flex>
-                </Flex>
-            </GeneratePassportsButton>
-        )
+    const { open } = useModal()
 
     return (
         <GeneratePassportsButton
