@@ -8,7 +8,7 @@ import { ScienceTable } from '@widgets/science-table'
 
 import { scienceModel } from '@entities/science'
 
-import { ARTICLES } from '@shared/routing'
+import { ARTICLES, ARTICLE_APPLICATIONS } from '@shared/routing'
 import { Button } from '@shared/ui/atoms'
 import Flex from '@shared/ui/flex'
 import PageBlock from '@shared/ui/page-block'
@@ -34,6 +34,7 @@ const PublicationList = () => {
 }
 
 const Header = () => {
+    const history = useHistory()
     const [select, selected, articles, columns, setColumns] = useUnit([
         scienceModel.events.selectArticle,
         scienceModel.stores.selectedArticles,
@@ -81,6 +82,16 @@ const Header = () => {
             </Flex>
             <Button
                 onClick={() => {
+                    history.push(ARTICLE_APPLICATIONS)
+                }}
+                text="Мои заявки"
+                background="var(--reallyBlue)"
+                textColor="#fff"
+                minWidth="100px"
+                height="36px"
+            />
+            {/* <Button
+                onClick={() => {
                     setColumns([
                         ...columns,
                         {
@@ -96,7 +107,7 @@ const Header = () => {
                 minWidth="150px"
                 height="36px"
                 icon={<FiPlus />}
-            />
+            /> */}
         </Flex>
     )
 }

@@ -32,3 +32,37 @@ export type Filter = {
     value: string | boolean | number
     operation: 'Eq' | 'Like'
 }
+
+export type Subdivision = {
+    guid: string
+    name: string
+    headGuid: string | null
+    parentGuid: string | null
+    isActive: boolean
+    isDepartment: boolean
+    isFaculty: boolean
+    childSubdivisions: Subdivision[]
+}
+
+export const ArticleApplicationStatuses = {
+    Accepted: 'Принято',
+    Declined: 'Отклонено',
+    HeadOfDepartmentReview: 'На рассмотрении заведующим кафедрой',
+    DeanOrDeputyDeanReview: 'На рассмотрении деканом или заместителем декана',
+    AdminReview: 'На рассмотрении администратором',
+}
+
+export type ArticleApplicationStatus = keyof typeof ArticleApplicationStatuses
+export type ArticleApplicationStatusName = (typeof ArticleApplicationStatuses)[ArticleApplicationStatus]
+
+export type ArticleApplication = {
+    id: string
+    authorId: string
+    articleId: string
+    departmentId: string
+    status: ArticleApplicationStatus
+    createdAt: string
+    article: {
+        title: string
+    }
+}
