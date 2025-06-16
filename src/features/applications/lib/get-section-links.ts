@@ -54,6 +54,7 @@ const getSectionLinks = ({ studentFinance }: { studentFinance: StudentAccount['f
             links: [
                 {
                     link: STUD_ACCOUNTING,
+                    disabled: studentFinance !== 'Бюджетная',
                     title: 'Справка о выплате стипендии и иные выплаты (из бухгалтерии)',
                 },
                 {

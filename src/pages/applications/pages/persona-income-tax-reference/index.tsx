@@ -216,7 +216,12 @@ function Files() {
 
     return (
         <Flex d="column" gap="0.5rem">
-            {isFilesRequired && <Message type="alert" title="Прикрепите скан запроса" />}
+            {isFilesRequired && (
+                <Message type="alert" title="Прикрепите скан запроса:">
+                    Бланк Управления социальной защиты, полученный или скачанный с официального сайта Управления
+                    социальной защиты
+                </Message>
+            )}
             <Title size={5} align="left" required={isFilesRequired}>
                 Приложите файлы
             </Title>
