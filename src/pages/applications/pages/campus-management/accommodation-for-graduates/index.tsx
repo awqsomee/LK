@@ -49,7 +49,7 @@ const AccommodationForGraduatesPage = () => {
             />
         )
 
-    if (isProduction && new Date() > new Date('2024 Aug 08')) return <Error text="Подача заявок закончилась"></Error>
+    // if (isProduction && new Date() > new Date('2024 Aug 08')) return <Error text="Подача заявок закончилась"></Error>
 
     return (
         <BaseApplicationWrapper isDone={isDone}>
