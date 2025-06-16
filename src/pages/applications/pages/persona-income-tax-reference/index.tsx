@@ -1,4 +1,5 @@
 import React, { useEffect } from 'react'
+import { FcFile } from 'react-icons/fc'
 
 import { useUnit } from 'effector-react'
 
@@ -10,6 +11,7 @@ import { TeacherMethodObtainingOptions } from '@entities/applications/consts'
 import { Input, Message, TextArea, Title } from '@shared/ui/atoms'
 import FormBlockWrapper from '@shared/ui/atoms/form-block'
 import FileInput from '@shared/ui/file-input'
+import FileWrapper from '@shared/ui/file-input/ui/list-of-files/ui/file/style'
 import Flex from '@shared/ui/flex'
 import { Grid } from '@shared/ui/grid'
 import { RadioButtonList } from '@shared/ui/organisms'
@@ -34,8 +36,21 @@ const PersonaIncomeTaxReferencePage = () => {
     return (
         <BaseApplicationWrapper isDone={isDone}>
             <FormBlockWrapper noHeader>
-                <Message title="" icon={null} type="failure">
-                    Срок изготовления справки - 3 рабочих дня, не считая дня подачи заявления
+                <Message
+                    title="Срок изготовления справки - 3 рабочих дня, не считая дня подачи заявления"
+                    icon={null}
+                    type="failure"
+                >
+                    <Flex d="column" gap="0.5rem" ai="flex-start" jc="flex-start">
+                        <File
+                            title="Пример справки по стипендии"
+                            link="https://e.mospolytech.ru/old/storage/files/PRIMER_spravka_po_stipendii.pdf"
+                        />
+                        <File
+                            title="Пример запроса на субсидию 7 месяцев"
+                            link="https://e.mospolytech.ru/old/storage/files/PRIMER_zapros_na_subsidiju_7_mesyatsev.pdf"
+                        />
+                    </Flex>
                 </Message>
                 <Fio />
                 <Group />
@@ -229,5 +244,20 @@ function Files() {
         </Flex>
     )
 }
+
+const File = ({ link, title }: { link: string; title: string }) => (
+    <a href={link} style={{ width: 290, zIndex: 1, color: 'var(--blue)' }} target="_blank" rel="noreferrer">
+        <FileWrapper>
+            <div className="file-body">
+                <div className="image-container">
+                    <FcFile />
+                </div>
+                <div className="name-and-size">
+                    <b className="file-name">{title}</b>
+                </div>
+            </div>
+        </FileWrapper>
+    </a>
+)
 
 export default PersonaIncomeTaxReferencePage
