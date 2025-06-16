@@ -45,14 +45,15 @@ export type Subdivision = {
 }
 
 export const ArticleApplicationStatuses = {
+    Accepted: 'Принято',
+    Declined: 'Отклонено',
     HeadOfDepartmentReview: 'На рассмотрении заведующим кафедрой',
     DeanOrDeputyDeanReview: 'На рассмотрении деканом или заместителем декана',
     AdminReview: 'На рассмотрении администратором',
-    Accepted: 'Принято',
-    Declined: 'Отклонено',
 }
 
 export type ArticleApplicationStatus = keyof typeof ArticleApplicationStatuses
+export type ArticleApplicationStatusName = (typeof ArticleApplicationStatuses)[ArticleApplicationStatus]
 
 export type ArticleApplication = {
     id: string

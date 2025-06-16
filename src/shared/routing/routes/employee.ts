@@ -1019,7 +1019,6 @@ export const employeeHiddenRoutes: (params: { allowancesRoles: Role[] }) => IRou
         id: 'Социальная среда',
         title: 'Социальная среда',
         color: 'pink',
-
         icon: BiGroup,
         isTemplate: false,
         path: SOICAL_ENVIROMENT,
@@ -1032,7 +1031,6 @@ export const employeeHiddenRoutes: (params: { allowancesRoles: Role[] }) => IRou
         id: 'Психологическая помощь',
         title: 'Психологическая помощь',
         color: 'green',
-
         icon: MdPsychology,
         isTemplate: false,
         path: PSYCHOLOGICAL_HELP,
@@ -1045,7 +1043,6 @@ export const employeeHiddenRoutes: (params: { allowancesRoles: Role[] }) => IRou
         id: 'Медицинская помощь',
         title: 'Медицинская помощь',
         color: 'red',
-
         icon: BiPlusMedical,
         isTemplate: false,
         path: HEALTH_CARE,
@@ -1058,7 +1055,6 @@ export const employeeHiddenRoutes: (params: { allowancesRoles: Role[] }) => IRou
         id: 'WI-FI  в университете',
         title: 'WI-FI  в университете',
         color: 'purple',
-
         icon: BiWifi,
         isTemplate: false,
         path: WIFI_AT_THE_UNIVERSITY,
@@ -1071,7 +1067,6 @@ export const employeeHiddenRoutes: (params: { allowancesRoles: Role[] }) => IRou
         id: 'Брендбук',
         title: 'Брендбук',
         color: 'orange',
-
         icon: BiBookOpen,
         isTemplate: false,
         path: BRANDBOOK,
@@ -1085,7 +1080,6 @@ export const employeeHiddenRoutes: (params: { allowancesRoles: Role[] }) => IRou
         title: 'Адреса и контакты',
         icon: BiBuildings,
         path: ADDRESSES_AND_CONTACTS,
-
         color: 'darkBlue',
         isTemplate: false,
         group: 'FINANCES_DOCS',
@@ -1099,7 +1093,6 @@ export const employeeHiddenRoutes: (params: { allowancesRoles: Role[] }) => IRou
         title: 'Структура университета',
         icon: MdGroups,
         path: STRUCTURE_OF_THE_UNIVERSITY,
-
         color: 'lightGreen',
         isTemplate: false,
         group: 'FINANCES_DOCS',
@@ -1119,7 +1112,6 @@ export const employeeHiddenRoutes: (params: { allowancesRoles: Role[] }) => IRou
         pageSize: 'large',
         show: false,
         isSubPage: true,
-        fallbackPrevPage: ARTICLE_LIST,
         backButtonText: 'Список публикаций',
     },
     'article-apply': {

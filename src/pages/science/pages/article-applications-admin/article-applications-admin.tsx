@@ -1,9 +1,9 @@
 import React from 'react'
 import { useHistory } from 'react-router'
 
-import { useGate, useUnit } from 'effector-react'
+import { useGate, useStoreMap } from 'effector-react'
 
-import { ArticleApplicationStatus, ArticleApplicationStatuses } from '@shared/api/science'
+import { ArticleApplicationStatusName, ArticleApplicationStatuses } from '@shared/api/science'
 import { ARTICLE } from '@shared/routing'
 import { CenterPage, Message } from '@shared/ui/atoms'
 import PageBlock from '@shared/ui/page-block'
@@ -17,7 +17,12 @@ const ArticleApplicationsAdmin = () => {
 
     const history = useHistory()
 
-    const [articleApplications] = useUnit([model.$articleApplications])
+    const articleApplications = useStoreMap(model.$articleApplications, (articleApplications) =>
+        articleApplications.map((articleApplication) => ({
+            ...articleApplication,
+            status: ArticleApplicationStatuses[articleApplication.status],
+        })),
+    )
 
     return (
         <CenterPage padding="10px">
@@ -37,14 +42,16 @@ const columns: ColumnProps[] = [
         field: 'article',
         title: 'Название',
         render: (value) => value.title,
+        search: true,
     },
     {
         field: 'status',
         title: 'Статус',
-        render: (value: ArticleApplicationStatus) => (
+        catalogs: Object.values(ArticleApplicationStatuses).map((val, i) => ({ id: i.toString(), title: val })),
+        render: (value: ArticleApplicationStatusName) => (
             <Message
-                type={value === 'Accepted' ? 'success' : value === 'Declined' ? 'failure' : 'alert'}
-                title={ArticleApplicationStatuses[value] || '—'}
+                type={value === 'Принято' ? 'success' : value === 'Отклонено' ? 'failure' : 'alert'}
+                title={value || '—'}
                 align="center"
                 icon={null}
             />
@@ -54,6 +61,7 @@ const columns: ColumnProps[] = [
         field: 'createdAt',
         title: 'Дата запроса',
         type: 'date',
+        sort: true,
     },
 ]
 export default ArticleApplicationsAdmin
