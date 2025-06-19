@@ -1,9 +1,14 @@
 import React from 'react'
 
+import { format } from 'date-fns'
+import { ru } from 'date-fns/locale'
+
 import listHostelsOptions from '@features/applications/lib/get-list-hostels'
 
 import { UserApplication } from '@shared/api/model'
 import { IInputArea } from '@shared/ui/input-area/model'
+
+export const accommodationForGraduatesEndDate = new Date('2025 Jun 29')
 
 const statusesStudentForHostelOptions = [
     {
@@ -83,7 +88,10 @@ const getForm = (dataUserApplication: UserApplication): IInputArea => {
             <>
                 <p>Прикрепите расписку из приемной комиссии о подаче документов для поступления</p>
                 <br />
-                <p>Подача заявок будет доступна до 07.08.2024 включительно</p>
+                <p>
+                    Подача заявок будет доступна до{' '}
+                    {format(accommodationForGraduatesEndDate, 'dd.MM.yyyy', { locale: ru })}
+                </p>
             </>
         ),
         documents: { files: [], fieldName: 'docs', required: false, maxFiles: 3, allowedTypes: ['pdf'] },
