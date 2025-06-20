@@ -8,7 +8,7 @@ import listHostelsOptions from '@features/applications/lib/get-list-hostels'
 import { UserApplication } from '@shared/api/model'
 import { IInputArea } from '@shared/ui/input-area/model'
 
-export const accommodationForGraduatesEndDate = new Date('2025 Jun 29')
+export const accommodationForGraduatesEndDate = new Date('2025 Jul 19')
 
 const statusesStudentForHostelOptions = [
     {
@@ -88,10 +88,7 @@ const getForm = (dataUserApplication: UserApplication): IInputArea => {
             <>
                 <p>Прикрепите расписку из приемной комиссии о подаче документов для поступления</p>
                 <br />
-                <p>
-                    Подача заявок будет доступна до{' '}
-                    {format(accommodationForGraduatesEndDate, 'dd.MM.yyyy', { locale: ru })}
-                </p>
+                <p>Подача заявок доступна до даты окончания ГИА вашей учебной группы</p>
             </>
         ),
         documents: { files: [], fieldName: 'docs', required: false, maxFiles: 3, allowedTypes: ['pdf'] },
