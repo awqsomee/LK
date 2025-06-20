@@ -36,10 +36,11 @@ const Inputs = () => {
                 scroll={false}
             >
                 <Logo width="50px" short className="logo second" />
-                <Flex jc="space-between">
+                <Flex d="column" ai="flex-start">
                     <Title size={3} align="left">
                         Личный кабинет
                     </Title>
+                    <Subtext>обучающегося и сотрудника</Subtext>
                 </Flex>
                 {showAbiturientMessage && (
                     <Message type={'info'} title="Уважаемые абитуриенты!">
