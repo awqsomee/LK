@@ -34,7 +34,7 @@ export const getConsColumns = (onClick: () => void, link: string): ColumnProps[]
     {
         title: '',
         field: '',
-        align: 'center',
+        align: 'right',
         render: () => (
             <Link to={link} onClick={onClick}>
                 Завершить...

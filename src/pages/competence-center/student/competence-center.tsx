@@ -340,6 +340,12 @@ const HowToGetCard = styled(Card)`
         transition: all 0.3s ease-in-out;
     }
     overflow: hidden;
+    &::before {
+        transition:
+            --myColor1 0.3s ease-in-out,
+            --myColor2 0.3s ease-in-out,
+            all 0.3s ease-in-out;
+    }
 
     &:hover {
         ${CircleLink} svg {
@@ -350,10 +356,6 @@ const HowToGetCard = styled(Card)`
         }
 
         &::before {
-            transition:
-                --myColor1 0.3s ease-in-out,
-                --myColor2 0.3s ease-in-out,
-                all 0.3s ease-in-out;
             --myColor1: #567dff;
             --myColor2: rgba(0, 0, 0, 0.12);
         }

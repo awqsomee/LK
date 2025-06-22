@@ -265,13 +265,14 @@ const SuccessfulActiveElementWrapper = styled.div`
     min-height: 6.5rem;
     padding-inline: 3.75rem;
     border-radius: 0.5rem;
-    background: #252525;
+    background: var(--block-content);
     border-radius: 9px;
 
     font-weight: 600;
     font-size: 1.125rem;
     line-height: 1.375rem;
     color: #3cd288;
+    box-shadow: 0px 2px 6px rgba(0, 0, 0, 0.1);
 
     ${MEDIA_QUERIES.isMobile} {
         padding-inline: 1rem;
@@ -292,6 +293,7 @@ const PassportActiveElementWrapper = styled.div`
     font-weight: 600;
     font-size: 1.125rem;
     line-height: 1.375rem;
+    box-shadow: 0px 2px 6px rgba(0, 0, 0, 0.1);
 
     ${MEDIA_QUERIES.isMobile} {
         padding-inline: 1rem;
@@ -310,6 +312,7 @@ const GeneratePassportsButton = styled(ButtonBase)`
     font-weight: 600;
     font-size: 1.125rem;
     line-height: 1.375rem;
+    box-shadow: 0px 2px 6px rgba(0, 0, 0, 0.1);
 
     &:disabled {
         background-color: var(--block-content);
@@ -345,11 +348,10 @@ const Progress = styled.progress`
     width: 100%;
     height: 0.5rem;
     border-radius: 0.25rem;
-    background-color: var(--reallyBlue);
-    color: var(--reallyBlue);
+    background-color: var(--almostTransparent);
 
     &::-webkit-progress-bar {
-        background-color: var(--theme);
+        background-color: var(--almostTransparent);
         border-radius: 0.25rem;
     }
 

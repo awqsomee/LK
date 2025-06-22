@@ -6,7 +6,7 @@ const RowWrapper = styled.div<{ even?: boolean; height?: string }>`
     width: 100%;
     font-size: 0.9em;
     cursor: pointer;
-    background: ${({ even }) => (!even ? 'var(--theme)' : `var(--settings)`)};
+    background: ${({ even }) => (even ? 'var(--settings)' : `var(--settings-2)`)};
     height: ${({ height }) => height};
     &:hover {
         filter: brightness(0.98);

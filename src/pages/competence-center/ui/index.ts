@@ -27,6 +27,7 @@ export const Button = styled(ButtonBase)<{ p?: string }>`
     padding: ${({ p }) => p ?? '1rem 1rem'};
 
     background-color: var(--reallyBlue);
+    color: white;
 
     ${MEDIA_QUERIES.isMobile} {
         line-height: 0.75rem;
@@ -63,7 +64,7 @@ export const ButtonLink = styled(Link)`
     line-height: 1rem;
     border-radius: 0.5rem;
 
-    color: #90b3e7;
+    color: var() (--blue);
 
     &:hover {
         text-decoration: underline;
