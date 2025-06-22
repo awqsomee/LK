@@ -1,5 +1,4 @@
 import React, { useEffect, useState } from 'react'
-import { FiPlus } from 'react-icons/fi'
 import { useHistory } from 'react-router'
 
 import { useUnit } from 'effector-react'
@@ -35,12 +34,10 @@ const PublicationList = () => {
 
 const Header = () => {
     const history = useHistory()
-    const [select, selected, articles, columns, setColumns] = useUnit([
+    const [select, selected, articles] = useUnit([
         scienceModel.events.selectArticle,
         scienceModel.stores.selectedArticles,
         scienceModel.stores.articles,
-        scienceModel.stores.columns,
-        scienceModel.events.setColumns,
     ])
     const [allSelected, setAllSelected] = useState(false)
     return (

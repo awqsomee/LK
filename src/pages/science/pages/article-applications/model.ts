@@ -11,9 +11,10 @@ const getUserArticleApplicationsFx = attach({ effect: scienceApi.getUserArticleA
 
 sample({
     clock: ArticleApplicationsGate.open,
-    fn: () => ({
+    fn: (): scienceApi.GetUserArticleApplicationsFxParams => ({
         limit: 100,
         offset: 0,
+        statuses: ['AdminReview', 'DeanOrDeputyDeanReview', 'HeadOfDepartmentReview', 'Accepted', 'Declined'],
     }),
     target: [getUserArticleApplicationsFx],
 })

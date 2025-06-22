@@ -72,7 +72,7 @@ export const applyArticleFx = createEffect(async (params: ApplyArticleFxParams) 
     return data
 })
 
-export type GetUserArticleApplicationsFxParams = { limit: number; offset: number }
+export type GetUserArticleApplicationsFxParams = { limit: number; offset: number; statuses: ArticleApplicationStatus[] }
 export const getUserArticleApplicationsFx = createEffect(async (params: GetUserArticleApplicationsFxParams) => {
     const { data } = await $scienceApi.post<{
         data: {
@@ -92,4 +92,16 @@ export const getAllArticleApplicationsFx = createEffect(async (params: GetAllArt
         }
     }>('/article/application/approver/all', params)
     return data.data
+})
+
+export type ApproveApplicationFxParams = { id: string }
+export const approveApplicationFx = createEffect(async ({ id }: ApproveApplicationFxParams) => {
+    const { data } = await $scienceApi.post(`/article/application/${id}/approve`)
+    return data
+})
+
+export type DeclineApplicationFxParams = { id: string; declineReason: string }
+export const declineApplicationFx = createEffect(async ({ id, declineReason }: DeclineApplicationFxParams) => {
+    const { data } = await $scienceApi.post(`/article/application/${id}/decline`, { declineReason })
+    return data
 })
