@@ -41,6 +41,7 @@ import {
     STATE_ACCREDITATION,
     STUDENT_EMPLOYMENT_APPLICATION_ROUTE,
     STUDENT_STATUS,
+    STUD_ACCOUNTING,
     TECHNICAL_MAINTENANCE,
     TERMINATION_OF_EMPLOYMENT_CONTRACT,
 } from '@shared/routing'
@@ -51,6 +52,11 @@ const getSectionLinks = ({ studentFinance }: { studentFinance: StudentAccount['f
         {
             title: 'Многофункциональный центр',
             links: [
+                {
+                    link: STUD_ACCOUNTING,
+                    disabled: studentFinance !== 'Бюджетная',
+                    title: 'Справка о выплате стипендии и иные выплаты (из бухгалтерии)',
+                },
                 {
                     link: CERTIFICATE_OF_ATTENDANCE,
                     title: 'Справка о прослушанных дисциплинах за период обучения (справка об обучении)',

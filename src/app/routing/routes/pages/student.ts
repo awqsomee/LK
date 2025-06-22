@@ -120,6 +120,8 @@ export const AccommodationCorrespondenceFormPage = lazy(
     () => import('@pages/applications/pages/campus-management/accommodation-correspondence-form'),
 )
 
+export const StudAccountingPage = lazy(() => import('@pages/applications/pages/persona-income-tax-reference'))
+
 export const FamilyRoomPage = lazy(() => import('@pages/applications/pages/campus-management/family-room'))
 
 export const ArbitraryRequestPage = lazy(() => import('@pages/applications/pages/other/arbitrary-request'))

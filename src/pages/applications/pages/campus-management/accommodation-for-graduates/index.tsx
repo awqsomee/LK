@@ -17,7 +17,7 @@ import { Error, FormBlock, SubmitButton } from '@shared/ui/atoms'
 import InputArea from '@shared/ui/input-area'
 import { IInputArea } from '@shared/ui/input-area/model'
 
-import getForm from './lib/get-form'
+import getForm, { accommodationForGraduatesEndDate } from './lib/get-form'
 
 type LoadedState = React.Dispatch<React.SetStateAction<IInputArea>>
 
@@ -49,7 +49,8 @@ const AccommodationForGraduatesPage = () => {
             />
         )
 
-    if (isProduction && new Date() > new Date('2024 Aug 08')) return <Error text="Подача заявок закончилась"></Error>
+    if (isProduction && new Date() > accommodationForGraduatesEndDate)
+        return <Error text="Подача заявок закончилась"></Error>
 
     return (
         <BaseApplicationWrapper isDone={isDone}>

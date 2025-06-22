@@ -74,15 +74,6 @@ const getTeachersSectionLinks = (user: User): Section[] => {
             ],
         },
         ...getInDevelopmentStaffLinks(),
-        {
-            title: 'Прочее',
-            links: [
-                {
-                    link: TECHNICAL_MAINTENANCE,
-                    title: 'Техническая эксплуатация',
-                },
-            ],
-        },
     ]
 }
 

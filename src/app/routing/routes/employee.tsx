@@ -183,7 +183,7 @@ export const employeeHiddenPages = {
     'issuance-of-licenses-page': isProduction ? ApplicationRedirect : IssuanceOfLicensesPage,
     'getting-computer-equipment': GettingComputerEquipmentPage,
     'connecting-computer': ConnectingComputerPage,
-    'printer-maintenance': PrinterMaintenancePage,
+    // 'printer-maintenance': PrinterMaintenancePage,
     'question-sed': QuestionSedPage,
     'question-personal-account': QuestionPersonalAccountPage,
     'other-it-services': OtherItServicesPage,
