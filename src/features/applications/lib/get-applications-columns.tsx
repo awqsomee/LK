@@ -1,8 +1,7 @@
 import React from 'react'
 import { FiDownload } from 'react-icons/fi'
 
-import { ApplicationStatusType, ApplicationsConstants } from '@entities/applications/consts'
-
+import { ApplicationStatusType, ApplicationsConstants } from '@shared/consts/applications'
 import { LinkButton } from '@shared/ui/atoms'
 import Flex from '@shared/ui/flex'
 import { Message } from '@shared/ui/message'

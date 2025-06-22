@@ -3,9 +3,8 @@ import getStudentSubdivisions from '@pages/applications/lib/get-student-subdivis
 import getAddressFields from '@features/applications/lib/get-address-fields'
 import { getStudentMethodObtainingFields } from '@features/applications/lib/get-student-method-obtaining-fields'
 
-import { NumberOfCopiesOptions } from '@entities/applications/consts'
-
 import { UserApplication } from '@shared/api/model'
+import { NumberOfCopiesOptions } from '@shared/consts/applications'
 import { IInputArea } from '@shared/ui/input-area/model'
 
 const SocialPlaceOfReferenceOptions = [

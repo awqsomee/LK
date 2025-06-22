@@ -12,7 +12,6 @@ import Subtext from '@shared/ui/subtext'
 const LinkItemStyled = styled(Link)<{ color: string; amount: number }>`
     width: 100%;
     height: 100%;
-    max-width: ${({ amount }) => amount > 6 && '93.25px'};
     /* background: var(--block); */
     display: flex;
     align-items: center;

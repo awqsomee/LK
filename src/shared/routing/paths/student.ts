@@ -5,6 +5,7 @@ export const JOB_ROUTE = '/job'
 export const APPLICATION_FOR_SUPERIOR_ROOM_ROUTE = '/application-for-superior-room'
 export const ACAD_PERFORMANCE_ROUTE = '/acad-performance'
 export const STUDENT_EMPLOYMENT_ROUTE = '/student-employment'
+export const COMPETENCE_CENTER = '/competence-center'
 
 //hidden routes
 export const CLARIFICATION_OF_PASSPORT_DATA_ROUTE = APPLICATIONS_ROUTE + '/clarification-of-passport-data'
@@ -54,6 +55,11 @@ export const STUDENT_EMPLOYMENT = STUDENT_EMPLOYMENT_ROUTE + '/employment'
 
 export const TAX_CERTIFICATES_ROUTE = '/tax-certificates'
 export const TAX_CERTIFICATE_ROUTE = '/tax-certificates/:id'
+
+export const COMPETENCE_CENTER_PASSPORTS = COMPETENCE_CENTER + '/passports'
+export const COMPETENCE_CENTER_CONSULTATIONS = COMPETENCE_CENTER + '/consultations'
+export const COMPETENCE_CENTER_CONSULTATION_FORM = COMPETENCE_CENTER + '/consultation-form'
+export const COMPETENCE_CENTER_PASSPORT_FORM = COMPETENCE_CENTER + '/passport-form'
 export const STUD_ACCOUNTING = APPLICATIONS_ROUTE + '/accounting'
 export const TAX_CERT_REQUEST_ROUTE_PREFIX = '/tax-cert-request'
 export const TAX_CERT_REQUEST_ROUTE = TAX_CERT_REQUEST_ROUTE_PREFIX + '/:id/:paymentId'

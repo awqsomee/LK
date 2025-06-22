@@ -21,6 +21,7 @@ export const ButtonWrapper = styled.button<{
     height?: string
     fontSize?: string
     flipped?: boolean
+    radius?: string
 }>`
     display: flex;
     align-items: center;
@@ -30,7 +31,6 @@ export const ButtonWrapper = styled.button<{
     background: ${({ isChosen, background }) => (isChosen ? 'var(--reallyBlue)' : (background ?? 'var(--search)'))};
     padding: ${({ padding }) => padding ?? '10px'};
     font-size: ${({ fontSize }) => fontSize};
-    border-radius: 10px;
     cursor: pointer;
     font-weight: 600;
     transition: 0.2s transform;
@@ -41,6 +41,7 @@ export const ButtonWrapper = styled.button<{
     opacity: ${({ isActive }) => (isActive ? 1 : 0.5)};
     height: ${({ height = '40px' }) => height};
     ${({ flipped }) => flipped && 'transform: rotate(180deg);'};
+    border-radius: ${({ radius }) => radius ?? '10px'};
 
     &:focus {
         outline: 4px solid var(--almostTransparentOpposite);
@@ -114,5 +115,46 @@ export const ButtonWrapper = styled.button<{
         span {
             display: ${({ shrinkTextInMobile }) => (shrinkTextInMobile ? 'none' : 'flex')};
         }
+    }
+`
+
+// TODO: create basic Button component
+export const ButtonBase = styled.button<{ w?: string; size?: number; margin?: string; c?: string }>`
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    gap: 0.5rem;
+    width: ${({ w }) => w};
+    min-width: ${({ size }) => (size ? size / 16 + 'rem' : undefined)};
+    min-height: ${({ size }) => (size ? size / 16 + 'rem' : undefined)};
+    margin: ${({ margin }) => margin};
+    color: ${({ c }) => c ?? 'var(--text)'};
+    border-radius: var(--brLight);
+    outline: none;
+    border: none;
+    text-wrap: nowrap;
+
+    transition: all 200ms;
+
+    &:not(:disabled):hover {
+        filter: brightness(0.9);
+        cursor: pointer;
+    }
+
+    &:disabled {
+        opacity: 0.5;
+    }
+
+    &:focus {
+        outline: 0.25rem solid var(--almostTransparentOpposite);
+    }
+
+    &:focus:not(:focus-visible) {
+        outline: none;
+    }
+
+    ${MEDIA_QUERIES.isTablet} {
+        font-size: 0.8em;
     }
 `
