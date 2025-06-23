@@ -29,7 +29,7 @@ const ArticleApplications = () => {
                 <Table
                     columns={columns}
                     data={articleApplications}
-                    onRowClick={(row) => history.push(ARTICLE.replace(':id', row.id))}
+                    onRowClick={(row) => history.push(ARTICLE.replace(':id', row.articleId))}
                 />
             </PageBlock>
         </CenterPage>
