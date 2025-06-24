@@ -1,0 +1,1 @@
+import{ax as r,r as t,j as s}from"./vendor-8a1e4858.js";import{c as a,f as c,r as n}from"./index-da560b3a.js";const x=()=>{const e=r();return t.useEffect(()=>{e.push(a)},[]),s.jsx(c,{h:"100%",d:"column",ai:"center",jc:"center",children:s.jsx(n,{})})};export{x as default};
