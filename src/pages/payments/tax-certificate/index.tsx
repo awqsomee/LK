@@ -147,7 +147,7 @@ const TaxCertificate = () => {
                                     priority: 'three',
                                 },
                             ]}
-                            data={certificates?.toReversed()}
+                            data={certificates}
                             onRowClick={(row) => history.push(TAX_CERTIFICATES_ROUTE + '/' + row.id)}
                         />
                     </Flex>
