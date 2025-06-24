@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react'
 import { FiPlus } from 'react-icons/fi'
 import { useHistory } from 'react-router'
 
-import { useUnit } from 'effector-react'
+import { useStoreMap, useUnit } from 'effector-react'
 import styled from 'styled-components'
 
 import { taxCertificateModel } from '@entities/payments'
@@ -29,16 +29,17 @@ const years = getYears()
 const TaxCertificate = () => {
     const history = useHistory()
     const [selected, setSelected] = useState<SelectPage | null>(years[0])
-    const [pageMounted, certificates, loading] = useUnit([
-        taxCertificateModel.pageMounted,
-        taxCertificateModel.certificates,
-        taxCertificateModel.certificatesLoading,
-    ])
+    const [pageMounted, loading] = useUnit([taxCertificateModel.pageMounted, taxCertificateModel.certificatesLoading])
     const [presentYears, certificatedRequested, certCreating] = useUnit([
         taxCertificateModel.presentYears,
         taxCertificateModel.certificatedRequested,
         taxCertificateModel.createCertificateLoading,
     ])
+
+    const certificates = useStoreMap(taxCertificateModel.certificates, (certificates) =>
+        certificates ? [...certificates].reverse() : null,
+    )
+
     useEffect(() => {
         pageMounted()
     }, [])
@@ -146,7 +147,7 @@ const TaxCertificate = () => {
                                     priority: 'three',
                                 },
                             ]}
-                            data={certificates?.toReversed()}
+                            data={certificates}
                             onRowClick={(row) => history.push(TAX_CERTIFICATES_ROUTE + '/' + row.id)}
                         />
                     </Flex>
