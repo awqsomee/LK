@@ -122,6 +122,7 @@ type Contracts = {
     contractDate: string
 }
 export const getTaxCerts = async () => (await $api.get<TaxCertificate[]>(`?getTaxCert&token=${token()}`)).data
+
 export const createTaxCertificate = async ({ year }: { year: string }) => {
     const { data } = await $api.get(`?createTaxCert=${year}&token=${token()}`)
     if (data.result !== 'ok') throw new Error(data.error_text)
