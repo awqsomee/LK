@@ -1,3 +1,4 @@
+// TODO: fetch from backend
 export const adminGUIDs = [
     '907afd9b-d9c5-11e7-940a-b4b52f5f5349',
     '4e2ee194-82a3-11ec-bba0-f3424449f339',

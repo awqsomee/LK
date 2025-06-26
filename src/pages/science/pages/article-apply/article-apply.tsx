@@ -52,12 +52,12 @@ const Department = () => {
         <Select
             title="Кафедра"
             placeholder="Кафедра"
-            required
             width="100%"
             items={departments}
             selected={value}
             setSelected={setValue}
             withSearch
+            isActive={!!departments.length}
         />
     )
 }

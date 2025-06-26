@@ -66,3 +66,39 @@ export type ArticleApplication = {
         title: string
     }
 }
+
+type AcceptanceStatus = {
+    userId: string
+    isApproved: true
+    updatedAt: string
+} | null
+
+export type ArticleApplicationDetailed = {
+    acceptanceChain: {
+        headOfDepartment: AcceptanceStatus
+        deanOrDeputyDean: AcceptanceStatus
+        admin: AcceptanceStatus
+    }
+    declineReason: null
+    authorsFractionShares:
+        | [
+              {
+                  authorName: string
+                  fractionShare: 1
+                  isApplyingAuthor: true
+              },
+          ]
+        | null
+    id: string
+    authorId: string
+    articleId: string
+    departmentId: null
+    article: {
+        title: string
+    }
+    author: {
+        fullName: string
+    }
+    status: ArticleApplicationStatus
+    createdAt: string
+}

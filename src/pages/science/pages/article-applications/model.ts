@@ -19,4 +19,4 @@ sample({
     target: [getUserArticleApplicationsFx],
 })
 
-$articleApplications.on(getUserArticleApplicationsFx.doneData, (_, { data }) => data)
+$articleApplications.on(getUserArticleApplicationsFx.doneData, (_, data) => data)

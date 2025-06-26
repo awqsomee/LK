@@ -21,7 +21,7 @@ export const title = createInputField()
 export const department = createSelectField({ reset: [ArticleApplyGate.open, ArticleApplyGate.close] })
 
 export const completed = createCheckboxField({ reset: [ArticleApplyGate.open, ArticleApplyGate.close] })
-export const $isActive = and(title.value, department.value)
+export const $isActive = and(title.value)
 
 const applyArticleFx = attach({ effect: scienceApi.applyArticleFx })
 const getUserSubdivisionsFx = attach({ effect: subdivisionsApi.getUserSubdivisionsFx })
@@ -64,7 +64,7 @@ sample({
         articleId: $articleId,
         department: department.value,
     },
-    fn: ({ articleId, department }) => ({ articleId: articleId!, departmentId: department!.id.toString() }),
+    fn: ({ articleId, department }) => ({ articleId: articleId!, departmentId: department?.id.toString() ?? null }),
     target: applyArticleFx,
 })
 
