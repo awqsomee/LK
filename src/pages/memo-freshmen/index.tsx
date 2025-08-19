@@ -14,7 +14,7 @@ const MemoFreshmenPage = () => {
                 <Title size={4} align="left">
                     Вниманию студентов 1 курса!
                 </Title>
-                <Ul>
+                <Ul> 
                     <p>
                         Пароль для доступа в Личный кабинет формируется следующим образом: <strong>StudDDMMYYXXXXXX!</strong>
                     </p>
