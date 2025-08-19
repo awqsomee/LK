@@ -48,7 +48,7 @@ export const getForm = (dataUserApplication: UserApplication): IInputArea => {
                 fieldName: 'order-time',
                 value: '',
                 editable: true,
-                required: true,
+                required: false,
             },
             {
                 title: '№:',
@@ -56,16 +56,16 @@ export const getForm = (dataUserApplication: UserApplication): IInputArea => {
                 type: 'text',
                 value: null,
                 editable: true,
-                required: true,
+                required: false,
             },
             {
                 title: 'Приложения:',
                 type: 'select',
                 fieldName: 'attachments',
                 width: '100',
-                value: null,
-                required: true,
+                value: '',
                 editable: true,
+                required: false,
                 items: AttachmentOptions,
             },
             {
@@ -103,6 +103,6 @@ export const getForm = (dataUserApplication: UserApplication): IInputArea => {
                 editable: true,
             },
         ],
-        documents: { files: [], fieldName: 'docs', maxFiles: 6, required: true },
+        documents: { files: [], fieldName: 'docs', maxFiles: 6, required: false },
     }
 }
