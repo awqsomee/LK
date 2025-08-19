@@ -159,7 +159,7 @@ export const employeePages = {
     // 'generate-schedule': GenerateSchedule,
     kedo: () => {
         React.useEffect(() => {
-            window.open('https://lk-staff.mospolytech.ru/applications/1SKabinet-sotrudnika')
+            window.open('https://kedo.mospolytech.ru')
             window.history.back()
         }, [])
         return null
