@@ -58,9 +58,9 @@ jobs:
             - name: Build and publish
               run: |
                   port="${{ env.PORT }}"
-                  echo ${{ secrets.GH_PAT }} | docker login ghcr.io -u awqsomee --password-stdin
-                  docker build . --tag ghcr.io/awqsomee/mospolytech-lk-ghcr:feat$port
-                  docker push ghcr.io/awqsomee/mospolytech-lk-ghcr:feat$port
+                  echo ${{ secrets.GH_PAT }} | docker login ghcr.io -u LukyanovLeoe --password-stdin
+                  docker build . --tag ghcr.io/LukyanovLeoe/mospolytech-lk-ghcr:feat$port
+                  docker push ghcr.io/LukyanovLeoe/mospolytech-lk-ghcr:feat$port
 
     update-server-containers:
         runs-on: ubuntu-latest
