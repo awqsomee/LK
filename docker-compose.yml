@@ -1,6 +1,6 @@
 version: '3.8'
 services:
-  web:
+  web: 
     image: ghcr.io/LukyanovLeo/mospolytech-lk-ghcr:latest
     ports:
       - "80:80"
