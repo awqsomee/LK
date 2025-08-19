@@ -63,7 +63,7 @@ export const getForm = (dataUserApplication: UserApplication): IInputArea => {
                 type: 'select',
                 fieldName: 'attachments',
                 width: '100',
-                value: null,
+                value: '',
                 editable: true,
                 required: false,
                 items: AttachmentOptions,
