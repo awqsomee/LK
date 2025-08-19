@@ -48,7 +48,7 @@ export const getForm = (dataUserApplication: UserApplication): IInputArea => {
                 fieldName: 'order-time',
                 value: '',
                 editable: true,
-                required: true,
+                required: false,
             },
             {
                 title: '№:',
@@ -56,7 +56,7 @@ export const getForm = (dataUserApplication: UserApplication): IInputArea => {
                 type: 'text',
                 value: null,
                 editable: true,
-                required: true,
+                required: false,
             },
             {
                 title: 'Приложения:',
@@ -64,8 +64,8 @@ export const getForm = (dataUserApplication: UserApplication): IInputArea => {
                 fieldName: 'attachments',
                 width: '100',
                 value: null,
-                required: true,
                 editable: true,
+                required: false,
                 items: AttachmentOptions,
             },
             {
@@ -75,7 +75,7 @@ export const getForm = (dataUserApplication: UserApplication): IInputArea => {
                 value: '',
                 specialType: 'medicalReport',
                 editable: true,
-                required: true,
+                required: false,
             },
             {
                 title: '№:',
@@ -84,7 +84,7 @@ export const getForm = (dataUserApplication: UserApplication): IInputArea => {
                 value: null,
                 specialType: 'medicalReport',
                 editable: true,
-                required: true,
+                required: false,
             },
             {
                 title: 'Количество листов подтверждающих документов:',
@@ -93,7 +93,7 @@ export const getForm = (dataUserApplication: UserApplication): IInputArea => {
                 value: null,
                 specialType: 'medicalReport',
                 editable: true,
-                required: true,
+                required: false,
             },
             {
                 title: 'Комментарий к заявке',
@@ -103,6 +103,6 @@ export const getForm = (dataUserApplication: UserApplication): IInputArea => {
                 editable: true,
             },
         ],
-        documents: { files: [], fieldName: 'docs', maxFiles: 6, required: true },
+        documents: { files: [], fieldName: 'docs', maxFiles: 6, required: false },
     }
 }
