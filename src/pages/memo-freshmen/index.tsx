@@ -16,10 +16,19 @@ const MemoFreshmenPage = () => {
                 </Title>
                 <Ul>
                     <p>
-                        Пароль для доступа в Личный кабинет формируется следующим образом: <strong>StudXXXXXX!</strong>
+                        Пароль для доступа в Личный кабинет формируется следующим образом: <strong>StudDDMMYYXXXXXX!</strong>
                     </p>
                     <p>
                         где <strong>Stud</strong> - не меняется,
+                    </p>
+                    <p>
+                        <strong>DD</strong> - день рождения,
+                    </p>
+                    <p>
+                        <strong>MM</strong> - месяц рождения,
+                    </p>
+                    <p>
+                        <strong>YY</strong> - год рождения,
                     </p>
                     <p>
                         <strong>ХХХХХХ</strong> - 6 цифр номера паспорта (если количество цифр в номере паспорта меньше
@@ -29,7 +38,7 @@ const MemoFreshmenPage = () => {
                     <p>
                         <strong>!</strong> - восклицательный знак, не меняется, <strong>обязателен</strong>
                     </p>
-                    <p>
+                    {/* <p>
                         Для более подробной информации{' '}
                         <a
                             href="https://e.mospolytech.ru/old/storage/files/stud_login_instruction.pdf?1"
@@ -38,7 +47,7 @@ const MemoFreshmenPage = () => {
                         >
                             <strong> нажмите сюда</strong>
                         </a>
-                    </p>
+                    </p> */}
                 </Ul>
             </Block>
         </CenterPage>
