@@ -12,6 +12,7 @@ const dormLocations = [
     { id: 7, title: 'г. Москва, Рижский проезд, д. 15, к. 2' },
     { id: 8, title: 'г. Москва, Рижский проезд, д. 15, к. 1' },
     { id: 9, title: 'г. Москва, 1-й Балтийский переулок, д. 6/21, к. 3' },
+    { id: 10, title: 'г. Москва, ул. Павла Корчагина, д. 22А, к. 2' },
 ]
 
 export const getForm = (dataUserApplication: UserApplication): IInputArea => {
