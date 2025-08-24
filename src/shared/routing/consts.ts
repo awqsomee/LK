@@ -10,6 +10,7 @@ export const pageGroups = {
     LEARNING_ACTIVITIES: 'Учебная деятельность',
     OTHER: 'Находится в разработке',
     COMMUNICATION: 'Коммуникация',
+    COMPETENCE_CENTER: 'Центр компетенций',
     SCIENCE: 'Научная деятельность',
 }
 

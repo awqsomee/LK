@@ -21,6 +21,7 @@ import {
 } from '@shared/routing'
 
 import {
+    AdminCompetenceCenter,
     AllowanceInfo,
     Allowances,
     Article,
@@ -31,6 +32,7 @@ import {
     CertificationAndIssuanceOfDocs,
     CertifiedCopiesOfMilitaryDocs,
     Children,
+    CompletedConsultationList,
     ConnectingComputerPage,
     ContactDetails,
     ContactDetailsForm,
@@ -57,6 +59,7 @@ import {
     NumberOfUnusedVacationDaysPage,
     Onboarding,
     OtherItServicesPage,
+    PassportGenerationList,
     PaymentForChildCarePage,
     PaymentOfChildBirthAllowancePage,
     PersonaIncomeTaxReferencePage,
@@ -164,6 +167,7 @@ export const employeePages = {
         }, [])
         return null
     },
+    'competence-center-admin': AdminCompetenceCenter,
 }
 
 export const employeeHiddenPages = {
@@ -255,4 +259,6 @@ export const employeeHiddenPages = {
         return <Redirect to={ONBOARDING} />
     },
     article: Article,
+    'cc-passport-log': PassportGenerationList,
+    'cc-completed-consultations': CompletedConsultationList,
 }

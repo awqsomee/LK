@@ -6,8 +6,8 @@ import { useUnit } from 'effector-react'
 import BaseApplicationWrapper from '@pages/applications/ui/base-application-wrapper'
 
 import { listTeacherMfc } from '@entities/applications'
-import { TeacherMethodObtainingOptions } from '@entities/applications/consts'
 
+import { TeacherMethodObtainingOptions } from '@shared/consts/applications'
 import { Input, Message, TextArea, Title } from '@shared/ui/atoms'
 import FormBlockWrapper from '@shared/ui/atoms/form-block'
 import FileInput from '@shared/ui/file-input'

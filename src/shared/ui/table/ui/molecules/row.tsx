@@ -4,13 +4,13 @@ import { IndexedProperties } from '@shared/consts/models/indexed-properties'
 import Checkbox from '@shared/ui/checkbox'
 import { useModal } from '@shared/ui/modal'
 import displayWithType from '@shared/ui/table/lib/display-with-type'
-import { ColumnProps } from '@shared/ui/table/types'
+import { ColumnProps, TableRowProps } from '@shared/ui/table/types'
 
 import { RowWrapper } from '../atoms'
 import Column from '../atoms/column'
 import RowModal from './row-modal'
 
-interface Props {
+type Props = {
     el: { [key: string]: any }
     index: number
     columns: ColumnProps[]
@@ -18,11 +18,10 @@ interface Props {
     onRowClick?: (obj: IndexedProperties) => void
     select?: (rowIndex: number) => void
     selected?: boolean
-    padding?: string
     height?: string
-}
+} & TableRowProps
 
-const Row = ({ columns, columnsExtended, el, index, onRowClick, select, selected, padding, height }: Props) => {
+const Row = ({ columns, columnsExtended, el, index, onRowClick, select, selected, height, rowPadding }: Props) => {
     const { open } = useModal()
     const defaultOnClick = () => open(<RowModal obj={el} columns={columnsExtended || columns} />, 'Информация')
     return (
@@ -52,7 +51,7 @@ const Row = ({ columns, columnsExtended, el, index, onRowClick, select, selected
             {columns.map((column) => {
                 return (
                     <Column
-                        padding={padding}
+                        padding={rowPadding}
                         showFull={column.showFull}
                         width={column.width}
                         className={column.priority?.toString() ?? 'one'}

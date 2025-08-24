@@ -1,5 +1,7 @@
 import React from 'react'
 
+import { Property } from 'csstype'
+
 import { Align, HeaderSize } from '@shared/ui/types'
 
 import { CreateHeader } from './create-header'
@@ -10,6 +12,8 @@ export type TitleProps = {
     width?: string
     size?: HeaderSize
     align?: Align
+    justify?: Property.AlignItems
+    gap?: string
     bottomGap?: boolean | string
     icon?: React.ReactNode
     iconColor?: string
@@ -28,6 +32,8 @@ export function Title(props: TitleProps) {
         width,
         style,
         align = 'center',
+        justify = 'center',
+        gap,
         bottomGap = false,
         visible = true,
     } = props
@@ -46,7 +52,9 @@ export function Title(props: TitleProps) {
             {icon}
             <CreateHeader size={size} width={width}>
                 {required && <RedStar>*</RedStar>}
-                <ChildrenWrapper width={width}>{children}</ChildrenWrapper>
+                <ChildrenWrapper width={width} justify={justify} gap={gap}>
+                    {children}
+                </ChildrenWrapper>
             </CreateHeader>
         </TitleWrapper>
     )

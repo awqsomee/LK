@@ -14,7 +14,7 @@ const LinksStyled = styled.div<{ componentHeight?: number }>`
     width: 100%;
     display: flex;
     align-items: center;
-    max-width: 750px;
+    max-width: 800px;
     border-radius: var(--brLight);
     background: var(--block);
     box-shadow: var(--very-mild-shadow);

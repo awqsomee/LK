@@ -104,7 +104,8 @@ const TaxCertificate = () => {
                         </Title>
                         <Table
                             loading={loading}
-                            innerPadding="0.5rem"
+                            rowPadding="0.5rem"
+                            headerPadding="0.5rem"
                             columns={[
                                 {
                                     title: 'Дата справки',

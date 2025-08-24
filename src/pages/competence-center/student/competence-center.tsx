@@ -1,0 +1,462 @@
+import React from 'react'
+import { FiPlus } from 'react-icons/fi'
+import { LiaArrowRightSolid } from 'react-icons/lia'
+import { LuSendHorizonal } from 'react-icons/lu'
+import { Link, useHistory } from 'react-router-dom'
+
+import { useGate, useUnit } from 'effector-react'
+import styled from 'styled-components'
+
+import { ApplicationsConstants } from '@shared/consts/applications'
+import { useIntersectionObserver } from '@shared/lib/hooks/use-intersection-observer'
+import { COMPETENCE_CENTER_CONSULTATION_FORM, COMPETENCE_CENTER_PASSPORT_FORM } from '@shared/routing'
+import { ButtonBase } from '@shared/ui'
+import { Message, Title } from '@shared/ui/atoms'
+import { BrightPlate } from '@shared/ui/bright-plate/bright-plate'
+import { MEDIA_QUERIES } from '@shared/ui/consts'
+import Flex from '@shared/ui/flex'
+import useCurrentDevice from '@shared/ui/hooks/use-current-device'
+import PageBlock from '@shared/ui/page-block'
+import Table from '@shared/ui/table'
+import { ColumnProps } from '@shared/ui/table/types'
+
+import * as model from '../models/competence-center-model'
+import { Button, Card, IconButton, Stack, Text } from '../ui'
+import { PassportBlock } from './passport'
+
+const CompetenceCenter = () => {
+    useGate(model.CompetenceCenterStudentGate)
+    const { isMobile } = useCurrentDevice()
+
+    return (
+        <PageBlock padding="0">
+            <Flex d="column" gap="3rem" p="0.75rem 3rem 2rem">
+                <Stack gap={isMobile ? 48 : 64}>
+                    <PassportBlock />
+                    <HowToGet />
+                    <Information />
+                    <Consultations />
+                </Stack>
+            </Flex>
+        </PageBlock>
+    )
+}
+
+type Step = { title: string; text: string; link: string; isExternalLink?: boolean }
+const howToGetSteps: Step[] = [
+    {
+        title: 'Регистрация на платформе',
+        text: 'Для получения паспорта компетенций необходимо пройти тестирование на официальной платформе Softskills. Перед прохождением следует изучить инструкцию',
+        link: 'https://docs.yandex.ru/docs/view?url=ya-disk-public%3A%2F%2FwIRgzN3TJiqUBmvTFYH3uOda6XQUfUcTaONFCt0v%2B96aE8crffa6P7mr70UNFwSoq%2FJ6bpmRyOJonT3VoXnDag%3D%3D%3A%2FИнструкция%20по%20прохождению%20тестирования.pdf&name=Инструкция%20по%20прохождению%20тестирования.pdf',
+        isExternalLink: true,
+    },
+    {
+        title: 'Тестирование',
+        text: 'Сразу после заполнения всех данных можно начать тестирование',
+        link: 'https://softskills.rsv.ru',
+        isExternalLink: true,
+    },
+    {
+        title: 'Получение результатов',
+        text: 'После прохождения тестирования ты можешь подать заявку в Центр компетенций на формирование результатов и выдачу паспорта компетенций',
+        link: COMPETENCE_CENTER_PASSPORT_FORM,
+    },
+]
+
+const HowToGet = () => {
+    const { isMobile } = useCurrentDevice()
+    return (
+        <Stack gap={isMobile ? 16 : 32}>
+            <Title align="left" size={2}>
+                Как получить Паспорт компетенций?
+            </Title>
+            <InstructionsGrid>
+                {howToGetSteps.map((step, index) => {
+                    if (step.isExternalLink)
+                        return (
+                            <A href={step.link} target="_blank" rel="noreferrer" key={index}>
+                                <HowToGetStep {...step} index={index} />
+                            </A>
+                        )
+
+                    return (
+                        <LinkStyled to={step.link} key={index}>
+                            <HowToGetStep {...step} index={index} />
+                        </LinkStyled>
+                    )
+                })}
+            </InstructionsGrid>
+        </Stack>
+    )
+}
+
+const HowToGetStep = ({ title, text, index }: Step & { index: number }) => {
+    return (
+        <HowToGetCard h="100%" withBg withBorder>
+            <Flex ai="stretch" jc="space-between" gap="0.5rem" h="100%">
+                <Stack gap={24} h="100%">
+                    <Title size={3} align="left">
+                        {title}
+                    </Title>
+                    <Text>{text}</Text>
+                </Stack>
+                <Stack gap={16} justify="space-between" align="center">
+                    <StepNumber>{index + 1}</StepNumber>
+                    <CircleLink>
+                        <LiaArrowRightSolid size={20} />
+                    </CircleLink>
+                </Stack>
+            </Flex>
+        </HowToGetCard>
+    )
+}
+
+const Information = () => {
+    const { isMobile } = useCurrentDevice()
+    return (
+        <Stack gap={isMobile ? 16 : 32}>
+            <Title align="left" size={2}>
+                Справочная информация
+            </Title>
+
+            <InformationGrid>
+                <Card withBorder>
+                    <Stack gap={24}>
+                        <Title size={3} align="left">
+                            Что такое паспорт компетенций?
+                        </Title>
+                        <Text mw="37.5rem">
+                            Паспорт компетенций – официальный документ, подтверждающий прохождение студентом
+                            тестирования по оценке надпрофессиональных навыков, среди которых:
+                            <UL style={{ marginTop: '1rem', marginLeft: '1rem' }}>
+                                <li>анализ информации и выработка решений</li> <li>ориентация на результат</li>
+                                <li>партнёрство/сотрудничество</li> <li>стрессоустойчивость</li>
+                                <li>планирование и организация</li>
+                                <li>следование процедурам и правилам</li>
+                            </UL>
+                        </Text>
+                    </Stack>
+                </Card>
+                <Card withBorder>
+                    <Stack gap={24}>
+                        <Title size={3} align="left">
+                            Зачем нужен паспорт компетенций?
+                        </Title>
+                        <Text>
+                            Паспорт компетенций даёт следующие преимущества:
+                            <UL>
+                                <li>5 дополнительных баллов при поступлении в магистратуру;</li>
+                                <li>
+                                    на платформе hh.ru его можно приложить к резюме, а работодатель сможет узнать ваш
+                                    уровень softskills.
+                                </li>
+                            </UL>
+                        </Text>
+                    </Stack>
+                </Card>
+                <BrightPlate
+                    show
+                    onClick={() => window.open('https://softskills.rsv.ru/', '_blank')}
+                    height="auto"
+                    padding="0.75rem"
+                    maw="100%"
+                >
+                    <Text>✨ Улучшить компетенции ✨</Text>
+                </BrightPlate>
+            </InformationGrid>
+        </Stack>
+    )
+}
+
+const Consultations = () => {
+    const { isMobile } = useCurrentDevice()
+    const history = useHistory()
+
+    const [recentConsultations] = useUnit([model.$recentConsultations])
+
+    const { isIntersecting, ref } = useIntersectionObserver({
+        threshold: 0.5,
+    })
+
+    return (
+        <Stack w="100%" gap={32}>
+            <Flex gap="0.5rem" jc="space-between">
+                <Flex w="fit-content">
+                    <Title size={2} align="left">
+                        Заявки на консультацию
+                    </Title>
+                </Flex>
+                {isMobile ? (
+                    <IconButton bg="var(--reallyBlue)" c="white" size={38}>
+                        <FiPlus size={20} />
+                    </IconButton>
+                ) : (
+                    <Button ref={ref} c="white" onClick={() => history.push(COMPETENCE_CENTER_CONSULTATION_FORM)}>
+                        Связаться с Центром
+                        <LuSendHorizonal size={14} />
+                    </Button>
+                )}
+            </Flex>
+            <Table
+                dimmedHeaders={true}
+                fw={500}
+                headerPadding="1rem 0.75rem"
+                rowPadding="1.25rem"
+                loading={false}
+                columns={getColumns()}
+                columnsExtended={getExtColumns()}
+                data={recentConsultations}
+            />
+            {!isIntersecting && (
+                <CallCenterButton c="white" onClick={() => history.push(COMPETENCE_CENTER_CONSULTATION_FORM)}>
+                    Связаться с Центром
+                    <LuSendHorizonal size={14} />
+                </CallCenterButton>
+            )}
+        </Stack>
+    )
+}
+
+const CallCenterButton = styled(ButtonBase)`
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    padding: 1rem;
+    gap: 0.5rem;
+
+    position: fixed;
+    right: calc((100% - 235px) / 2);
+    transform: translateX(50%);
+    left: auto;
+    top: auto;
+    bottom: 0.625rem;
+
+    background: #222222;
+`
+
+const A = styled.a`
+    width: 100%;
+    text-decoration: none;
+    color: var(--text);
+`
+
+const LinkStyled = styled(Link)`
+    width: 100%;
+    text-decoration: none;
+    color: var(--text);
+`
+
+const InstructionsGrid = styled.div`
+    display: grid;
+    gap: 0.75rem;
+    grid-template-columns: 1fr 1fr 1fr;
+
+    ${MEDIA_QUERIES.isSmallDesktop} {
+        grid-template-columns: 1fr 1fr;
+
+        a:first-child {
+            grid-column: span 2;
+        }
+    }
+
+    ${MEDIA_QUERIES.isMobile} {
+        grid-template-columns: 1fr;
+        a:first-child {
+            grid-column: span 1;
+        }
+        gap: 0.5rem;
+    }
+`
+
+const InformationGrid = styled.div`
+    display: grid;
+    gap: 0.75rem;
+    grid-template-columns: 1fr 1fr;
+
+    div:first-child {
+        grid-row: span 2;
+    }
+
+    ${MEDIA_QUERIES.isMobile} {
+        grid-template-columns: 1fr;
+        gap: 0.5rem;
+    }
+`
+const StepNumber = styled.div`
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 1.5rem;
+    height: 1.5rem;
+    border-radius: 50%;
+    border: 1px solid var(--theme-mild-opposite);
+    color: var(--theme-mild-opposite);
+    font-weight: 500;
+    font-size: 0.9rem;
+`
+const CircleLink = styled.div`
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 2.5rem;
+    height: 2.5rem;
+
+    background: var(--reallyBlue);
+    border-radius: 50%;
+
+    transform: rotate(-35deg);
+
+    color: white;
+`
+
+const HowToGetCard = styled(Card)`
+    @property --myColor1 {
+        syntax: '<color>';
+        initial-value: #567dff00;
+        inherits: false;
+    }
+
+    @property --myColor2 {
+        syntax: '<color>';
+        initial-value: rgba(0, 0, 0, 0);
+        inherits: false;
+    }
+    position: relative;
+    &::before {
+        content: '';
+        min-width: 100%;
+        min-height: 100%;
+        position: absolute;
+        top: 0;
+        left: 0;
+        background: linear-gradient(353.15deg, var(--myColor1) -50.96%, var(--myColor2) 80.04%);
+    }
+    transition:
+        --myColor1 0.3s ease-in-out,
+        --myColor2 0.3s ease-in-out,
+        all 0.3s ease-in-out;
+    ${CircleLink} svg {
+        transition: all 0.3s ease-in-out;
+    }
+    overflow: hidden;
+    &::before {
+        transition:
+            --myColor1 0.3s ease-in-out,
+            --myColor2 0.3s ease-in-out,
+            all 0.3s ease-in-out;
+    }
+
+    &:hover {
+        ${CircleLink} svg {
+            scale: 1.2;
+            translate: 20%;
+            transition: all 0.2s ease-in-out;
+            stroke-width: 0.5px;
+        }
+
+        &::before {
+            --myColor1: #567dff;
+            --myColor2: rgba(0, 0, 0, 0.12);
+        }
+
+        border-color: var(--almostTransparentOpposite);
+    }
+`
+
+const UL = styled.ul`
+    margin-top: 1rem;
+    margin-left: 1rem;
+`
+
+const getColumns = (): ColumnProps[] => [
+    {
+        title: 'Дата подачи',
+        field: 'createdAt',
+        sort: true,
+        type: 'date',
+        width: '8.75rem',
+    },
+    {
+        title: 'Способ связи',
+        field: 'communication',
+        render: (val) => val || '-',
+    },
+    {
+        title: 'Статус',
+        field: 'status',
+        priority: 'three',
+        width: '10.375rem',
+        catalogs: [...(Object.values(ApplicationsConstants).map((val, i) => ({ id: i.toString(), title: val })) ?? [])],
+        render: (value: keyof typeof ApplicationsConstants) => {
+            const status = ApplicationsConstants[value]
+            return (
+                <Message
+                    type={
+                        value === 'accepted' ||
+                        value === 'completed' ||
+                        value === 'ready' ||
+                        value === 'recieved' ||
+                        value === 'done'
+                            ? 'success'
+                            : value === 'rejected'
+                              ? 'failure'
+                              : 'alert'
+                    }
+                    title={status || '—'}
+                    align="center"
+                    icon={null}
+                />
+            )
+        },
+    },
+]
+
+const getExtColumns = (): ColumnProps[] => [
+    {
+        title: 'Дата подачи',
+        field: 'createdAt',
+        sort: true,
+        type: 'date',
+        width: '8.75rem',
+    },
+    {
+        title: 'Способ связи',
+        field: 'communication',
+        render: (val) => val || '-',
+    },
+    {
+        title: 'Комментарий',
+        field: 'comment',
+    },
+    {
+        title: 'Статус',
+        field: 'status',
+        priority: 'three',
+        width: '10.375rem',
+        catalogs: [...(Object.values(ApplicationsConstants).map((val, i) => ({ id: i.toString(), title: val })) ?? [])],
+        render: (value: keyof typeof ApplicationsConstants) => {
+            const status = ApplicationsConstants[value]
+            return (
+                <Message
+                    type={
+                        value === 'accepted' ||
+                        value === 'completed' ||
+                        value === 'ready' ||
+                        value === 'recieved' ||
+                        value === 'done'
+                            ? 'success'
+                            : value === 'rejected'
+                              ? 'failure'
+                              : 'alert'
+                    }
+                    title={status || '—'}
+                    align="center"
+                    icon={null}
+                />
+            )
+        },
+    },
+]
+
+export default CompetenceCenter

@@ -6,11 +6,11 @@ import styled from 'styled-components'
 
 import Select, { SelectPage } from '@shared/ui/select'
 import sortPopUp from '@shared/ui/table/lib/sort-pop-up'
-import { ColumnProps, TableCatalogType, TableSearchType, TableSortType } from '@shared/ui/table/types'
+import { ColumnProps, TableCatalogType, TableHeaderProps, TableSearchType, TableSortType } from '@shared/ui/table/types'
 
 import { Column, HeaderWrapper } from '../atoms'
 
-interface Props {
+type Props = {
     sort: TableSortType
     setSort: React.Dispatch<React.SetStateAction<TableSortType>>
     columns: ColumnProps[]
@@ -19,9 +19,8 @@ interface Props {
     setFilter: React.Dispatch<React.SetStateAction<TableCatalogType>>
     setSearch: React.Dispatch<React.SetStateAction<TableSearchType>>
     tableHasSelect?: boolean
-    padding?: string
     fontSize?: string
-}
+} & TableHeaderProps
 
 const FilterWrapper = styled.div`
     display: flex;
@@ -37,8 +36,10 @@ const Header = ({
     sort,
     setSort,
     tableHasSelect,
-    padding,
+    headerPadding,
     fontSize,
+    dimmedHeaders,
+    fw,
 }: Props) => {
     const columnClick = (column: ColumnProps) => {
         return () => {
@@ -62,7 +63,7 @@ const Header = ({
             {columns.map((column) => {
                 return (
                     <Column
-                        padding={padding}
+                        padding={headerPadding}
                         overflow={!!column.catalogs ? 'visible' : 'hidden'}
                         width={column.width}
                         title={column.title}
@@ -73,6 +74,8 @@ const Header = ({
                         className={column.priority?.toString() ?? 'one'}
                         onClick={columnClick(column)}
                         fontSize={fontSize}
+                        dimmed={dimmedHeaders}
+                        fw={fw}
                     >
                         {!column.catalogs && column.title}
                         {!column.catalogs && !column.sort && column.search && (

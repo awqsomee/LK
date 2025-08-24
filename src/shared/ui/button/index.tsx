@@ -30,6 +30,7 @@ export type ButtonProps = BaseProps & {
     flipped?: boolean
     loading?: boolean
     fontSize?: string
+    radius?: string
 }
 
 export function Button(props: ButtonProps & TutorialComponent) {

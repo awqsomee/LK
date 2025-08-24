@@ -130,4 +130,8 @@ export const StudentEmploymentApplicationPage = lazy(() => import('@pages/applic
 
 export const TaxCertificatesPage = lazy(() => import('@pages/payments/tax-certificate'))
 export const TaxCertificatePage = lazy(() => import('@pages/payments/tax-certificate/tax-certificate'))
+
+export const CompetenceCenter = lazy(() => import('@pages/competence-center/student/competence-center'))
+export const CompetenceCenterPassportForm = lazy(() => import('@pages/competence-center/passport-form'))
+export const CompetenceCenterConsultationForm = lazy(() => import('@pages/competence-center/consultation-form'))
 export const TaxCertRequestPage = lazy(() => import('@pages/payments/tax-certificate/tax-cert-request'))

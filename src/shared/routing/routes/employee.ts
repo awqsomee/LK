@@ -32,6 +32,8 @@ import {
     ARTICLE,
     ARTICLE_LIST,
     BRANDBOOK,
+    CC_COMPLETED_CONSULTATIONS,
+    CC_PASSPORT_LOG,
     CENTERS_ROUTE,
     CERTIFICATE_FROM_PLACE_OF_WORK,
     CERTIFICATE_OF_WORK_EXPERIENCE,
@@ -39,6 +41,7 @@ import {
     CERTIFICATION_AND_ISSUANCE_OF_DOCS,
     CERTIFIED_COPIES_OF_MILITARY_DOCS,
     CHILDREN_ROUTE,
+    COMPETENCE_CENTER_STAFF,
     CONNECTING_COMPUTER,
     CONTACT_DETAILS,
     CONTACT_DETAILS_FORM,
@@ -450,6 +453,19 @@ export const employeeRoutes: (params: { allowancesRoles: Role[] }) => IRoutes = 
         isTemplate: false,
         group: 'FINANCES_DOCS',
         withoutHeader: true,
+    },
+    'competence-center-admin': {
+        id: 'competence-center-admin',
+        title: 'Центр компетенций',
+        icon: RiPassValidLine,
+        path: COMPETENCE_CENTER_STAFF,
+        color: 'orange',
+        isTemplate: false,
+        pageSize: 'large',
+        group: 'COMPETENCE_CENTER',
+
+        hiddenTitle: true,
+        subPageHeaderTitle: '',
     },
 })
 
@@ -1114,4 +1130,29 @@ export const employeeHiddenRoutes: (params: { allowancesRoles: Role[] }) => IRou
         fallbackPrevPage: ARTICLE_LIST,
         backButtonText: 'Список публикаций',
     },
+
+    //#region competence center
+    'cc-passport-log': {
+        id: 'cc-passport-log',
+        title: 'Заявки на создание паспорта компетенций',
+        icon: RiPassValidLine,
+        path: CC_PASSPORT_LOG,
+        color: 'orange',
+        isTemplate: false,
+        pageSize: 'large',
+        group: 'COMPETENCE_CENTER',
+        isSubPage: true,
+    },
+    'cc-completed-consultations': {
+        id: 'cc-completed-consultations',
+        title: 'Завершенные консультации',
+        icon: RiPassValidLine,
+        path: CC_COMPLETED_CONSULTATIONS,
+        color: 'orange',
+        isTemplate: false,
+        pageSize: 'large',
+        group: 'COMPETENCE_CENTER',
+        isSubPage: true,
+    },
+    //#endregion
 })

@@ -7,6 +7,8 @@ export const ApplicationsConstants = {
     pending: 'На рассмотрении',
     accepted: 'Принято в работу',
     rejected: 'Отклонено',
+    not_found: 'Не найден',
+    done: 'Готов',
 } as const
 
 export const hrApplicationsConstants = {
